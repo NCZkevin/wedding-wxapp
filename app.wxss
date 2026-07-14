@@ -1,0 +1,109 @@
+page {
+  min-height: 100%;
+  background: #07111f;
+  color: #f3f0e8;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+view,
+text,
+image,
+button,
+input,
+textarea,
+picker {
+  box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  line-height: inherit;
+}
+
+button::after {
+  display: none;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding-bottom: calc(156rpx + env(safe-area-inset-bottom));
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(30, 101, 143, 0.28), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, #050608 100%);
+}
+
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+.eyebrow {
+  color: #a7b6c2;
+  font-size: 22rpx;
+  letter-spacing: 8rpx;
+  text-transform: uppercase;
+}
+
+.section {
+  position: relative;
+  padding: 96rpx 40rpx 0;
+}
+
+.section-heading {
+  margin-top: 18rpx;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 52rpx;
+  font-weight: 400;
+  letter-spacing: 6rpx;
+}
+
+.section-copy {
+  margin-top: 24rpx;
+  color: #a7b6c2;
+  font-size: 26rpx;
+  line-height: 1.8;
+}
+
+.hairline {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, rgba(216, 225, 231, 0.55), transparent);
+}
+
+.glass-card {
+  border: 1rpx solid rgba(216, 225, 231, 0.2);
+  border-radius: 32rpx;
+  background: linear-gradient(145deg, rgba(25, 53, 78, 0.78), rgba(6, 16, 27, 0.92));
+  box-shadow: 0 24rpx 70rpx rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(20rpx);
+}
+
+.ivory-button,
+.outline-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 96rpx;
+  border-radius: 18rpx;
+  font-size: 30rpx;
+  letter-spacing: 4rpx;
+}
+
+.ivory-button {
+  color: #07111f;
+  background: linear-gradient(135deg, #f3f0e8, #d8e1e7);
+  box-shadow: 0 16rpx 40rpx rgba(2, 5, 8, 0.3);
+}
+
+.outline-button {
+  color: #e7edf1;
+  border: 1rpx solid rgba(216, 225, 231, 0.42);
+  background: rgba(7, 17, 31, 0.54);
+}
+
+.safe-bottom {
+  height: 56rpx;
+}

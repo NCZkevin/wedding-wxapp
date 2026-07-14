@@ -1,0 +1,73 @@
+<view class="page-shell schedule-page">
+  <view class="schedule-hero">
+    <image src="/assets/images/stage-backdrop.jpg" mode="aspectFill" />
+    <view class="schedule-hero-shade"></view>
+    <view class="schedule-hero-copy">
+      <text class="eyebrow">THE WEDDING DAY</text>
+      <text class="schedule-title serif">婚礼流程</text>
+      <text class="schedule-date">{{wedding.dateDisplay}} · {{wedding.venue.name}}</text>
+    </view>
+  </view>
+
+  <view class="section timeline-section">
+    <text class="eyebrow">TIMELINE</text>
+    <text class="section-heading">当天安排</text>
+    <text class="section-copy">以下为当前拟定流程，请以婚礼前的最终通知为准。建议提前 30 分钟到场。</text>
+
+    <view class="timeline">
+      <view class="timeline-item" wx:for="{{wedding.schedule}}" wx:key="time">
+        <view class="timeline-axis">
+          <view class="timeline-dot"></view>
+          <view wx:if="{{index !== wedding.schedule.length - 1}}" class="timeline-line"></view>
+        </view>
+        <view class="timeline-content">
+          <text class="timeline-time serif">{{item.time}}</text>
+          <text class="timeline-title serif">{{item.title}}</text>
+          <text class="timeline-copy">{{item.detail}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section activities-section">
+    <text class="eyebrow">ACTIVITIES</text>
+    <text class="section-heading">当日活动</text>
+    <view class="activities-grid">
+      <view class="activity-card glass-card" wx:for="{{activities}}" wx:key="index" bindtap="openInteract">
+        <view class="activity-top">
+          <text>{{item.index}}</text>
+          <text>↗</text>
+        </view>
+        <text class="activity-title serif">{{item.title}}</text>
+        <text class="activity-copy">{{item.copy}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section guide-section">
+    <text class="eyebrow">GUEST GUIDE</text>
+    <text class="section-heading">宾客指南</text>
+    <view class="guide-card">
+      <image src="/assets/images/handover-stage.jpg" mode="aspectFill" />
+      <view class="guide-shade"></view>
+      <view class="guide-content">
+        <view class="guide-row">
+          <text class="guide-label">建议着装</text>
+          <text class="guide-value serif">黑 / 深蓝 / 银白</text>
+        </view>
+        <view class="hairline"></view>
+        <view class="guide-row">
+          <text class="guide-label">抵达时间</text>
+          <text class="guide-value serif">仪式前 30 分钟</text>
+        </view>
+        <view class="hairline"></view>
+        <view class="guide-row">
+          <text class="guide-label">温馨提示</text>
+          <text class="guide-note">仪式期间请将手机调至静音；拍照时请勿使用闪光灯。</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

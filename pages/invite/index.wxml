@@ -1,0 +1,111 @@
+<view class="page-shell invite-page">
+  <view class="hero">
+    <image class="hero-image" src="/assets/images/hero-sea.jpg" mode="aspectFill" />
+    <view class="hero-shade"></view>
+    <view class="hero-beam"></view>
+    <view class="stars stars-a"></view>
+    <view class="stars stars-b"></view>
+
+    <view class="hero-top">
+      <text class="hero-kicker">OUR WEDDING · 2026</text>
+      <button class="music-button {{musicEnabled ? 'is-playing' : ''}}" bindtap="toggleMusic" aria-label="背景音乐">
+        <view class="music-icon">
+          <view></view><view></view><view></view>
+        </view>
+      </button>
+    </view>
+
+    <view class="hero-content">
+      <text class="hero-title serif">张凯文</text>
+      <view class="hero-cross"><view></view><text>×</text><view></view></view>
+      <text class="hero-title serif">刘明玥</text>
+      <text class="hero-subtitle">我们的婚礼</text>
+    </view>
+
+    <view class="hero-meta">
+      <text class="hero-date serif">{{wedding.dateDisplay}}</text>
+      <text class="hero-venue">{{wedding.venue.name}}</text>
+      <text class="hero-quote serif">{{wedding.quote}}</text>
+      <view class="scroll-cue"><view></view></view>
+    </view>
+  </view>
+
+  <view class="section countdown-section">
+    <text class="eyebrow">SAVE THE DATE</text>
+    <text class="section-heading">期待相见</text>
+    <view class="countdown glass-card">
+      <view class="countdown-main">
+        <text class="countdown-number serif">{{countdown.days}}</text>
+        <text class="countdown-label">DAYS</text>
+      </view>
+      <view class="countdown-rest">
+        <view><text>{{countdown.hours}}</text><text>HRS</text></view>
+        <view><text>{{countdown.minutes}}</text><text>MIN</text></view>
+        <view><text>{{countdown.seconds}}</text><text>SEC</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section story-section">
+    <text class="eyebrow">THE CEREMONY</text>
+    <text class="section-heading">故事正式开场</text>
+    <text class="section-copy">深蓝幕布缓缓垂落，银白花枝从黑色舞台生长。我们想邀请你，来到这场只发生一次的开放式游戏。</text>
+    <view class="stage-card">
+      <image src="/assets/images/ceremony-stage.jpg" mode="aspectFill" />
+      <view class="stage-caption">
+        <text>01</text>
+        <text class="serif">在这里，见证我们</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section entry-section">
+    <text class="eyebrow">EXPLORE</text>
+    <text class="section-heading">婚礼指南</text>
+
+    <view class="entry-list">
+      <view class="entry-card glass-card" bindtap="openSchedule">
+        <view>
+          <text class="entry-index">01</text>
+          <text class="entry-title serif">婚礼流程</text>
+          <text class="entry-copy">签到 · 合影 · 仪式 · 晚宴</text>
+        </view>
+        <text class="entry-arrow">↗</text>
+      </view>
+      <view class="entry-card glass-card" bindtap="openInteract">
+        <view>
+          <text class="entry-index">02</text>
+          <text class="entry-title serif">当日活动</text>
+          <text class="entry-copy">照片共创 · 留声祝福 · 桌号查询</text>
+        </view>
+        <text class="entry-arrow">↗</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section venue-section">
+    <view class="venue-card">
+      <image src="/assets/images/welcome-installation.jpg" mode="aspectFill" />
+      <view class="venue-overlay"></view>
+      <view class="venue-content">
+        <text class="eyebrow">VENUE</text>
+        <text class="venue-name serif">{{wedding.venue.name}}</text>
+        <text class="venue-date">{{wedding.dateDisplay}}</text>
+        <button class="outline-button venue-button" bindtap="openVenue">查看地图</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="section invitation-end">
+    <text class="eyebrow">BE OUR GUEST</text>
+    <view class="end-title serif">
+      <text>这一天，因你在场</text>
+      <text>而更加完整</text>
+    </view>
+    <button class="ivory-button" bindtap="openRsvp">确认出席</button>
+    <button class="share-button" open-type="share">分享邀请函</button>
+    <text class="end-sign serif">K &amp; M · 2026</text>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

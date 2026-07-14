@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/invite/index",
+    "pages/schedule/index",
+    "pages/interact/index",
+    "pages/rsvp/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#07111f",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "张凯文 × 刘明玥",
+    "backgroundColor": "#07111f",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8fa0b1",
+    "selectedColor": "#f3f0e8",
+    "backgroundColor": "#07111f",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/invite/index", "text": "邀请" },
+      { "pagePath": "pages/schedule/index", "text": "流程" },
+      { "pagePath": "pages/interact/index", "text": "互动" },
+      { "pagePath": "pages/rsvp/index", "text": "RSVP" }
+    ]
+  },
+  "permission": {
+    "scope.record": {
+      "desc": "用于录制给新人的语音祝福"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

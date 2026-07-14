@@ -1,0 +1,6 @@
+{
+  "desc": "婚礼邀请小程序",
+  "rules": [
+    { "action": "allow", "page": "*" }
+  ]
+}
