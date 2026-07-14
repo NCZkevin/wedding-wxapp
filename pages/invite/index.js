@@ -7,20 +7,36 @@ Page({
     wedding,
     countdown: { days: '000', hours: '00', minutes: '00', seconds: '00' },
     musicEnabled: false,
+    musicAvailable: false,
+    opening: true,
+    guestName: '',
+    heroOffset: 0,
   },
 
-  onLoad() {
+  onLoad(options = {}) {
+    const guestName = options.guest ? decodeURIComponent(options.guest) : ''
+    this.setData({ guestName })
     this.updateCountdown()
     this.countdownTimer = setInterval(() => this.updateCountdown(), 1000)
+    this.openingTimer = setTimeout(() => this.setData({ opening: false }), 2100)
   },
 
   onShow() {
-    if (this.getTabBar()) this.getTabBar().setData({ selected: 0 })
+    if (this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 })
+      this.getTabBar().refreshRsvp()
+    }
     this.setData({ musicEnabled: getApp().globalData.musicEnabled })
   },
 
   onUnload() {
     clearInterval(this.countdownTimer)
+    clearTimeout(this.openingTimer)
+  },
+
+  onPageScroll(event) {
+    const next = Math.min(36, Math.round(event.scrollTop * 0.045))
+    if (next !== this.data.heroOffset) this.setData({ heroOffset: next })
   },
 
   updateCountdown() {
@@ -49,7 +65,12 @@ Page({
   },
 
   openRsvp() {
-    wx.switchTab({ url: '/pages/rsvp/index' })
+    wx.navigateTo({ url: '/pages/rsvp/index' })
+  },
+
+  skipOpening() {
+    clearTimeout(this.openingTimer)
+    this.setData({ opening: false })
   },
 
   openVenue() {
@@ -69,10 +90,6 @@ Page({
     const enabled = !this.data.musicEnabled
     getApp().globalData.musicEnabled = enabled
     this.setData({ musicEnabled: enabled })
-    wx.showToast({
-      title: enabled ? '背景音乐将在上线前接入' : '已关闭背景音乐',
-      icon: 'none',
-    })
   },
 
   onShareAppMessage() {

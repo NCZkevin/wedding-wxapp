@@ -15,6 +15,7 @@ Page({
     form: emptyForm(),
     countOptions: [1, 2, 3, 4, 5, 6],
     submitted: false,
+    step: 1,
   },
 
   onLoad() {
@@ -24,12 +25,18 @@ Page({
     }
   },
 
-  onShow() {
-    if (this.getTabBar()) this.getTabBar().setData({ selected: 3 })
-  },
-
   chooseAttendance(event) {
     this.setData({ 'form.attendance': event.currentTarget.dataset.value })
+  },
+
+  nextStep() {
+    this.setData({ step: 2 })
+    wx.pageScrollTo({ scrollTop: 0, duration: 260 })
+  },
+
+  previousStep() {
+    this.setData({ step: 1 })
+    wx.pageScrollTo({ scrollTop: 0, duration: 260 })
   },
 
   inputField(event) {
@@ -68,7 +75,15 @@ Page({
   },
 
   editRsvp() {
-    this.setData({ submitted: false })
+    this.setData({ submitted: false, step: 2 })
+  },
+
+  goBack() {
+    if (getCurrentPages().length > 1) {
+      wx.navigateBack()
+      return
+    }
+    this.goHome()
   },
 
   goHome() {

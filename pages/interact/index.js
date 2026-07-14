@@ -11,6 +11,7 @@ Page({
     recordingPath: '',
     guestName: '',
     queryResult: '',
+    queryReady: false,
     blessingSubmitted: false,
   },
 
@@ -34,7 +35,10 @@ Page({
   },
 
   onShow() {
-    if (this.getTabBar()) this.getTabBar().setData({ selected: 2 })
+    if (this.getTabBar()) {
+      this.getTabBar().setData({ selected: 2 })
+      this.getTabBar().refreshRsvp()
+    }
   },
 
   onUnload() {
@@ -111,7 +115,7 @@ Page({
   },
 
   inputGuestName(event) {
-    this.setData({ guestName: event.detail.value, queryResult: '' })
+    this.setData({ guestName: event.detail.value, queryResult: '', queryReady: false })
   },
 
   querySeat() {
@@ -119,7 +123,10 @@ Page({
       wx.showToast({ title: '请先输入姓名', icon: 'none' })
       return
     }
-    this.setData({ queryResult: '座位表将在婚礼前更新，我们会第一时间通知你。' })
+    this.setData({
+      queryResult: '座位表将在婚礼前更新，我们会第一时间通知你。',
+      queryReady: true,
+    })
   },
 
   onShareAppMessage() {

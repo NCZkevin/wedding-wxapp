@@ -1,84 +1,77 @@
 <view class="page-shell interact-page">
   <view class="interact-hero">
-    <image src="/assets/images/hero-sea.jpg" mode="aspectFill" />
+    <image src="/assets/images/welcome-installation.jpg" mode="aspectFill" />
     <view class="interact-shade"></view>
+    <view class="gallery-frame gallery-frame--a"></view>
+    <view class="gallery-frame gallery-frame--b"></view>
     <view class="interact-copy">
-      <text class="eyebrow">GUEST INTERACTION</text>
-      <view class="interact-title serif">
-        <text>把你眼中的这一天</text>
-        <text>留在这里</text>
-      </view>
+      <text class="eyebrow">GUEST PARTICIPATION</text>
+      <view class="interact-title serif"><text>你不只是宾客</text><text>也是故事的一部分</text></view>
+      <text class="interact-subtitle">上传一帧、留下一句话，让记忆拥有更多视角。</text>
     </view>
   </view>
 
-  <view class="section photo-section">
-    <view class="section-number">01</view>
-    <text class="eyebrow">PHOTO WALL</text>
-    <text class="section-heading">照片共创</text>
-    <text class="section-copy">你看到的细节、笑声和光，都将成为我们共同完成的婚礼相册。</text>
+  <view class="section photo-section light-chapter">
+    <view class="chapter-row"><text class="chapter-index">01 · PHOTO</text><text class="eyebrow">CO-CREATE</text></view>
+    <text class="section-heading">共同完成一本相册</text>
+    <text class="section-copy">你看到的细节、笑声和光，会在这里汇成属于所有人的婚礼画册。</text>
 
-    <view class="photo-grid" wx:if="{{photos.length}}">
-      <view class="photo-item" wx:for="{{photos}}" wx:key="*this">
+    <view class="photo-gallery" wx:if="{{photos.length}}">
+      <view class="photo-item photo-item--{{index % 3}}" wx:for="{{photos}}" wx:key="*this">
         <image src="{{item}}" mode="aspectFill" data-src="{{item}}" bindtap="previewPhoto" />
+        <text class="photo-index">0{{index + 1}}</text>
         <button class="photo-remove" data-index="{{index}}" catchtap="removePhoto">×</button>
       </view>
-      <button wx:if="{{photos.length !== 9}}" class="photo-add-small" bindtap="choosePhotos">＋</button>
+      <button wx:if="{{photos.length !== 9}}" class="photo-add-small pressable" bindtap="choosePhotos"><text>＋</text><text>继续添加</text></button>
     </view>
 
-    <button wx:else class="upload-card glass-card" bindtap="choosePhotos">
-      <view class="upload-icon"><view></view></view>
-      <text class="upload-title serif">上传照片</text>
-      <text class="upload-copy">可从相册选择，或直接拍摄</text>
+    <button wx:else class="upload-stage pressable" bindtap="choosePhotos">
+      <view class="upload-orbit upload-orbit--a"></view>
+      <view class="upload-orbit upload-orbit--b"></view>
+      <view class="upload-cross">＋</view>
+      <text class="upload-title serif">上传你眼中的此刻</text>
+      <text class="upload-copy">从相册选择，或直接拍摄</text>
     </button>
-    <text class="local-note">当前版本仅保存在本机；接入云开发后可汇入共同相册。</text>
   </view>
 
   <view class="section blessing-section">
-    <view class="section-number">02</view>
-    <text class="eyebrow">A MESSAGE FOR US</text>
-    <text class="section-heading">留声祝福</text>
+    <view class="chapter-row"><text class="chapter-index">02 · VOICE</text><text class="eyebrow">A MESSAGE FOR US</text></view>
+    <text class="section-heading">让声音开一朵花</text>
 
-    <view class="record-card glass-card">
-      <button wx:if="{{!recording}}" class="record-button" bindtap="startRecording">
-        <view class="record-core"></view>
-      </button>
-      <button wx:else class="record-button is-recording" bindtap="stopRecording">
-        <view class="record-core"></view>
-      </button>
-      <text class="record-title serif">{{recording ? '正在录音' : recordingPath ? '录音已完成' : '录一段声音'}}</text>
+    <view class="record-stage {{recording ? 'is-recording' : ''}} {{recordingPath ? 'has-recording' : ''}}">
+      <view class="voice-bloom">
+        <view class="bloom-stem"></view>
+        <view class="bloom-petal bloom-petal--1"></view>
+        <view class="bloom-petal bloom-petal--2"></view>
+        <view class="bloom-petal bloom-petal--3"></view>
+        <view class="bloom-petal bloom-petal--4"></view>
+      </view>
+      <button wx:if="{{!recording}}" class="record-button" bindtap="startRecording"><view class="record-core"></view></button>
+      <button wx:else class="record-button is-recording" bindtap="stopRecording"><view class="record-core"></view></button>
+      <text class="record-title serif">{{recording ? '正在生长' : recordingPath ? '声音已经留下' : '按下，录一段声音'}}</text>
       <text class="record-time">00:{{recordingDurationDisplay}} / 01:00</text>
-      <block wx:if="{{recordingPath}}">
-        <button wx:if="{{!recording}}" class="play-button" bindtap="playRecording">试听录音</button>
-      </block>
+      <block wx:if="{{recordingPath}}"><button wx:if="{{!recording}}" class="play-button" bindtap="playRecording">试听声音</button></block>
     </view>
 
-    <view class="text-blessing glass-card">
+    <view class="text-blessing line-card">
       <text class="field-label">或者，写一句祝福</text>
-      <textarea
-        class="blessing-input"
-        maxlength="160"
-        value="{{blessingText}}"
-        placeholder="想对我们说些什么……"
-        placeholder-class="placeholder"
-        bindinput="inputBlessing"
-      />
+      <textarea class="blessing-input" maxlength="160" value="{{blessingText}}" placeholder="想对我们说些什么……" placeholder-class="placeholder" bindinput="inputBlessing" />
       <text class="char-count">{{blessingText.length}} / 160</text>
     </view>
-    <button class="ivory-button" bindtap="submitBlessing">{{blessingSubmitted ? '祝福已收下' : '提交祝福'}}</button>
+    <button class="ivory-button pressable" bindtap="submitBlessing">{{blessingSubmitted ? '祝福已收下  ✓' : '提交祝福'}}</button>
   </view>
 
-  <view class="section seat-section">
-    <view class="section-number">03</view>
-    <text class="eyebrow">FIND YOUR SEAT</text>
-    <text class="section-heading">桌号查询</text>
-    <view class="seat-card">
-      <image src="/assets/images/welcome-installation.jpg" mode="aspectFill" />
-      <view class="seat-shade"></view>
+  <view class="section seat-section light-chapter">
+    <view class="chapter-row"><text class="chapter-index">03 · SEAT</text><text class="eyebrow">FIND YOUR PLACE</text></view>
+    <text class="section-heading">聚光灯为你亮起</text>
+    <view class="seat-stage {{queryReady ? 'is-ready' : ''}}">
+      <view class="seat-spotlight"></view>
+      <view class="seat-number serif">{{queryReady ? '…' : '?'}}</view>
       <view class="seat-content">
-        <text class="field-label">宾客姓名</text>
+        <text class="field-label">输入宾客姓名</text>
         <view class="seat-search">
-          <input value="{{guestName}}" placeholder="请输入姓名" placeholder-class="placeholder" bindinput="inputGuestName" />
-          <button bindtap="querySeat">查询</button>
+          <input value="{{guestName}}" placeholder="你的姓名" placeholder-class="placeholder" bindinput="inputGuestName" />
+          <button class="pressable" bindtap="querySeat">查询</button>
         </view>
         <text wx:if="{{queryResult}}" class="query-result">{{queryResult}}</text>
       </view>

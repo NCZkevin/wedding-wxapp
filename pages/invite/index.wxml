@@ -1,24 +1,37 @@
 <view class="page-shell invite-page">
+  <view wx:if="{{opening}}" class="opening-scene" bindtap="skipOpening">
+    <view class="opening-glow"></view>
+    <view class="opening-curtain opening-curtain--left"></view>
+    <view class="opening-curtain opening-curtain--right"></view>
+    <view class="opening-mark">
+      <text class="opening-monogram serif">K</text>
+      <view></view>
+      <text class="opening-monogram serif">M</text>
+      <text class="opening-caption">THE CURTAIN OPENS</text>
+    </view>
+    <text class="opening-skip">轻触进入</text>
+  </view>
+
   <view class="hero">
-    <image class="hero-image" src="/assets/images/hero-sea.jpg" mode="aspectFill" />
+    <image class="hero-image" style="transform: translateY({{heroOffset}}rpx) scale(1.18);" src="/assets/images/hero-sea.jpg" mode="aspectFill" />
     <view class="hero-shade"></view>
     <view class="hero-beam"></view>
-    <view class="stars stars-a"></view>
-    <view class="stars stars-b"></view>
 
     <view class="hero-top">
       <text class="hero-kicker">OUR WEDDING · 2026</text>
-      <button class="music-button {{musicEnabled ? 'is-playing' : ''}}" bindtap="toggleMusic" aria-label="背景音乐">
-        <view class="music-icon">
-          <view></view><view></view><view></view>
-        </view>
+      <button wx:if="{{musicAvailable}}" class="music-button {{musicEnabled ? 'is-playing' : ''}}" bindtap="toggleMusic" aria-label="背景音乐">
+        <view class="music-icon"><view></view><view></view><view></view></view>
       </button>
+      <text wx:else class="hero-mark serif">K / M</text>
     </view>
 
     <view class="hero-content">
-      <text class="hero-title serif">张凯文</text>
-      <view class="hero-cross"><view></view><text>×</text><view></view></view>
-      <text class="hero-title serif">刘明玥</text>
+      <text wx:if="{{guestName}}" class="guest-line">致 {{guestName}}</text>
+      <view class="name-lockup">
+        <text class="hero-title serif">张凯文</text>
+        <view class="hero-cross"><view></view><text>×</text><view></view></view>
+        <text class="hero-title serif">刘明玥</text>
+      </view>
       <text class="hero-subtitle">我们的婚礼</text>
     </view>
 
@@ -30,52 +43,59 @@
     </view>
   </view>
 
-  <view class="section countdown-section">
-    <text class="eyebrow">SAVE THE DATE</text>
-    <text class="section-heading">期待相见</text>
-    <view class="countdown glass-card">
+  <view class="section countdown-section light-chapter">
+    <view class="chapter-row">
+      <text class="chapter-index">ACT I</text>
+      <text class="eyebrow">SAVE THE DATE</text>
+    </view>
+    <text class="section-heading countdown-heading">距离故事开场</text>
+    <view class="countdown-editorial">
       <view class="countdown-main">
         <text class="countdown-number serif">{{countdown.days}}</text>
-        <text class="countdown-label">DAYS</text>
+        <view class="countdown-unit"><text>天</text><text>DAYS</text></view>
       </view>
       <view class="countdown-rest">
-        <view><text>{{countdown.hours}}</text><text>HRS</text></view>
-        <view><text>{{countdown.minutes}}</text><text>MIN</text></view>
-        <view><text>{{countdown.seconds}}</text><text>SEC</text></view>
+        <view><text>{{countdown.hours}}</text><text>HOURS</text></view>
+        <view><text>{{countdown.minutes}}</text><text>MINUTES</text></view>
+        <view><text>{{countdown.seconds}}</text><text>SECONDS</text></view>
       </view>
     </view>
+    <text class="countdown-note serif">九月十二日，愿你与我们一起抵达。</text>
   </view>
 
-  <view class="section story-section">
-    <text class="eyebrow">THE CEREMONY</text>
-    <text class="section-heading">故事正式开场</text>
-    <text class="section-copy">深蓝幕布缓缓垂落，银白花枝从黑色舞台生长。我们想邀请你，来到这场只发生一次的开放式游戏。</text>
-    <view class="stage-card">
-      <image src="/assets/images/ceremony-stage.jpg" mode="aspectFill" />
-      <view class="stage-caption">
-        <text>01</text>
-        <text class="serif">在这里，见证我们</text>
+  <view class="story-section">
+    <image src="/assets/images/ceremony-stage.jpg" mode="aspectFill" />
+    <view class="story-shade"></view>
+    <view class="story-copy">
+      <view class="chapter-row chapter-row--dark">
+        <text class="chapter-index">ACT II</text>
+        <text class="eyebrow">THE CEREMONY</text>
       </view>
+      <text class="story-title serif">故事正式开场</text>
+      <text class="story-body">深蓝幕布缓缓垂落，银白花枝从黑色舞台生长。我们想邀请你，来到这场只发生一次的开放式游戏。</text>
+      <view class="story-line"><text>01</text><view></view><text>见证我们</text></view>
     </view>
   </view>
 
   <view class="section entry-section">
-    <text class="eyebrow">EXPLORE</text>
-    <text class="section-heading">婚礼指南</text>
-
+    <view class="chapter-row">
+      <text class="chapter-index">ACT III</text>
+      <text class="eyebrow">THE WEDDING DAY</text>
+    </view>
+    <text class="section-heading">进入婚礼日</text>
     <view class="entry-list">
-      <view class="entry-card glass-card" bindtap="openSchedule">
-        <view>
-          <text class="entry-index">01</text>
+      <view class="entry-card line-card pressable" bindtap="openSchedule">
+        <view class="entry-number serif">01</view>
+        <view class="entry-main">
           <text class="entry-title serif">婚礼流程</text>
           <text class="entry-copy">签到 · 合影 · 仪式 · 晚宴</text>
         </view>
         <text class="entry-arrow">↗</text>
       </view>
-      <view class="entry-card glass-card" bindtap="openInteract">
-        <view>
-          <text class="entry-index">02</text>
-          <text class="entry-title serif">当日活动</text>
+      <view class="entry-card line-card pressable" bindtap="openInteract">
+        <view class="entry-number serif">02</view>
+        <view class="entry-main">
+          <text class="entry-title serif">参与这一天</text>
           <text class="entry-copy">照片共创 · 留声祝福 · 桌号查询</text>
         </view>
         <text class="entry-arrow">↗</text>
@@ -83,28 +103,29 @@
     </view>
   </view>
 
-  <view class="section venue-section">
+  <view class="section venue-section light-chapter">
     <view class="venue-card">
       <image src="/assets/images/welcome-installation.jpg" mode="aspectFill" />
       <view class="venue-overlay"></view>
       <view class="venue-content">
-        <text class="eyebrow">VENUE</text>
+        <text class="chapter-index">ACT IV · VENUE</text>
         <text class="venue-name serif">{{wedding.venue.name}}</text>
         <text class="venue-date">{{wedding.dateDisplay}}</text>
-        <button class="outline-button venue-button" bindtap="openVenue">查看地图</button>
+        <button class="venue-button pressable" bindtap="openVenue"><text>查看地图</text><text>↗</text></button>
       </view>
     </view>
   </view>
 
-  <view class="section invitation-end">
-    <text class="eyebrow">BE OUR GUEST</text>
-    <view class="end-title serif">
-      <text>这一天，因你在场</text>
-      <text>而更加完整</text>
+  <view class="invitation-end">
+    <image src="/assets/images/floral-sculpture.jpg" mode="aspectFill" />
+    <view class="end-shade"></view>
+    <view class="end-content">
+      <text class="eyebrow">BE OUR GUEST</text>
+      <view class="end-title serif"><text>这一天，因你在场</text><text>而更加完整</text></view>
+      <button class="ivory-button pressable" bindtap="openRsvp">接受邀请</button>
+      <button class="share-button" open-type="share">分享邀请函</button>
+      <text class="end-sign serif">K &amp; M · 2026</text>
     </view>
-    <button class="ivory-button" bindtap="openRsvp">确认出席</button>
-    <button class="share-button" open-type="share">分享邀请函</button>
-    <text class="end-sign serif">K &amp; M · 2026</text>
   </view>
 
   <view class="safe-bottom"></view>

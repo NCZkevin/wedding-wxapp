@@ -1,17 +1,23 @@
 <view class="tab-shell">
   <view class="tab-inner">
-    <view
-      wx:for="{{list}}"
-      wx:key="pagePath"
-      class="tab-item {{selected === index ? 'is-active' : ''}}"
-      data-path="{{item.pagePath}}"
-      data-index="{{index}}"
-      bindtap="switchTab"
-    >
-      <view class="tab-mark tab-mark--{{item.mark}}">
-        <view class="mark-core"></view>
+    <view class="tab-links">
+      <view
+        wx:for="{{list}}"
+        wx:key="pagePath"
+        class="tab-item {{selected === index ? 'is-active' : ''}}"
+        data-path="{{item.pagePath}}"
+        data-index="{{index}}"
+        bindtap="switchTab"
+      >
+        <view class="tab-mark tab-mark--{{item.mark}}">
+          <view class="mark-core"></view>
+        </view>
+        <text>{{item.text}}</text>
       </view>
-      <text>{{item.text}}</text>
     </view>
+    <button class="rsvp-cta {{hasRsvp ? 'is-confirmed' : ''}}" bindtap="openRsvp">
+      <text class="rsvp-cta__label">{{rsvpLabel}}</text>
+      <text class="rsvp-cta__meta">{{rsvpMeta}}</text>
+    </button>
   </view>
 </view>

@@ -21,8 +21,7 @@
     "list": [
       { "pagePath": "pages/invite/index", "text": "邀请" },
       { "pagePath": "pages/schedule/index", "text": "流程" },
-      { "pagePath": "pages/interact/index", "text": "互动" },
-      { "pagePath": "pages/rsvp/index", "text": "RSVP" }
+      { "pagePath": "pages/interact/index", "text": "互动" }
     ]
   },
   "permission": {
