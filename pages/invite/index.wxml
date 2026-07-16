@@ -96,7 +96,7 @@
         <view class="entry-number serif">02</view>
         <view class="entry-main">
           <text class="entry-title serif">参与这一天</text>
-          <text class="entry-copy">照片共创 · 留声祝福 · 桌号查询</text>
+          <text class="entry-copy">照片共创 · 留声祝福</text>
         </view>
         <text class="entry-arrow">↗</text>
       </view>
@@ -113,6 +113,23 @@
         <text class="venue-date">{{wedding.dateDisplay}}</text>
         <button class="venue-button pressable" bindtap="openVenue"><text>查看地图</text><text>↗</text></button>
       </view>
+    </view>
+  </view>
+
+  <view class="city-section pressable" bindtap="openTravel">
+    <image src="/assets/images/welcome-installation.jpg" mode="aspectFill" />
+    <view class="city-shade"></view>
+    <view class="city-route"><view></view><view></view><view></view><view></view></view>
+    <view class="city-content">
+      <view class="chapter-row chapter-row--dark">
+        <text class="chapter-index">ACT V · CITY GUIDE</text>
+        <text class="eyebrow">JINGDEZHEN</text>
+      </view>
+      <view class="city-copy">
+        <text class="city-title serif">婚礼之外，顺游瓷都</text>
+        <text class="city-description">从酒店出发，去看窑火、老城与这座城市仍在生长的当代一面。</text>
+      </view>
+      <view class="city-link"><text>四处私心推荐</text><text>查看漫游指南 ↗</text></view>
     </view>
   </view>
 

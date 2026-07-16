@@ -68,6 +68,10 @@ Page({
     wx.navigateTo({ url: '/pages/rsvp/index' })
   },
 
+  openTravel() {
+    wx.navigateTo({ url: '/packages/travel/index' })
+  },
+
   skipOpening() {
     clearTimeout(this.openingTimer)
     this.setData({ opening: false })
@@ -82,7 +86,7 @@ Page({
 
     wx.setClipboardData({
       data: address,
-      success: () => wx.showToast({ title: '酒店名称已复制', icon: 'none' }),
+      success: () => wx.showToast({ title: '酒店地址已复制', icon: 'none' }),
     })
   },
 

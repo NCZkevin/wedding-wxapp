@@ -1,0 +1,55 @@
+<view class="page-shell travel-page">
+  <view class="travel-hero">
+    <view class="travel-glow"></view>
+    <view class="travel-grid"></view>
+    <view class="travel-hero-content">
+      <text class="eyebrow">A DAY IN JINGDEZHEN</text>
+      <text class="travel-title serif">婚礼之外<text>顺游瓷都</text></text>
+      <text class="travel-intro">如果时间刚好，也想邀请你沿着窑火留下的光，看看我们举办婚礼的这片土地。</text>
+    </view>
+    <view class="origin-card">
+      <view class="origin-light"></view>
+      <view class="origin-copy">
+        <text class="origin-label">ROUTE STARTS HERE</text>
+        <text class="origin-name serif">{{wedding.venue.name}}</text>
+        <text class="origin-address">{{wedding.venue.address}}</text>
+      </view>
+      <view class="origin-mark"><view></view><text>起点</text></view>
+    </view>
+  </view>
+
+  <view class="spots-section light-chapter">
+    <view class="spots-heading">
+      <text class="chapter-index">04 PLACES · ONE CITY</text>
+      <text class="section-heading">我们的私心推荐</text>
+      <text class="section-copy">距离与车程从婚礼酒店出发估算，周末和节假日请预留更多时间。</text>
+    </view>
+
+    <view class="spot-list">
+      <view class="spot-card pressable" wx:for="{{spots}}" wx:key="id" data-index="{{index}}" bindtap="openSpot">
+        <view class="spot-visual">
+          <image src="{{item.image}}" mode="aspectFill" />
+          <view class="spot-shade"></view>
+          <text class="spot-index serif">0{{index + 1}}</text>
+          <view class="spot-time"><text>{{item.bestTime}}</text></view>
+        </view>
+        <view class="spot-content">
+          <text class="spot-label">{{item.label}}</text>
+          <text class="spot-name serif">{{item.name}}</text>
+          <text class="spot-description">{{item.description}}</text>
+          <view class="spot-meta">
+            <view><text>DISTANCE</text><text>{{item.distance}}</text></view>
+            <view><text>BY CAR</text><text>{{item.driveTime}}</text></view>
+          </view>
+          <view class="spot-action"><text>{{item.visitTime}}</text><text>地图导航 ↗</text></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="travel-note">
+      <view class="note-light"></view>
+      <text class="note-title serif">慢一点，才看得见瓷的光</text>
+      <text class="note-copy">以上为常规路况下的参考距离。景点开放时间、预约方式及实际路线，请在出发前通过地图或官方渠道确认。</text>
+    </view>
+  </view>
+</view>

@@ -26,7 +26,13 @@ Page({
   },
 
   chooseAttendance(event) {
-    this.setData({ 'form.attendance': event.currentTarget.dataset.value })
+    const attendance = event.currentTarget.dataset.value
+    const updates = { 'form.attendance': attendance }
+    if (attendance !== 'yes') {
+      updates['form.guestCount'] = 1
+      updates['form.diet'] = ''
+    }
+    this.setData(updates)
   },
 
   nextStep() {
@@ -63,7 +69,8 @@ Page({
       return
     }
 
-    if (!/^1\d{10}$/.test(form.phone)) {
+    const requiresPhone = form.attendance !== 'no'
+    if (requiresPhone && !/^1\d{10}$/.test(form.phone)) {
       wx.showToast({ title: '请填写正确的手机号码', icon: 'none' })
       return
     }

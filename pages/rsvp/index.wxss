@@ -54,7 +54,7 @@
 .success-view > image { filter: saturate(0.65) brightness(0.48); }
 .success-shade { background: linear-gradient(180deg, rgba(7, 17, 31, 0.18), #07111f 92%); }
 .success-content { position: relative; z-index: 2; display: flex; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: calc(150rpx + env(safe-area-inset-top)) 40rpx 100rpx; text-align: center; }
-.success-title { margin-top: 24rpx; font-size: 56rpx; letter-spacing: 8rpx; }
+.success-title { max-width: 660rpx; margin-top: 24rpx; font-size: 56rpx; line-height: 1.45; letter-spacing: 8rpx; }
 .success-copy { margin-top: 22rpx; color: #9eafbb; font-size: 23rpx; }
 .wedding-ticket { position: relative; width: 100%; margin: 52rpx 0 34rpx; padding: 34rpx; color: #0b1826; background: #f3f0e8; text-align: left; box-shadow: 0 28rpx 60rpx rgba(0, 0, 0, 0.3); }
 .wedding-ticket::before,

@@ -61,22 +61,5 @@
     <button class="ivory-button pressable" bindtap="submitBlessing">{{blessingSubmitted ? '祝福已收下  ✓' : '提交祝福'}}</button>
   </view>
 
-  <view class="section seat-section light-chapter">
-    <view class="chapter-row"><text class="chapter-index">03 · SEAT</text><text class="eyebrow">FIND YOUR PLACE</text></view>
-    <text class="section-heading">聚光灯为你亮起</text>
-    <view class="seat-stage {{queryReady ? 'is-ready' : ''}}">
-      <view class="seat-spotlight"></view>
-      <view class="seat-number serif">{{queryReady ? '…' : '?'}}</view>
-      <view class="seat-content">
-        <text class="field-label">输入宾客姓名</text>
-        <view class="seat-search">
-          <input value="{{guestName}}" placeholder="你的姓名" placeholder-class="placeholder" bindinput="inputGuestName" />
-          <button class="pressable" bindtap="querySeat">查询</button>
-        </view>
-        <text wx:if="{{queryResult}}" class="query-result">{{queryResult}}</text>
-      </view>
-    </view>
-  </view>
-
   <view class="safe-bottom"></view>
 </view>

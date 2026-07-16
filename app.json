@@ -5,6 +5,13 @@
     "pages/interact/index",
     "pages/rsvp/index"
   ],
+  "subPackages": [
+    {
+      "root": "packages/travel",
+      "name": "travel",
+      "pages": ["index"]
+    }
+  ],
   "window": {
     "navigationBarBackgroundColor": "#07111f",
     "navigationBarTextStyle": "white",

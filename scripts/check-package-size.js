@@ -3,6 +3,7 @@ const path = require('path')
 
 const root = path.resolve(__dirname, '..')
 const config = JSON.parse(fs.readFileSync(path.join(root, 'project.config.json'), 'utf8'))
+const appConfig = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8'))
 const ignores = Array.isArray(config.packOptions && config.packOptions.ignore)
   ? config.packOptions.ignore
   : []
@@ -42,15 +43,42 @@ function collectFiles(directory, relativeDirectory = '') {
 }
 
 const files = collectFiles(root)
-const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
 const maxBytes = 2 * 1024 * 1024
+const subpackages = (appConfig.subpackages || appConfig.subPackages || []).map((subpackage) => ({
+  name: subpackage.name || subpackage.root,
+  root: String(subpackage.root || '').replace(/^\//, '').replace(/\/$/, ''),
+}))
 
-console.log(`Package source size: ${(totalBytes / 1024 / 1024).toFixed(2)} MB`)
-console.log(`Included files: ${files.length}`)
-
-if (totalBytes > maxBytes) {
-  console.error(`Package exceeds WeChat's 2 MB main-package limit by ${((totalBytes - maxBytes) / 1024 / 1024).toFixed(2)} MB.`)
-  process.exit(1)
+function packageSize(packageFiles) {
+  return packageFiles.reduce((sum, file) => sum + file.size, 0)
 }
 
-console.log(`Remaining budget: ${((maxBytes - totalBytes) / 1024 / 1024).toFixed(2)} MB`)
+function reportPackage(name, packageFiles) {
+  const totalBytes = packageSize(packageFiles)
+  console.log(`${name}: ${(totalBytes / 1024 / 1024).toFixed(2)} MB (${packageFiles.length} files)`)
+
+  if (totalBytes > maxBytes) {
+    console.error(`${name} exceeds the 2 MB package limit by ${((totalBytes - maxBytes) / 1024 / 1024).toFixed(2)} MB.`)
+    return false
+  }
+
+  console.log(`${name} remaining budget: ${((maxBytes - totalBytes) / 1024 / 1024).toFixed(2)} MB`)
+  return true
+}
+
+const mainFiles = files.filter((file) => !subpackages.some((subpackage) => (
+  file.path === subpackage.root || file.path.startsWith(`${subpackage.root}/`)
+)))
+
+let valid = reportPackage('Main package', mainFiles)
+
+for (const subpackage of subpackages) {
+  const subpackageFiles = files.filter((file) => (
+    file.path === subpackage.root || file.path.startsWith(`${subpackage.root}/`)
+  ))
+  valid = reportPackage(`Subpackage ${subpackage.name}`, subpackageFiles) && valid
+}
+
+if (!valid) {
+  process.exit(1)
+}

@@ -1,0 +1,48 @@
+.travel-page { padding-bottom: calc(56rpx + env(safe-area-inset-bottom)); }
+
+.travel-hero { position: relative; min-height: 1120rpx; overflow: hidden; padding: calc(92rpx + env(safe-area-inset-top)) 40rpx 70rpx; }
+.travel-glow { position: absolute; top: -120rpx; left: 46%; width: 190rpx; height: 820rpx; background: linear-gradient(180deg, rgba(89, 205, 237, 0.26), rgba(89, 205, 237, 0.04)); filter: blur(24rpx); transform: rotate(7deg); }
+.travel-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(216, 225, 231, 0.035) 1rpx, transparent 1rpx), linear-gradient(90deg, rgba(216, 225, 231, 0.035) 1rpx, transparent 1rpx); background-size: 92rpx 92rpx; mask-image: linear-gradient(180deg, #000, transparent 76%); }
+.travel-hero-content { position: relative; z-index: 1; padding-top: 48rpx; }
+.travel-title { display: flex; flex-direction: column; margin-top: 34rpx; font-size: 70rpx; line-height: 1.35; letter-spacing: 9rpx; }
+.travel-title text { margin-left: 84rpx; }
+.travel-intro { display: block; max-width: 600rpx; margin-top: 38rpx; color: #9eafbb; font-size: 25rpx; line-height: 1.9; }
+
+.origin-card { position: absolute; right: 40rpx; bottom: 74rpx; left: 40rpx; min-height: 350rpx; overflow: hidden; padding: 48rpx 36rpx; border: 1rpx solid rgba(216, 225, 231, 0.22); background: linear-gradient(145deg, rgba(18, 45, 67, 0.84), rgba(5, 11, 20, 0.94)); }
+.origin-light { position: absolute; top: -220rpx; right: -60rpx; width: 300rpx; height: 520rpx; background: radial-gradient(ellipse, rgba(91, 200, 232, 0.34), transparent 65%); transform: rotate(-20deg); }
+.origin-copy { position: relative; z-index: 1; max-width: 500rpx; }
+.origin-label { color: #6f8799; font-size: 16rpx; letter-spacing: 5rpx; }
+.origin-name { display: block; margin-top: 30rpx; font-size: 40rpx; letter-spacing: 5rpx; }
+.origin-address { display: block; margin-top: 18rpx; color: #9aabb7; font-size: 21rpx; line-height: 1.7; }
+.origin-mark { position: absolute; right: 32rpx; bottom: 30rpx; display: flex; align-items: center; gap: 14rpx; color: #a9bac5; font-size: 18rpx; letter-spacing: 3rpx; }
+.origin-mark view { width: 14rpx; height: 14rpx; border: 1rpx solid #b9dce7; border-radius: 50%; box-shadow: 0 0 20rpx rgba(89, 205, 237, 0.8); }
+
+.spots-section { padding: 110rpx 40rpx 120rpx; }
+.spots-heading .section-heading { display: block; margin-top: 24rpx; }
+.spots-heading .section-copy { display: block; max-width: 620rpx; }
+.spot-list { margin-top: 74rpx; }
+.spot-card { margin-bottom: 62rpx; overflow: hidden; border: 1rpx solid rgba(11, 24, 38, 0.16); background: #f9f7f1; box-shadow: 0 22rpx 54rpx rgba(18, 32, 45, 0.1); }
+.spot-visual { position: relative; height: 660rpx; overflow: hidden; background: #07111f; }
+.spot-visual image,
+.spot-shade { position: absolute; width: 100%; height: 100%; }
+.spot-visual image { filter: saturate(0.82) contrast(1.02); }
+.spot-shade { background: linear-gradient(180deg, rgba(3, 8, 15, 0.05), transparent 52%, rgba(3, 8, 15, 0.84)); }
+.spot-index { position: absolute; top: 28rpx; left: 28rpx; font-size: 54rpx; letter-spacing: 3rpx; }
+.spot-time { position: absolute; right: 24rpx; bottom: 24rpx; padding: 14rpx 20rpx; border: 1rpx solid rgba(243, 240, 232, 0.4); border-radius: 999rpx; background: rgba(5, 12, 21, 0.48); backdrop-filter: blur(16rpx); }
+.spot-time text { color: #f3f0e8; font-size: 18rpx; letter-spacing: 3rpx; }
+.spot-content { padding: 34rpx 30rpx 28rpx; }
+.spot-label { color: #667b8c; font-size: 18rpx; letter-spacing: 4rpx; }
+.spot-name { display: block; margin-top: 16rpx; font-size: 39rpx; line-height: 1.45; letter-spacing: 4rpx; }
+.spot-description { display: block; margin-top: 22rpx; color: #566674; font-size: 23rpx; line-height: 1.8; }
+.spot-meta { display: flex; margin-top: 32rpx; border-top: 1rpx solid rgba(11, 24, 38, 0.12); border-bottom: 1rpx solid rgba(11, 24, 38, 0.12); }
+.spot-meta view { display: flex; flex: 1; flex-direction: column; gap: 10rpx; padding: 24rpx 0; }
+.spot-meta view + view { padding-left: 28rpx; border-left: 1rpx solid rgba(11, 24, 38, 0.12); }
+.spot-meta text:first-child { color: #82909b; font-size: 14rpx; letter-spacing: 3rpx; }
+.spot-meta text:last-child { font-family: "Songti SC", serif; font-size: 25rpx; }
+.spot-action { display: flex; align-items: center; justify-content: space-between; padding-top: 26rpx; color: #435765; font-size: 19rpx; letter-spacing: 2rpx; }
+.spot-action text:last-child { color: #0b1826; }
+
+.travel-note { position: relative; overflow: hidden; margin-top: 84rpx; padding: 58rpx 34rpx; color: #f3f0e8; background: #07111f; }
+.note-light { position: absolute; top: -160rpx; right: -50rpx; width: 280rpx; height: 420rpx; background: radial-gradient(circle, rgba(94, 196, 226, 0.28), transparent 66%); }
+.note-title { position: relative; display: block; font-size: 32rpx; letter-spacing: 4rpx; }
+.note-copy { position: relative; display: block; margin-top: 24rpx; color: #92a5b3; font-size: 21rpx; line-height: 1.8; }

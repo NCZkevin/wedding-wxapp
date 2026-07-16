@@ -9,19 +9,19 @@
     <image src="/assets/images/floral-sculpture.jpg" mode="aspectFill" />
     <view class="success-shade"></view>
     <view class="success-content">
-      <text class="eyebrow">ADMISSION CONFIRMED</text>
-      <text class="success-title serif">期待与你见面</text>
-      <text class="success-copy">{{form.name}}，灯光已经为你亮起。</text>
+      <text class="eyebrow">{{form.attendance === 'yes' ? 'ADMISSION CONFIRMED' : 'REPLY RECEIVED'}}</text>
+      <text class="success-title serif">{{form.attendance === 'yes' ? '期待与你见面' : form.attendance === 'unsure' ? '为你保留一束光' : '下次见面也值得期待'}}</text>
+      <text class="success-copy">{{form.attendance === 'yes' ? form.name + '，灯光已经为你亮起。' : form.attendance === 'unsure' ? form.name + '，确定后再告诉我们就好。' : form.name + '，谢谢你认真回复这份邀请。'}}</text>
 
       <view class="wedding-ticket">
         <view class="ticket-head">
           <text class="ticket-monogram serif">K × M</text>
-          <text>WEDDING ADMISSION</text>
+          <text>{{form.attendance === 'yes' ? 'WEDDING ADMISSION' : 'WEDDING REPLY'}}</text>
         </view>
         <view class="ticket-name serif">{{form.name}}</view>
         <view class="ticket-grid">
           <view><text>DATE</text><text>{{wedding.dateDisplay}}</text></view>
-          <view><text>GUESTS</text><text>{{form.attendance === 'no' ? '—' : form.guestCount + ' 人'}}</text></view>
+          <view><text>GUESTS</text><text>{{form.attendance === 'yes' ? form.guestCount + ' 人' : '—'}}</text></view>
           <view><text>VENUE</text><text>{{wedding.venue.name}}</text></view>
           <view><text>STATUS</text><text>{{form.attendance === 'yes' ? '确认出席' : form.attendance === 'no' ? '无法出席' : '暂未确定'}}</text></view>
         </view>
@@ -65,38 +65,44 @@
             <view><text class="option-index">03</text><text class="option-title serif">遗憾缺席</text></view><view class="radio"><view></view></view>
           </view>
         </view>
-        <button class="dark-button pressable" bindtap="nextStep"><text>继续</text><text>→</text></button>
+        <button class="dark-button pressable" bindtap="nextStep">
+          <text>{{form.attendance === 'yes' ? '填写出席信息' : form.attendance === 'unsure' ? '留下联系方式' : '快速回复'}}</text>
+          <text>→</text>
+        </button>
       </view>
 
       <view wx:else class="step-two">
-        <text class="step-title serif">再告诉我们一点</text>
-        <text class="step-copy">用于签到、席位安排与婚礼前的必要提醒。</text>
+        <text class="step-title serif">{{form.attendance === 'yes' ? '再告诉我们一点' : form.attendance === 'unsure' ? '方便稍后联系你吗？' : '谢谢你告诉我们'}}</text>
+        <text class="step-copy">{{form.attendance === 'yes' ? '用于签到、席位安排与婚礼前的必要提醒。' : form.attendance === 'unsure' ? '只需留下姓名和联系方式，确定后再回复即可。' : '只需留下姓名；如果愿意，也可以写一句话。'}}</text>
 
         <view class="form-field">
           <text class="field-label">姓名 *</text>
           <input value="{{form.name}}" placeholder="请输入你的姓名" placeholder-class="placeholder" data-field="name" bindinput="inputField" />
         </view>
-        <view class="form-field">
+        <view class="form-field" wx:if="{{form.attendance !== 'no'}}">
           <text class="field-label">手机号码 *</text>
           <input type="number" maxlength="11" value="{{form.phone}}" placeholder="用于接收婚礼提醒" placeholder-class="placeholder" data-field="phone" bindinput="inputField" />
         </view>
-        <view class="form-field" wx:if="{{form.attendance !== 'no'}}">
+        <view class="form-field" wx:if="{{form.attendance === 'yes'}}">
           <text class="field-label">出席人数</text>
           <picker mode="selector" range="{{countOptions}}" value="{{form.guestCount - 1}}" bindchange="chooseCount">
             <view class="picker-value"><text>{{form.guestCount}} 人</text><text>⌄</text></view>
           </picker>
         </view>
-        <view class="form-field" wx:if="{{form.attendance !== 'no'}}">
+        <view class="form-field" wx:if="{{form.attendance === 'yes'}}">
           <text class="field-label">饮食备注</text>
           <input value="{{form.diet}}" placeholder="如素食、过敏等，没有可不填" placeholder-class="placeholder" data-field="diet" bindinput="inputField" />
         </view>
         <view class="form-field message-field">
-          <text class="field-label">想对我们说</text>
-          <textarea maxlength="160" value="{{form.message}}" placeholder="留下一句话……" placeholder-class="placeholder" data-field="message" bindinput="inputField" />
+          <text class="field-label">{{form.attendance === 'no' ? '想对我们说（选填）' : '想对我们说'}}</text>
+          <textarea maxlength="160" value="{{form.message}}" placeholder="{{form.attendance === 'no' ? '如果愿意，可以留下一句话……' : '留下一句话……'}}" placeholder-class="placeholder" data-field="message" bindinput="inputField" />
           <text class="message-count">{{form.message.length}} / 160</text>
         </view>
-        <view class="privacy-note"><view class="privacy-shield">✓</view><text>你填写的信息只用于本次婚礼服务。</text></view>
-        <button class="dark-button pressable" bindtap="submitRsvp"><text>提交 RSVP</text><text>→</text></button>
+        <view wx:if="{{form.attendance !== 'no'}}" class="privacy-note"><view class="privacy-shield">✓</view><text>你填写的信息只用于本次婚礼服务。</text></view>
+        <button class="dark-button pressable" bindtap="submitRsvp">
+          <text>{{form.attendance === 'yes' ? '确认出席' : form.attendance === 'unsure' ? '保存待定回复' : '发送回复'}}</text>
+          <text>→</text>
+        </button>
         <button class="previous-button" bindtap="previousStep">返回上一步</button>
       </view>
     </view>
