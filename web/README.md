@@ -52,6 +52,19 @@ npm test
 npm run build
 ```
 
+项目将 Rollup 精确锁定为官方 `@rollup/wasm-node` 构建，避免宝塔服务器或旧版
+Linux 发行版因 glibc 版本不足而无法加载 Rollup 原生二进制。部署服务器请使用
+`npm ci` 按锁文件安装，不要删除或重新生成 `package-lock.json`。
+
+从原生 Rollup 版本更新后，在服务器执行：
+
+```bash
+git pull
+cd web
+npm ci
+npm run build
+```
+
 构建结果：
 
 - 前端：`dist/`
