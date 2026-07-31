@@ -1,4 +1,13 @@
-# 张凯文 × 刘明玥婚礼小程序
+# 张凯文 × 刘明玥婚礼邀请
+
+本仓库正在从原生微信小程序迁移为移动优先的婚礼 Web H5。
+
+- Web 新版本：[`web/`](web/)
+- 原微信小程序：保留在仓库根目录，便于迁移期间视觉与内容对照
+
+Web 版本使用 Vue 3、TypeScript、Vite、Node.js、Fastify 与 MySQL，计划部署至 `wedding.nczkevin.com`。开发和部署说明见 [`web/README.md`](web/README.md)。
+
+## 原微信小程序
 
 原生微信小程序实现，视觉延续婚礼提案中的深海蓝幕布、黑色舞台、银白花艺与装置艺术语言。
 

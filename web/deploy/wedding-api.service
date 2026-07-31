@@ -1,0 +1,21 @@
+[Unit]
+Description=Wedding website API
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=www
+Group=www
+WorkingDirectory=/www/server/wedding-api
+EnvironmentFile=/etc/wedding-api.env
+ExecStart=/usr/bin/node /www/server/wedding-api/server/dist/index.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/data/wedding/uploads
+
+[Install]
+WantedBy=multi-user.target
