@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import { resolve } from 'node:path'
 import { z } from 'zod'
 
 const envSchema = z.object({
@@ -14,9 +15,19 @@ const envSchema = z.object({
   MYSQL_PASSWORD: z.string().default(''),
   WECHAT_APP_ID: z.string().default(''),
   WECHAT_APP_SECRET: z.string().default(''),
-  UPLOAD_DIR: z.string().default('/data/wedding/uploads'),
+  UPLOAD_DIR: z.string().min(1).optional(),
   MAX_UPLOAD_MB: z.coerce.number().int().min(1).max(30).default(10),
   ADMIN_EXPORT_TOKEN: z.string().default(''),
 })
 
-export const env = envSchema.parse(process.env)
+export function parseEnv(input: NodeJS.ProcessEnv, cwd = process.cwd()) {
+  const parsed = envSchema.parse(input)
+  return {
+    ...parsed,
+    UPLOAD_DIR:
+      parsed.UPLOAD_DIR ??
+      (parsed.NODE_ENV === 'production' ? '/data/wedding/uploads' : resolve(cwd, 'data/uploads')),
+  }
+}
+
+export const env = parseEnv(process.env)

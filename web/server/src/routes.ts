@@ -1,6 +1,7 @@
 import { createWriteStream } from 'node:fs'
 import { mkdir, unlink } from 'node:fs/promises'
 import { randomUUID } from 'node:crypto'
+import { join } from 'node:path'
 import { pipeline } from 'node:stream/promises'
 import type { FastifyInstance } from 'fastify'
 import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise'
@@ -78,7 +79,6 @@ export async function registerRoutes(app: FastifyInstance) {
   })
 
   app.post('/api/blessings', async (request, reply) => {
-    await mkdir(env.UPLOAD_DIR, { recursive: true })
     const fields: Record<string, string> = {}
     const uploads: Array<{
       storageName: string
@@ -104,9 +104,10 @@ export async function registerRoutes(app: FastifyInstance) {
           return reply.code(415).send({ message: '仅支持 JPEG、PNG、WebP 或 HEIC 图片' })
         }
 
+        await mkdir(env.UPLOAD_DIR, { recursive: true })
         const originalName = part.filename.slice(0, 240)
         const storageName = `${Date.now()}-${randomUUID()}${extension}`
-        const path = `${env.UPLOAD_DIR}/${storageName}`
+        const path = join(env.UPLOAD_DIR, storageName)
         const upload = {
           storageName,
           originalName,
