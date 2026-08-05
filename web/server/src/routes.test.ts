@@ -40,3 +40,26 @@ test('does not create the upload directory for a text-only invalid blessing', as
   assert.equal(response.statusCode, 400)
   await assert.rejects(access(uploadDir), (error: NodeJS.ErrnoException) => error.code === 'ENOENT')
 })
+
+test('rejects admin dashboard requests before querying the database', async (context) => {
+  const previousToken = env.ADMIN_EXPORT_TOKEN
+  env.ADMIN_EXPORT_TOKEN = 'test-admin-token'
+  const app = Fastify()
+  await registerRoutes(app)
+
+  context.after(async () => {
+    env.ADMIN_EXPORT_TOKEN = previousToken
+    await app.close()
+  })
+
+  const missing = await app.inject({ method: 'GET', url: '/api/admin/dashboard' })
+  const incorrect = await app.inject({
+    method: 'GET',
+    url: '/api/admin/dashboard',
+    headers: { authorization: 'Bearer wrong-token' },
+  })
+
+  assert.equal(missing.statusCode, 401)
+  assert.equal(incorrect.statusCode, 401)
+  assert.equal(missing.headers['cache-control'], 'no-store')
+})

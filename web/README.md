@@ -95,9 +95,17 @@ npm run build
 5. 如公众号接口要求 IP 白名单，添加服务器出口公网 IP。
 6. 设置上传目录所有者为运行 API 的用户，并安排数据库与上传目录的每日异地备份。
 
-## 回执导出
+## 管理统计与回执导出
 
-配置 `ADMIN_EXPORT_TOKEN` 后：
+配置 `ADMIN_EXPORT_TOKEN` 后，访问：
+
+```text
+https://wedding.nczkevin.com/admin
+```
+
+输入 Token 后可查看回执概览、预计宾客人数、到达计划、交通分布与祝福统计。管理页不会出现在宾客导航中，必须通过 HTTPS 访问。
+
+仍可通过接口直接导出 CSV：
 
 ```bash
 curl -H "Authorization: Bearer $ADMIN_EXPORT_TOKEN" \

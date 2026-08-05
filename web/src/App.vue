@@ -27,13 +27,13 @@ watch(() => route.fullPath, updateShare)
   <div class="site-frame">
     <div class="ambient ambient--left"></div>
     <div class="ambient ambient--right"></div>
-    <main class="mobile-canvas">
+    <main class="mobile-canvas" :class="{ 'mobile-canvas--admin': route.name === 'admin' }">
       <RouterView v-slot="{ Component }">
         <Transition name="page" mode="out-in">
           <component :is="Component" />
         </Transition>
       </RouterView>
-      <BackgroundMusic />
+      <BackgroundMusic v-if="route.name !== 'admin'" />
       <FloatingNavigation />
       <ToastHost />
     </main>

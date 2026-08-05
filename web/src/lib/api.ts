@@ -34,6 +34,24 @@ export async function submitBlessing(payload: FormData) {
   )
 }
 
+export async function getAdminDashboard(token: string) {
+  return parseResponse<AdminDashboard>(
+    await fetch('/api/admin/dashboard', {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    }),
+  )
+}
+
+export async function downloadAdminRsvpCsv(token: string) {
+  const response = await fetch('/api/admin/rsvp.csv', {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: 'no-store',
+  })
+  if (!response.ok) await parseResponse<never>(response)
+  return response.blob()
+}
+
 export interface RsvpPayload {
   clientId: string
   name: string
@@ -43,4 +61,41 @@ export interface RsvpPayload {
   arrivalTime: string
   arrivalLocation: string
   message: string
+}
+
+export interface AdminRsvpRecord {
+  id: number
+  name: string
+  attendance: 'yes' | 'unsure' | 'no'
+  guestCount: number
+  transportMode: string
+  arrivalTime: string | null
+  arrivalLocation: string
+  message: string
+  updatedAt: string
+}
+
+export interface AdminDashboard {
+  generatedAt: string
+  summary: {
+    replies: number
+    confirmed: number
+    unsure: number
+    declined: number
+    guests: number
+    arrivalPlans: number
+    blessings: number
+    photos: number
+  }
+  transports: Array<{ label: string; count: number }>
+  rsvps: AdminRsvpRecord[]
+  blessings: AdminBlessingRecord[]
+}
+
+export interface AdminBlessingRecord {
+  id: number
+  name: string
+  message: string
+  photoCount: number
+  createdAt: string
 }

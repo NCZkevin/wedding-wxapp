@@ -3,8 +3,9 @@ import { mkdir, unlink } from 'node:fs/promises'
 import { randomUUID } from 'node:crypto'
 import { join } from 'node:path'
 import { pipeline } from 'node:stream/promises'
-import type { FastifyInstance } from 'fastify'
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import type { ResultSetHeader, RowDataPacket } from 'mysql2/promise'
+import { buildAdminDashboard, isAdminAuthorized, type AdminRsvpRecord } from './admin.js'
 import { pool } from './db.js'
 import { env } from './env.js'
 import { blessingFieldsSchema, rsvpSchema } from './schemas.js'
@@ -25,6 +26,13 @@ function validationMessage(error: { issues: Array<{ message: string }> }) {
 
 function csvCell(value: unknown) {
   return `"${String(value ?? '').replace(/"/g, '""')}"`
+}
+
+function authorizeAdmin(request: FastifyRequest, reply: FastifyReply) {
+  reply.header('Cache-Control', 'no-store')
+  if (isAdminAuthorized(request.headers.authorization, env.ADMIN_EXPORT_TOKEN)) return true
+  reply.code(401).send({ message: '管理密码错误' })
+  return false
 }
 
 export async function registerRoutes(app: FastifyInstance) {
@@ -174,11 +182,55 @@ export async function registerRoutes(app: FastifyInstance) {
     }
   })
 
-  app.get('/api/admin/rsvp.csv', async (request, reply) => {
-    const authorization = request.headers.authorization
-    if (!env.ADMIN_EXPORT_TOKEN || authorization !== `Bearer ${env.ADMIN_EXPORT_TOKEN}`) {
-      return reply.code(401).send({ message: '无权导出回执' })
+  app.get('/api/admin/dashboard', {
+    config: { rateLimit: { max: 20, timeWindow: '1 minute' } },
+  }, async (request, reply) => {
+    if (!authorizeAdmin(request, reply)) return
+
+    type DashboardRsvpRow = RowDataPacket & AdminRsvpRecord
+    type DashboardBlessingRow = RowDataPacket & {
+      id: number
+      name: string
+      message: string
+      photoCount: number
+      createdAt: string
     }
+
+    const [rsvpRows] = await pool.query<DashboardRsvpRow[]>(
+      `SELECT id, name, attendance, guest_count AS guestCount,
+              transport_mode AS transportMode,
+              DATE_FORMAT(arrival_time, '%Y-%m-%dT%H:%i') AS arrivalTime,
+              arrival_location AS arrivalLocation, message,
+              DATE_FORMAT(updated_at, '%Y-%m-%dT%H:%i:%s') AS updatedAt
+       FROM rsvps ORDER BY updated_at DESC`,
+    )
+    const [blessingRows] = await pool.query<DashboardBlessingRow[]>(
+      `SELECT b.id, b.guest_name AS name, b.message,
+              COUNT(media.id) AS photoCount,
+              DATE_FORMAT(b.created_at, '%Y-%m-%dT%H:%i:%s') AS createdAt
+       FROM blessings b
+       LEFT JOIN blessing_media media ON media.blessing_id = b.id
+       GROUP BY b.id, b.guest_name, b.message, b.created_at
+       ORDER BY b.created_at DESC`,
+    )
+    const blessings = blessingRows.map((row) => ({
+      ...row,
+      id: Number(row.id),
+      photoCount: Number(row.photoCount),
+    }))
+    return {
+      ...buildAdminDashboard(rsvpRows, {
+        blessings: blessings.length,
+        photos: blessings.reduce((total, blessing) => total + blessing.photoCount, 0),
+      }),
+      blessings,
+    }
+  })
+
+  app.get('/api/admin/rsvp.csv', {
+    config: { rateLimit: { max: 20, timeWindow: '1 minute' } },
+  }, async (request, reply) => {
+    if (!authorizeAdmin(request, reply)) return
 
     const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT name, attendance, guest_count, transport_mode, arrival_time, arrival_location,

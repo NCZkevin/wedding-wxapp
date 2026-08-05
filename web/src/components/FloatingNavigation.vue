@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const hidden = computed(() => route.name === 'rsvp')
+const hidden = computed(() => route.name === 'rsvp' || route.name === 'admin')
 
 const items = [
   { to: '/', label: '邀请', index: 'I' },

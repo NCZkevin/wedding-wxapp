@@ -8,6 +8,7 @@ export const router = createRouter({
     { path: '/travel', name: 'travel', component: () => import('./views/TravelView.vue') },
     { path: '/interact', name: 'interact', component: () => import('./views/InteractView.vue') },
     { path: '/rsvp', name: 'rsvp', component: () => import('./views/RsvpView.vue') },
+    { path: '/admin', name: 'admin', component: () => import('./views/AdminView.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: () => ({ top: 0 }),
