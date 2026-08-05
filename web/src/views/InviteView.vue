@@ -186,6 +186,15 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
+    <figure v-photo-motion class="outdoor-portrait">
+      <img class="cover-image" :src="images.coupleOutdoor" alt="张凯文与刘明玥的户外合影" loading="lazy" />
+      <span class="outdoor-portrait__shade"></span>
+      <figcaption v-reveal>
+        <small>ONE ORDINARY, BEAUTIFUL DAY</small>
+        <span class="serif">是恋人，也是彼此最熟悉的朋友</span>
+      </figcaption>
+    </figure>
+
     <section class="section entry-section">
       <div v-reveal class="chapter-row"><span class="chapter-index">ACT IV</span><span class="eyebrow">EXPLORE</span></div>
       <h2 v-reveal="{ delay: 70 }" class="section-heading">关于这一天</h2>
@@ -202,15 +211,6 @@ onBeforeUnmount(() => {
         </button>
       </div>
     </section>
-
-    <figure v-photo-motion class="outdoor-portrait">
-      <img class="cover-image" :src="images.coupleOutdoor" alt="张凯文与刘明玥的户外合影" loading="lazy" />
-      <span class="outdoor-portrait__shade"></span>
-      <figcaption v-reveal>
-        <small>ONE ORDINARY, BEAUTIFUL DAY</small>
-        <span class="serif">是恋人，也是彼此最熟悉的朋友</span>
-      </figcaption>
-    </figure>
 
     <section v-photo-motion class="invitation-end">
       <img class="cover-image" :src="images.floralSculpture" alt="银白色婚礼花艺装置" loading="lazy" />
