@@ -56,20 +56,36 @@ export async function registerRoutes(app: FastifyInstance) {
     }
 
     const input = parsed.data
-    const phone = input.attendance === 'no' ? null : input.phone
+    const hasArrivalPlan = input.attendance !== 'no'
+    const guestCount = input.attendance === 'yes' ? input.guestCount : 1
+    const transportMode = hasArrivalPlan ? input.transportMode : ''
+    const arrivalTime = hasArrivalPlan && input.arrivalTime
+      ? `${input.arrivalTime.replace('T', ' ')}:00`
+      : null
+    const arrivalLocation = hasArrivalPlan ? input.arrivalLocation : ''
     const [result] = await pool.execute<ResultSetHeader>(
       `INSERT INTO rsvps
-        (client_id, name, phone, attendance, guest_count, diet, message)
-       VALUES (?, ?, ?, ?, ?, ?, ?)
+        (client_id, name, attendance, guest_count, transport_mode, arrival_time, arrival_location, message)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
        ON DUPLICATE KEY UPDATE
         id = LAST_INSERT_ID(id),
         name = VALUES(name),
-        phone = VALUES(phone),
         attendance = VALUES(attendance),
         guest_count = VALUES(guest_count),
-        diet = VALUES(diet),
+        transport_mode = VALUES(transport_mode),
+        arrival_time = VALUES(arrival_time),
+        arrival_location = VALUES(arrival_location),
         message = VALUES(message)`,
-      [input.clientId, input.name, phone, input.attendance, input.guestCount, input.diet, input.message],
+      [
+        input.clientId,
+        input.name,
+        input.attendance,
+        guestCount,
+        transportMode,
+        arrivalTime,
+        arrivalLocation,
+        input.message,
+      ],
     )
 
     return {
@@ -165,17 +181,19 @@ export async function registerRoutes(app: FastifyInstance) {
     }
 
     const [rows] = await pool.query<RowDataPacket[]>(
-      `SELECT name, phone, attendance, guest_count, diet, message, created_at, updated_at
+      `SELECT name, attendance, guest_count, transport_mode, arrival_time, arrival_location,
+              message, created_at, updated_at
        FROM rsvps ORDER BY created_at ASC`,
     )
-    const header = ['姓名', '手机号码', '出席状态', '人数', '饮食备注', '留言', '提交时间', '更新时间']
+    const header = ['姓名', '出席状态', '人数', '交通方式', '到达时间', '到达地点', '留言', '提交时间', '更新时间']
     const body = rows.map((row) =>
       [
         row.name,
-        row.phone,
         row.attendance,
         row.guest_count,
-        row.diet,
+        row.transport_mode,
+        row.arrival_time,
+        row.arrival_location,
         row.message,
         row.created_at,
         row.updated_at,

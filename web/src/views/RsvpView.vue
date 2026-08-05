@@ -15,28 +15,38 @@ const submitting = ref(false)
 const form = reactive<RsvpPayload>({
   clientId: '',
   name: '',
-  phone: '',
   attendance: 'yes',
   guestCount: 1,
-  diet: '',
+  transportMode: '',
+  arrivalTime: '',
+  arrivalLocation: '',
   message: '',
 })
 
 const copy = computed(() => {
   if (form.attendance === 'yes') {
-    return { title: '再告诉我们一点', description: '用于签到、席位安排与婚礼前的必要提醒。', action: '确认出席' }
+    return { title: '告诉我们你的行程', description: '这些信息只用于统计人数和安排接送。', action: '确认出席' }
   }
   if (form.attendance === 'unsure') {
-    return { title: '方便稍后联系你吗？', description: '留下姓名和联系方式，确定后可以再次修改。', action: '保存待定回复' }
+    return { title: '先留下你的计划', description: '行程还未确定也没关系，之后可以再次修改。', action: '保存待定回复' }
   }
   return { title: '谢谢你告诉我们', description: '只需留下姓名；如果愿意，也可以写一句话。', action: '发送回复' }
 })
 
+function formatArrivalTime(value: string) {
+  if (!value) return '待补充'
+  const [date, time] = value.split('T')
+  const [, month, day] = date.split('-')
+  return `${Number(month)} 月 ${Number(day)} 日 · ${time}`
+}
+
 function chooseAttendance(value: RsvpPayload['attendance']) {
   form.attendance = value
-  if (value !== 'yes') {
+  if (value === 'no') {
     form.guestCount = 1
-    form.diet = ''
+    form.transportMode = ''
+    form.arrivalTime = ''
+    form.arrivalLocation = ''
   }
 }
 
@@ -47,17 +57,26 @@ function nextStep() {
 
 async function submit() {
   form.name = form.name.trim()
-  form.phone = form.phone.trim()
-  form.diet = form.diet.trim()
+  form.arrivalLocation = form.arrivalLocation.trim()
   form.message = form.message.trim()
 
   if (!form.name) {
     toast.show('请填写姓名')
     return
   }
-  if (form.attendance !== 'no' && !/^1\d{10}$/.test(form.phone)) {
-    toast.show('请填写正确的手机号码')
-    return
+  if (form.attendance === 'yes') {
+    if (!form.transportMode) {
+      toast.show('请选择交通方式')
+      return
+    }
+    if (!form.arrivalTime) {
+      toast.show('请选择到达时间')
+      return
+    }
+    if (!form.arrivalLocation) {
+      toast.show('请填写到达地点')
+      return
+    }
   }
 
   submitting.value = true
@@ -110,6 +129,8 @@ onMounted(() => {
           <div class="ticket-grid">
             <span><small>DATE</small><b>{{ wedding.dateDisplay }}</b></span>
             <span><small>GUESTS</small><b>{{ form.attendance === 'yes' ? `${form.guestCount} 人` : '—' }}</b></span>
+            <span v-if="form.attendance !== 'no'"><small>ARRIVAL</small><b>{{ formatArrivalTime(form.arrivalTime) }}</b></span>
+            <span v-if="form.attendance !== 'no'"><small>TRANSFER</small><b>{{ form.transportMode && form.arrivalLocation ? `${form.transportMode} · ${form.arrivalLocation}` : '待补充' }}</b></span>
             <span><small>VENUE</small><b>{{ wedding.venue.name }}</b></span>
             <span><small>STATUS</small><b>{{ form.attendance === 'yes' ? '确认出席' : form.attendance === 'no' ? '无法出席' : '暂未确定' }}</b></span>
           </div>
@@ -147,7 +168,7 @@ onMounted(() => {
             </button>
           </div>
           <button class="dark-button pressable" @click="nextStep">
-            <span>{{ form.attendance === 'yes' ? '填写出席信息' : form.attendance === 'unsure' ? '留下联系方式' : '快速回复' }}</span><span>→</span>
+            <span>{{ form.attendance === 'yes' ? '填写出席信息' : form.attendance === 'unsure' ? '填写初步信息' : '快速回复' }}</span><span>→</span>
           </button>
         </div>
 
@@ -155,9 +176,37 @@ onMounted(() => {
           <h2 class="step-title serif">{{ copy.title }}</h2>
           <p class="step-copy">{{ copy.description }}</p>
           <label class="form-field"><span class="field-label">姓名 *</span><input v-model="form.name" maxlength="30" placeholder="请输入你的姓名" /></label>
-          <label v-if="form.attendance !== 'no'" class="form-field"><span class="field-label">手机号码 *</span><input v-model="form.phone" inputmode="numeric" maxlength="11" placeholder="用于接收婚礼提醒" /></label>
           <label v-if="form.attendance === 'yes'" class="form-field"><span class="field-label">出席人数</span><select v-model.number="form.guestCount"><option v-for="count in 6" :key="count" :value="count">{{ count }} 人</option></select></label>
-          <label v-if="form.attendance === 'yes'" class="form-field"><span class="field-label">饮食备注</span><input v-model="form.diet" maxlength="100" placeholder="如素食、过敏等，没有可不填" /></label>
+          <div v-if="form.attendance !== 'no'" class="arrival-fields">
+            <div class="arrival-fields__head">
+              <span>ARRIVAL PLAN</span>
+              <small>{{ form.attendance === 'yes' ? '用于安排接送' : '可稍后补充' }}</small>
+            </div>
+            <label class="form-field">
+              <span class="field-label">交通方式{{ form.attendance === 'yes' ? ' *' : '' }}</span>
+              <select v-model="form.transportMode">
+                <option value="" disabled>请选择交通方式</option>
+                <option value="高铁">高铁</option>
+                <option value="飞机">飞机</option>
+                <option value="自驾">自驾</option>
+                <option value="其他">其他</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span class="field-label">到达时间{{ form.attendance === 'yes' ? ' *' : '' }}</span>
+              <input v-model="form.arrivalTime" type="datetime-local" />
+            </label>
+            <label class="form-field">
+              <span class="field-label">到达地点{{ form.attendance === 'yes' ? ' *' : '' }}</span>
+              <input v-model="form.arrivalLocation" list="arrival-location-options" maxlength="60" placeholder="如景德镇北站、景德镇罗家机场" />
+              <datalist id="arrival-location-options">
+                <option value="景德镇北站"></option>
+                <option value="景德镇罗家机场"></option>
+                <option value="乐平市站"></option>
+                <option :value="wedding.venue.name"></option>
+              </datalist>
+            </label>
+          </div>
           <label class="form-field message-field"><span class="field-label">想对我们说（选填）</span><textarea v-model="form.message" maxlength="300" placeholder="留下一句话……"></textarea><small>{{ form.message.length }} / 300</small></label>
           <p class="privacy-line privacy-line--dark">你填写的信息只用于本次婚礼服务。</p>
           <button class="dark-button pressable" :disabled="submitting" type="submit"><span>{{ submitting ? '正在保存…' : copy.action }}</span><span>→</span></button>

@@ -2212,6 +2212,35 @@ figure {
   background: linear-gradient(45deg, transparent 50%, #61717c 50%) right 8px center / 6px 6px no-repeat;
 }
 
+.form-field input[type="datetime-local"] {
+  color-scheme: light;
+}
+
+.arrival-fields {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(11, 24, 38, 0.17);
+}
+
+.arrival-fields__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #77858e;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+}
+
+.arrival-fields__head small {
+  color: #8c979e;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.arrival-fields .form-field:first-of-type {
+  margin-top: 20px;
+}
+
 .form-field textarea {
   height: 135px;
   padding: 13px 2px;

@@ -37,9 +37,10 @@ export async function submitBlessing(payload: FormData) {
 export interface RsvpPayload {
   clientId: string
   name: string
-  phone: string
   attendance: 'yes' | 'unsure' | 'no'
   guestCount: number
-  diet: string
+  transportMode: '' | '高铁' | '飞机' | '自驾' | '其他'
+  arrivalTime: string
+  arrivalLocation: string
   message: string
 }
