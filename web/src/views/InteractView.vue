@@ -69,12 +69,12 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="page-shell">
-    <header class="sub-hero interact-hero">
+    <header v-photo-motion class="sub-hero interact-hero">
       <img class="cover-image" :src="images.welcomeInstallation" alt="婚礼迎宾艺术装置" />
       <div class="sub-hero__shade"></div>
       <div class="gallery-frame gallery-frame--one"></div>
       <div class="gallery-frame gallery-frame--two"></div>
-      <div class="sub-hero__copy">
+      <div v-reveal class="sub-hero__copy">
         <span class="eyebrow">GUEST PARTICIPATION</span>
         <h1 class="interact-title serif">你不只是宾客<br />也是故事的一部分</h1>
         <p>上传一帧、留下一句话，让记忆拥有更多视角。</p>
@@ -82,9 +82,9 @@ onBeforeUnmount(() => {
     </header>
 
     <section class="section photo-section light-chapter">
-      <div class="chapter-row"><span class="chapter-index">01 · PHOTO</span><span class="eyebrow">CO-CREATE</span></div>
-      <h2 class="section-heading">共同完成一本相册</h2>
-      <p class="section-copy">你看到的细节、笑声和光，会在这里汇成属于所有人的婚礼画册。</p>
+      <div v-reveal class="chapter-row"><span class="chapter-index">01 · PHOTO</span><span class="eyebrow">CO-CREATE</span></div>
+      <h2 v-reveal="{ delay: 70 }" class="section-heading">共同完成一本相册</h2>
+      <p v-reveal="{ delay: 120 }" class="section-copy">你看到的细节、笑声和光，会在这里汇成属于所有人的婚礼画册。</p>
 
       <div v-if="photos.length" class="photo-gallery">
         <figure v-for="(photo, index) in photos" :key="photo.preview" class="photo-item">
@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
           <input type="file" accept="image/*" multiple @change="selectPhotos" />
         </label>
       </div>
-      <label v-else class="upload-stage pressable">
+      <label v-else v-reveal class="upload-stage pressable reveal--scale">
         <span class="upload-orbit upload-orbit--one"></span>
         <span class="upload-orbit upload-orbit--two"></span>
         <b>＋</b>
@@ -108,9 +108,9 @@ onBeforeUnmount(() => {
     </section>
 
     <section class="section blessing-section">
-      <div class="chapter-row"><span class="chapter-index">02 · MESSAGE</span><span class="eyebrow">A NOTE FOR US</span></div>
-      <h2 class="section-heading">把一句话留给未来</h2>
-      <div class="blessing-fields">
+      <div v-reveal class="chapter-row"><span class="chapter-index">02 · MESSAGE</span><span class="eyebrow">A NOTE FOR US</span></div>
+      <h2 v-reveal="{ delay: 70 }" class="section-heading">把一句话留给未来</h2>
+      <div v-reveal="{ delay: 120 }" class="blessing-fields">
         <label>
           <span class="field-label">你的名字（选填）</span>
           <input v-model="name" maxlength="30" placeholder="让我们知道祝福来自谁" />

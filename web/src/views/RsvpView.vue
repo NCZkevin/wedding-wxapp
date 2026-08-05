@@ -114,10 +114,10 @@ onMounted(() => {
       <i class="serif">K / M</i>
     </nav>
 
-    <section v-if="submitted" class="success-view">
+    <section v-if="submitted" v-photo-motion class="success-view">
       <img class="cover-image" :src="images.floralSculpture" alt="" />
       <div class="success-shade"></div>
-      <div class="success-content">
+      <div v-reveal class="success-content">
         <span class="eyebrow">{{ form.attendance === 'yes' ? 'ADMISSION CONFIRMED' : 'REPLY RECEIVED' }}</span>
         <h1 class="success-title serif">
           {{ form.attendance === 'yes' ? '期待与你见面' : form.attendance === 'unsure' ? '为你保留一束光' : '下次见面也值得期待' }}
@@ -142,10 +142,10 @@ onMounted(() => {
     </section>
 
     <template v-else>
-      <header class="rsvp-hero">
+      <header v-photo-motion class="rsvp-hero">
         <img class="cover-image" :src="images.handoverStage" alt="" />
         <div class="rsvp-shade"></div>
-        <div class="rsvp-hero__copy">
+        <div v-reveal class="rsvp-hero__copy">
           <span class="eyebrow">BE OUR GUEST</span>
           <h1 class="serif">确认出席</h1>
           <p>请在 {{ wedding.rsvpDeadline }} 前告诉我们，你是否会来到现场。</p>
@@ -155,7 +155,7 @@ onMounted(() => {
       <section class="rsvp-panel light-chapter">
         <div class="step-head"><span class="chapter-index">STEP 0{{ step }} / 02</span><i><b :style="{ width: step === 1 ? '50%' : '100%' }"></b></i></div>
 
-        <div v-if="step === 1">
+        <div v-if="step === 1" v-reveal>
           <h2 class="step-title serif">这一天，你会来吗？</h2>
           <p class="step-copy">无论答案是什么，都谢谢你认真回应这份邀请。</p>
           <div class="attendance-options">
@@ -172,7 +172,7 @@ onMounted(() => {
           </button>
         </div>
 
-        <form v-else @submit.prevent="submit">
+        <form v-else v-reveal @submit.prevent="submit">
           <h2 class="step-title serif">{{ copy.title }}</h2>
           <p class="step-copy">{{ copy.description }}</p>
           <label class="form-field"><span class="field-label">姓名 *</span><input v-model="form.name" maxlength="30" placeholder="请输入你的姓名" /></label>

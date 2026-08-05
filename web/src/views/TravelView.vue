@@ -8,12 +8,12 @@ import { openMap } from '@/lib/browser'
     <header class="travel-hero">
       <div class="travel-glow"></div>
       <div class="travel-grid"></div>
-      <div class="travel-hero__copy">
+      <div v-reveal class="travel-hero__copy">
         <span class="eyebrow">A DAY IN JINGDEZHEN</span>
         <h1 class="serif">婚礼之外<small>顺游瓷都</small></h1>
         <p>如果时间刚好，也想邀请你沿着窑火留下的光，看看我们举办婚礼的这片土地。</p>
       </div>
-      <div class="origin-card">
+      <div v-reveal="{ delay: 100 }" class="origin-card reveal--scale">
         <span class="origin-light"></span>
         <div>
           <small>ROUTE STARTS HERE</small>
@@ -25,14 +25,14 @@ import { openMap } from '@/lib/browser'
     </header>
 
     <section class="spots-section light-chapter">
-      <div class="spots-heading">
+      <div v-reveal class="spots-heading">
         <span class="chapter-index">04 PLACES · ONE CITY</span>
         <h2 class="section-heading">我们的私心推荐</h2>
         <p class="section-copy">距离与车程从婚礼酒店出发估算，周末和节假日请预留更多时间。</p>
       </div>
       <div class="spot-list">
-        <article v-for="(spot, index) in wedding.travelSpots" :key="spot.id" class="spot-card">
-          <button class="spot-visual pressable" @click="openMap(spot)">
+        <article v-for="(spot, index) in wedding.travelSpots" :key="spot.id" v-reveal class="spot-card reveal--scale">
+          <button v-photo-motion class="spot-visual pressable" @click="openMap(spot)">
             <img class="cover-image" :src="spot.image" :alt="spot.name" loading="lazy" />
             <span class="spot-shade"></span>
             <span class="spot-index serif">0{{ index + 1 }}</span>
@@ -50,7 +50,7 @@ import { openMap } from '@/lib/browser'
           </div>
         </article>
       </div>
-      <div class="travel-note">
+      <div v-reveal class="travel-note">
         <span></span>
         <h2 class="serif">慢一点，才看得见瓷的光</h2>
         <p>以上为常规路况下的参考距离。景点开放时间、预约方式及实际路线，请在出发前通过地图或官方渠道确认。</p>

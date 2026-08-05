@@ -26,6 +26,7 @@ const countdown = computed(() => {
 })
 
 function closeOpening() {
+  if (!opening.value) return
   opening.value = false
   sessionStorage.setItem('wedding-opening-seen', '1')
   window.clearTimeout(openingTimer)
@@ -98,9 +99,9 @@ onBeforeUnmount(() => {
     </header>
 
     <section class="section countdown-section light-chapter">
-      <div class="chapter-row"><span class="chapter-index">ACT I</span><span class="eyebrow">SAVE THE DATE</span></div>
-      <h2 class="section-heading">{{ countdown.ended ? '故事已经开场' : '距离故事开场' }}</h2>
-      <div class="countdown-editorial">
+      <div v-reveal class="chapter-row"><span class="chapter-index">ACT I</span><span class="eyebrow">SAVE THE DATE</span></div>
+      <h2 v-reveal="{ delay: 70 }" class="section-heading">{{ countdown.ended ? '故事已经开场' : '距离故事开场' }}</h2>
+      <div v-reveal="{ delay: 130 }" class="countdown-editorial">
         <div class="countdown-main">
           <strong class="countdown-number serif">{{ countdown.days }}</strong>
           <span class="countdown-unit"><b>天</b><small>DAYS</small></span>
@@ -111,13 +112,13 @@ onBeforeUnmount(() => {
           <span><b>{{ countdown.seconds }}</b><small>SECONDS</small></span>
         </div>
       </div>
-      <p class="countdown-note serif">九月十二日，愿你与我们共同抵达。</p>
+      <p v-reveal="{ delay: 190 }" class="countdown-note serif">九月十二日，愿你与我们共同抵达。</p>
     </section>
 
-    <section class="story-section">
-      <img class="cover-image" :src="images.ceremonyStage" alt="深蓝色婚礼仪式舞台" loading="lazy" />
+    <section v-photo-motion class="story-section">
+      <img class="cover-image story-photo" :src="images.coupleToast" alt="张凯文与刘明玥举杯合影" loading="lazy" />
       <div class="story-shade"></div>
-      <div class="story-copy">
+      <div v-reveal class="story-copy">
         <span class="eyebrow">ACT II · OUR STORY</span>
         <h2 class="story-title serif">光落下的时候</h2>
         <p class="story-body">我们想把那些平常却珍贵的时刻，变成这一天的光。也想邀请你，来到故事真正发生的地方。</p>
@@ -126,13 +127,13 @@ onBeforeUnmount(() => {
     </section>
 
     <section class="portrait-section light-chapter">
-      <div class="portrait-heading">
+      <div v-reveal class="portrait-heading">
         <div class="chapter-row"><span class="chapter-index">ACT III · PORTRAITS</span><span class="eyebrow">THE TWO OF US</span></div>
         <h2 class="section-heading">我们，和我们喜欢的日常</h2>
         <p class="section-copy">从此以后，生活继续发生，只是每一个明天都有彼此。</p>
       </div>
 
-      <figure class="portrait-feature">
+      <figure v-reveal class="portrait-feature reveal--image">
         <img :src="images.coupleClose" alt="张凯文与刘明玥的婚纱照" loading="lazy" />
         <span class="portrait-feature__line"></span>
         <figcaption>
@@ -142,31 +143,39 @@ onBeforeUnmount(() => {
       </figure>
 
       <div class="portrait-pair">
-        <figure>
+        <figure v-reveal class="reveal--image">
           <img :src="images.couplePlayful" alt="张凯文与刘明玥的轻松合影" loading="lazy" />
           <figcaption><span>01</span><small>LAUGHTER</small></figcaption>
         </figure>
-        <figure>
+        <figure v-reveal="{ delay: 90 }" class="reveal--image">
           <img :src="images.coupleFormal" alt="张凯文与刘明玥的正式合影" loading="lazy" />
           <figcaption><span>02</span><small>TOGETHER</small></figcaption>
         </figure>
       </div>
 
-      <div class="portrait-signature">
+      <figure v-reveal class="portrait-closing reveal--image">
+        <img :src="images.coupleVeil" alt="张凯文与刘明玥依偎在一起的婚纱照" loading="lazy" />
+        <figcaption>
+          <small>03 · QUIET MOMENT</small>
+          <span class="serif">靠近一点，就是我们的以后</span>
+        </figcaption>
+      </figure>
+
+      <div v-reveal class="portrait-signature">
         <span class="serif">K</span><i></i><span class="serif">M</span>
       </div>
     </section>
 
     <section class="section entry-section">
-      <div class="chapter-row"><span class="chapter-index">ACT IV</span><span class="eyebrow">EXPLORE</span></div>
-      <h2 class="section-heading">关于这一天</h2>
+      <div v-reveal class="chapter-row"><span class="chapter-index">ACT IV</span><span class="eyebrow">EXPLORE</span></div>
+      <h2 v-reveal="{ delay: 70 }" class="section-heading">关于这一天</h2>
       <div class="entry-list">
-        <button class="entry-card line-card pressable" @click="router.push('/schedule')">
+        <button v-reveal class="entry-card line-card pressable" @click="router.push('/schedule')">
           <span class="entry-number serif">01</span>
           <span class="entry-main"><b class="serif">婚礼流程</b><small>迎宾拍照 · 婚礼仪式 · 晚宴</small></span>
           <span class="entry-arrow">↗</span>
         </button>
-        <button class="entry-card line-card pressable" @click="router.push('/interact')">
+        <button v-reveal="{ delay: 80 }" class="entry-card line-card pressable" @click="router.push('/interact')">
           <span class="entry-number serif">02</span>
           <span class="entry-main"><b class="serif">参与这一天</b><small>照片共创 · 文字祝福</small></span>
           <span class="entry-arrow">↗</span>
@@ -175,7 +184,7 @@ onBeforeUnmount(() => {
     </section>
 
     <section class="section venue-section light-chapter">
-      <div class="venue-card">
+      <div v-reveal class="venue-card reveal--scale">
         <span class="venue-grid" aria-hidden="true"></span>
         <span class="venue-orbit" aria-hidden="true"><i></i></span>
         <div class="venue-topline">
@@ -194,30 +203,19 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <button class="city-section pressable" @click="router.push('/travel')">
-      <img class="cover-image" :src="images.welcomeInstallation" alt="" loading="lazy" />
-      <span class="city-shade"></span>
-      <span class="city-route"><i></i><i></i><i></i><i></i></span>
-      <span class="city-content">
-        <span class="chapter-row"><span class="chapter-index">ACT VI · CITY GUIDE</span><span class="eyebrow">JINGDEZHEN</span></span>
-        <span class="city-copy"><b class="city-title serif">婚礼之外，顺游瓷都</b><small>从酒店出发，去看窑火、老城与这座城市仍在生长的当代一面。</small></span>
-        <span class="city-link"><i>四处私心推荐</i><i>查看漫游指南 ↗</i></span>
-      </span>
-    </button>
-
-    <figure class="outdoor-portrait">
+    <figure v-photo-motion class="outdoor-portrait">
       <img class="cover-image" :src="images.coupleOutdoor" alt="张凯文与刘明玥的户外合影" loading="lazy" />
       <span class="outdoor-portrait__shade"></span>
-      <figcaption>
+      <figcaption v-reveal>
         <small>ONE ORDINARY, BEAUTIFUL DAY</small>
         <span class="serif">是恋人，也是彼此最熟悉的朋友</span>
       </figcaption>
     </figure>
 
-    <section class="invitation-end">
+    <section v-photo-motion class="invitation-end">
       <img class="cover-image" :src="images.floralSculpture" alt="银白色婚礼花艺装置" loading="lazy" />
       <div class="end-shade"></div>
-      <div class="end-content">
+      <div v-reveal class="end-content">
         <span class="eyebrow">BE OUR GUEST</span>
         <h2 class="end-title serif">这一天，因你在场<br />而更加完整</h2>
         <button class="ivory-button pressable" @click="router.push('/rsvp')">回应邀请</button>
@@ -225,5 +223,16 @@ onBeforeUnmount(() => {
         <p class="end-sign serif">K &amp; M · 2026</p>
       </div>
     </section>
+
+    <button v-photo-motion class="city-section city-section--epilogue pressable" @click="router.push('/travel')">
+      <img class="cover-image" :src="images.welcomeInstallation" alt="" loading="lazy" />
+      <span class="city-shade"></span>
+      <span class="city-route"><i></i><i></i><i></i><i></i></span>
+      <span v-reveal class="city-content">
+        <span class="chapter-row"><span class="chapter-index">AFTER CREDITS · CITY GUIDE</span><span class="eyebrow">JINGDEZHEN</span></span>
+        <span class="city-copy"><b class="city-title serif">婚礼之外，畅游瓷都</b><small>藏在片尾的一份私心推荐：从酒店出发，去看窑火、老城与这座城市仍在生长的当代一面。</small></span>
+        <span class="city-link"><i>四处私心推荐</i><i>开启彩蛋 ↗</i></span>
+      </span>
+    </button>
   </div>
 </template>

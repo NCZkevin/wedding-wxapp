@@ -1,5 +1,4 @@
 import heroSea from '../../../assets/images/hero-sea.jpg'
-import ceremonyStage from '../../../assets/images/ceremony-stage.jpg'
 import stageBackdrop from '../../../assets/images/stage-backdrop.jpg'
 import welcomeInstallation from '../../../assets/images/welcome-installation.jpg'
 import handoverStage from '../../../assets/images/handover-stage.jpg'
@@ -8,6 +7,8 @@ import coupleOutdoor from '../../../assets/images/1.jpg'
 import couplePlayful from '../../../assets/images/2.jpg'
 import coupleFormal from '../../../assets/images/3.jpg'
 import coupleClose from '../../../assets/images/4.jpg'
+import coupleToast from '../../../assets/images/5.jpg'
+import coupleVeil from '../../../assets/images/6.jpg'
 import ceramicsMuseum from '../../../packages/travel/images/ceramics-museum.jpg'
 import imperialKiln from '../../../packages/travel/images/imperial-kiln.jpg'
 import taoxichuan from '../../../packages/travel/images/taoxichuan.jpg'
@@ -15,7 +16,6 @@ import sanbao from '../../../packages/travel/images/sanbao.jpg'
 
 export const images = {
   heroSea,
-  ceremonyStage,
   stageBackdrop,
   welcomeInstallation,
   handoverStage,
@@ -24,6 +24,8 @@ export const images = {
   couplePlayful,
   coupleFormal,
   coupleClose,
+  coupleToast,
+  coupleVeil,
 }
 
 export const wedding = {

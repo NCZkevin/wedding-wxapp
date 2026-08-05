@@ -30,10 +30,10 @@ const activeIndex = computed(() => {
 
 <template>
   <div class="page-shell">
-    <header class="sub-hero schedule-hero">
+    <header v-photo-motion class="sub-hero schedule-hero">
       <img class="cover-image" :src="images.stageBackdrop" alt="婚礼舞台" />
       <div class="sub-hero__shade"></div>
-      <div class="sub-hero__copy">
+      <div v-reveal class="sub-hero__copy">
         <span class="status-pill"><i></i>{{ eventState }}</span>
         <span class="eyebrow">THE WEDDING DAY</span>
         <h1 class="sub-hero__title serif">婚礼流程</h1>
@@ -43,13 +43,14 @@ const activeIndex = computed(() => {
     </header>
 
     <section class="section timeline-section">
-      <div class="chapter-row"><span class="chapter-index">PROGRAMME</span><span class="eyebrow">TIMELINE</span></div>
-      <h2 class="section-heading">灯光依次亮起</h2>
-      <p class="section-copy">婚礼当天，当前环节会被聚光灯点亮。建议提前 30 分钟到场。</p>
+      <div v-reveal class="chapter-row"><span class="chapter-index">PROGRAMME</span><span class="eyebrow">TIMELINE</span></div>
+      <h2 v-reveal="{ delay: 70 }" class="section-heading">灯光依次亮起</h2>
+      <p v-reveal="{ delay: 120 }" class="section-copy">婚礼当天，当前环节会被聚光灯点亮。建议提前 30 分钟到场。</p>
       <div class="timeline">
         <article
           v-for="(item, index) in wedding.schedule"
           :key="item.time"
+          v-reveal="{ delay: index * 80 }"
           class="timeline-item"
           :class="{ 'is-active': activeIndex === index, 'is-past': activeIndex > index }"
         >
@@ -64,14 +65,14 @@ const activeIndex = computed(() => {
     </section>
 
     <section class="section activities-section light-chapter">
-      <div class="chapter-row"><span class="chapter-index">PARTICIPATE</span><span class="eyebrow">ACTIVITIES</span></div>
-      <h2 class="section-heading">不只是旁观</h2>
-      <p class="section-copy">拍下一张照片、留下一句话，让你也成为婚礼故事的一部分。</p>
-      <button class="entry-card line-card pressable" @click="router.push('/interact')">
+      <div v-reveal class="chapter-row"><span class="chapter-index">PARTICIPATE</span><span class="eyebrow">ACTIVITIES</span></div>
+      <h2 v-reveal="{ delay: 70 }" class="section-heading">不只是旁观</h2>
+      <p v-reveal="{ delay: 120 }" class="section-copy">拍下一张照片、留下一句话，让你也成为婚礼故事的一部分。</p>
+      <button v-reveal class="entry-card line-card pressable" @click="router.push('/interact')">
         <span class="entry-number serif">01</span>
         <span class="entry-main"><b class="serif">照片共创</b><small>上传你眼中的婚礼瞬间</small></span><span>↗</span>
       </button>
-      <button class="entry-card line-card pressable" @click="router.push('/interact')">
+      <button v-reveal="{ delay: 80 }" class="entry-card line-card pressable" @click="router.push('/interact')">
         <span class="entry-number serif">02</span>
         <span class="entry-main"><b class="serif">留下祝福</b><small>把想说的话交给未来的我们</small></span><span>↗</span>
       </button>
