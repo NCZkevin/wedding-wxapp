@@ -76,19 +76,5 @@ const activeIndex = computed(() => {
         <span class="entry-main"><b class="serif">留下祝福</b><small>把想说的话交给未来的我们</small></span><span>↗</span>
       </button>
     </section>
-
-    <section class="guide-section">
-      <img class="cover-image" :src="images.handoverStage" alt="" loading="lazy" />
-      <div class="guide-shade"></div>
-      <div class="guide-content">
-        <div class="chapter-row"><span class="chapter-index">GUEST NOTES</span><span class="eyebrow">GUIDE</span></div>
-        <h2 class="guide-title serif">宾客指南</h2>
-        <div class="guide-grid">
-          <div><small>建议着装</small><b class="serif">{{ wedding.dressCode.join(' / ') }}</b></div>
-          <div><small>抵达时间</small><b class="serif">仪式前 30 分钟</b></div>
-        </div>
-        <p><b>温馨提示</b>仪式期间请将手机调至静音；拍照时请勿使用闪光灯。</p>
-      </div>
-    </section>
   </div>
 </template>

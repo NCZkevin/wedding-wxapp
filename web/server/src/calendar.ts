@@ -22,8 +22,8 @@ function escapeIcs(value: string) {
 }
 
 export function createWeddingCalendar() {
-  const start = new Date('2026-09-12T14:00:00+08:00')
-  const end = new Date('2026-09-12T22:00:00+08:00')
+  const start = new Date('2026-09-12T17:00:00+08:00')
+  const end = new Date('2026-09-12T21:00:00+08:00')
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
