@@ -163,7 +163,7 @@ onBeforeUnmount(() => {
       <div class="entry-list">
         <button class="entry-card line-card pressable" @click="router.push('/schedule')">
           <span class="entry-number serif">01</span>
-          <span class="entry-main"><b class="serif">婚礼流程</b><small>签到 · 合影 · 仪式 · 晚宴</small></span>
+          <span class="entry-main"><b class="serif">婚礼流程</b><small>迎宾拍照 · 婚礼仪式 · 晚宴</small></span>
           <span class="entry-arrow">↗</span>
         </button>
         <button class="entry-card line-card pressable" @click="router.push('/interact')">
@@ -176,13 +176,20 @@ onBeforeUnmount(() => {
 
     <section class="section venue-section light-chapter">
       <div class="venue-card">
-        <img class="cover-image" :src="images.welcomeInstallation" alt="婚礼迎宾装置" loading="lazy" />
-        <div class="venue-overlay"></div>
-        <div class="venue-content">
+        <span class="venue-grid" aria-hidden="true"></span>
+        <span class="venue-orbit" aria-hidden="true"><i></i></span>
+        <div class="venue-topline">
           <span class="chapter-index">ACT V · VENUE</span>
+          <span class="venue-coordinate">29.0072° N&nbsp;&nbsp;117.1283° E</span>
+        </div>
+        <div class="venue-content">
+          <span class="venue-kicker"><i></i> WEDDING DESTINATION</span>
           <h2 class="venue-name serif">{{ wedding.venue.name }}</h2>
-          <p class="venue-date">{{ wedding.dateDisplay }}</p>
-          <button class="venue-button pressable" @click="openMap(wedding.venue)"><span>查看地图</span><span>↗</span></button>
+          <p class="venue-address">{{ wedding.venue.address }}</p>
+          <div class="venue-footer">
+            <span class="venue-date"><small>DATE &amp; TIME</small><b class="serif">{{ wedding.dateDisplay }} · 17:00</b></span>
+            <button class="venue-button pressable" @click="openMap(wedding.venue)"><span>地图导航</span><span>↗</span></button>
+          </div>
         </div>
       </div>
     </section>
