@@ -36,7 +36,7 @@ export const wedding = {
   },
   date: '2026-09-12T17:30:00+08:00',
   dateDisplay: '2026.09.12',
-  rsvpDeadline: '2026 年 8 月 20 日',
+  rsvpDeadline: '2026 年 9 月 1 日',
   venue: {
     name: '乐平山水国际酒店',
     address: '江西省景德镇市乐平市后港镇大山坞666号',
