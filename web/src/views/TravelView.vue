@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { wedding } from '@/data/wedding'
 import { openMap } from '@/lib/browser'
+
+const localRestaurants = ['好口福', '张星铁板烧', '三中小吃', '欧记大排档']
+const localDishes = ['乐平炒粉', '萝卜饺子', '油条包麻糍', '铁板烧']
 </script>
 
 <template>
@@ -55,6 +58,33 @@ import { openMap } from '@/lib/browser'
         <h2 class="serif">慢一点，才看得见瓷的光</h2>
         <p>以上为常规路况下的参考距离。景点开放时间、预约方式及实际路线，请在出发前通过地图或官方渠道确认。</p>
       </div>
+
+      <section v-reveal class="food-guide reveal--scale">
+        <span class="food-guide__grid" aria-hidden="true"></span>
+        <span class="food-guide__glow" aria-hidden="true"></span>
+        <div class="food-guide__topline">
+          <span>LOCAL TASTE · LEPING</span>
+          <span>04 PLACES</span>
+        </div>
+        <div class="food-guide__intro">
+          <span class="food-guide__eyebrow"><i></i> 婚礼之外的本地菜单</span>
+          <h2 class="serif">乐平味道</h2>
+          <p>如果还留有一点胃口，不妨从这些熟悉的小店与小吃里，尝一尝乐平的日常。</p>
+        </div>
+        <ol class="food-guide__shops" aria-label="乐平本地美食店铺推荐">
+          <li v-for="(restaurant, index) in localRestaurants" :key="restaurant">
+            <small class="serif">0{{ index + 1 }}</small>
+            <b class="serif">{{ restaurant }}</b>
+          </li>
+        </ol>
+        <div class="food-guide__dishes">
+          <span class="food-guide__dishes-title">RECOMMENDED BITES · 推荐品尝</span>
+          <div>
+            <span v-for="dish in localDishes" :key="dish"><i></i>{{ dish }}</span>
+          </div>
+        </div>
+        <p class="food-guide__contact"><i></i><span>更多美食请咨询 Kevin</span></p>
+      </section>
     </section>
   </div>
 </template>

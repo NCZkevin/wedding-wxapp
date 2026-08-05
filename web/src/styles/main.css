@@ -2242,6 +2242,184 @@ figure {
   line-height: 1.8;
 }
 
+.food-guide {
+  position: relative;
+  margin-top: 24px;
+  overflow: hidden;
+  padding: 24px 21px 21px;
+  border: 1px solid rgba(177, 210, 226, 0.16);
+  border-radius: 18px;
+  color: var(--ivory);
+  background:
+    radial-gradient(circle at 88% 10%, rgba(105, 202, 230, 0.18), transparent 26%),
+    linear-gradient(150deg, #102b40, #071522 58%, #040b13);
+  box-shadow: 0 28px 60px rgba(10, 28, 41, 0.2);
+}
+
+.food-guide__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(169, 215, 231, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(169, 215, 231, 0.08) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(145deg, #000, transparent 70%);
+}
+
+.food-guide__glow {
+  position: absolute;
+  top: -52px;
+  right: 24px;
+  width: 34px;
+  height: 260px;
+  background: rgba(112, 207, 233, 0.13);
+  filter: blur(11px);
+  transform: rotate(24deg);
+}
+
+.food-guide__topline,
+.food-guide__intro,
+.food-guide__shops,
+.food-guide__dishes,
+.food-guide__contact {
+  position: relative;
+  z-index: 1;
+}
+
+.food-guide__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #7793a4;
+  font-size: 7px;
+  letter-spacing: 0.19em;
+}
+
+.food-guide__intro {
+  margin-top: 38px;
+}
+
+.food-guide__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #91a8b6;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+}
+
+.food-guide__eyebrow i {
+  width: 20px;
+  height: 1px;
+  background: #78c9e1;
+}
+
+.food-guide__intro h2 {
+  margin-top: 13px;
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.food-guide__intro p {
+  max-width: 285px;
+  margin-top: 12px;
+  color: #91a4b0;
+  font-size: 11px;
+  line-height: 1.85;
+}
+
+.food-guide__shops {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 28px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(216, 225, 231, 0.16);
+  border-left: 1px solid rgba(216, 225, 231, 0.16);
+  list-style: none;
+}
+
+.food-guide__shops li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  min-height: 62px;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 7px;
+  border-right: 1px solid rgba(216, 225, 231, 0.16);
+  border-bottom: 1px solid rgba(216, 225, 231, 0.16);
+}
+
+.food-guide__shops small {
+  color: #6f8a9b;
+  font-size: 11px;
+}
+
+.food-guide__shops b {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.food-guide__dishes {
+  margin-top: 26px;
+}
+
+.food-guide__dishes-title {
+  color: #7892a2;
+  font-size: 7px;
+  letter-spacing: 0.17em;
+}
+
+.food-guide__dishes > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 13px;
+}
+
+.food-guide__dishes > div > span {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid rgba(216, 225, 231, 0.17);
+  border-radius: 999px;
+  color: #c8d5dc;
+  background: rgba(8, 22, 35, 0.46);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.food-guide__dishes > div > span i {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  border: 1px solid #9ed7e8;
+  border-radius: 50%;
+  box-shadow: 0 0 9px rgba(127, 206, 231, 0.62);
+}
+
+.food-guide__contact {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 20px;
+  color: #8298a6;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.food-guide__contact i {
+  width: 20px;
+  height: 1px;
+  background: rgba(158, 215, 232, 0.5);
+}
+
 /* Interaction */
 .interact-hero {
   height: min(700px, 145vw);
