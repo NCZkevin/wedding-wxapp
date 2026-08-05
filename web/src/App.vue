@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import BackgroundMusic from '@/components/BackgroundMusic.vue'
 import FloatingNavigation from '@/components/FloatingNavigation.vue'
 import ToastHost from '@/components/ToastHost.vue'
 import { images, wedding } from '@/data/wedding'
@@ -32,6 +33,7 @@ watch(() => route.fullPath, updateShare)
           <component :is="Component" />
         </Transition>
       </RouterView>
+      <BackgroundMusic />
       <FloatingNavigation />
       <ToastHost />
     </main>

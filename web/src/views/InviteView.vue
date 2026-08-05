@@ -11,7 +11,6 @@ const toast = useToast()
 const now = ref(Date.now())
 const opening = ref(sessionStorage.getItem('wedding-opening-seen') !== '1')
 let countdownTimer: number | undefined
-let openingTimer: number | undefined
 
 const guestName = computed(() => new URLSearchParams(window.location.search).get('guest')?.trim() || '')
 const countdown = computed(() => {
@@ -25,11 +24,11 @@ const countdown = computed(() => {
   }
 })
 
-function closeOpening() {
+function closeOpening(startMusic = false) {
   if (!opening.value) return
   opening.value = false
   sessionStorage.setItem('wedding-opening-seen', '1')
-  window.clearTimeout(openingTimer)
+  if (startMusic) window.dispatchEvent(new Event('wedding:music-request'))
 }
 
 async function shareInvitation() {
@@ -49,18 +48,16 @@ onMounted(() => {
   countdownTimer = window.setInterval(() => {
     now.value = Date.now()
   }, 1000)
-  if (opening.value) openingTimer = window.setTimeout(closeOpening, 2200)
 })
 
 onBeforeUnmount(() => {
   window.clearInterval(countdownTimer)
-  window.clearTimeout(openingTimer)
 })
 </script>
 
 <template>
   <div class="page-shell invite-page">
-    <button v-if="opening" class="opening-scene" aria-label="轻触进入婚礼邀请" @click="closeOpening">
+    <button v-if="opening" class="opening-scene" aria-label="轻触进入婚礼邀请并播放背景音乐" @click="closeOpening(true)">
       <span class="opening-glow"></span>
       <span class="opening-curtain opening-curtain--left"></span>
       <span class="opening-curtain opening-curtain--right"></span>
