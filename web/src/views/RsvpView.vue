@@ -40,6 +40,10 @@ function formatArrivalTime(value: string) {
   return `${Number(month)} 月 ${Number(day)} 日 · ${time}`
 }
 
+function formatTransfer() {
+  return [form.transportMode, form.arrivalLocation].filter(Boolean).join(' · ') || '待补充'
+}
+
 function chooseAttendance(value: RsvpPayload['attendance']) {
   form.attendance = value
   if (value === 'no') {
@@ -63,20 +67,6 @@ async function submit() {
   if (!form.name) {
     toast.show('请填写姓名')
     return
-  }
-  if (form.attendance === 'yes') {
-    if (!form.transportMode) {
-      toast.show('请选择交通方式')
-      return
-    }
-    if (!form.arrivalTime) {
-      toast.show('请选择到达时间')
-      return
-    }
-    if (!form.arrivalLocation) {
-      toast.show('请填写到达地点')
-      return
-    }
   }
 
   submitting.value = true
@@ -130,7 +120,7 @@ onMounted(() => {
             <span><small>DATE</small><b>{{ wedding.dateDisplay }}</b></span>
             <span><small>GUESTS</small><b>{{ form.attendance === 'yes' ? `${form.guestCount} 人` : '—' }}</b></span>
             <span v-if="form.attendance !== 'no'"><small>ARRIVAL</small><b>{{ formatArrivalTime(form.arrivalTime) }}</b></span>
-            <span v-if="form.attendance !== 'no'"><small>TRANSFER</small><b>{{ form.transportMode && form.arrivalLocation ? `${form.transportMode} · ${form.arrivalLocation}` : '待补充' }}</b></span>
+            <span v-if="form.attendance !== 'no'"><small>TRANSFER</small><b>{{ formatTransfer() }}</b></span>
             <span><small>VENUE</small><b>{{ wedding.venue.name }}</b></span>
             <span><small>STATUS</small><b>{{ form.attendance === 'yes' ? '确认出席' : form.attendance === 'no' ? '无法出席' : '暂未确定' }}</b></span>
           </div>
@@ -180,12 +170,12 @@ onMounted(() => {
           <div v-if="form.attendance !== 'no'" class="arrival-fields">
             <div class="arrival-fields__head">
               <span>ARRIVAL PLAN</span>
-              <small>{{ form.attendance === 'yes' ? '用于安排接送' : '可稍后补充' }}</small>
+              <small>均为选填 · 可稍后补充</small>
             </div>
             <label class="form-field">
-              <span class="field-label">交通方式{{ form.attendance === 'yes' ? ' *' : '' }}</span>
+              <span class="field-label">交通方式（选填）</span>
               <select v-model="form.transportMode">
-                <option value="" disabled>请选择交通方式</option>
+                <option value="">暂未确定</option>
                 <option value="高铁">高铁</option>
                 <option value="飞机">飞机</option>
                 <option value="自驾">自驾</option>
@@ -193,11 +183,11 @@ onMounted(() => {
               </select>
             </label>
             <label class="form-field">
-              <span class="field-label">到达时间{{ form.attendance === 'yes' ? ' *' : '' }}</span>
+              <span class="field-label">到达时间（选填）</span>
               <input v-model="form.arrivalTime" type="datetime-local" />
             </label>
             <label class="form-field">
-              <span class="field-label">到达地点{{ form.attendance === 'yes' ? ' *' : '' }}</span>
+              <span class="field-label">到达地点（选填）</span>
               <input v-model="form.arrivalLocation" list="arrival-location-options" maxlength="60" placeholder="如景德镇北站、景德镇罗家机场" />
               <datalist id="arrival-location-options">
                 <option value="景德镇北站"></option>

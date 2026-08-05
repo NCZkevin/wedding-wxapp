@@ -12,15 +12,10 @@ const baseRsvp = {
   message: '',
 }
 
-test('requires a complete arrival plan for confirmed guests', () => {
+test('allows a confirmed guest to omit the arrival plan', () => {
   const result = rsvpSchema.safeParse({ ...baseRsvp, attendance: 'yes' })
 
-  assert.equal(result.success, false)
-  if (result.success) return
-  assert.deepEqual(
-    result.error.issues.map((issue) => issue.message),
-    ['请选择交通方式', '请选择到达时间', '请填写到达地点'],
-  )
+  assert.equal(result.success, true)
 })
 
 test('accepts a complete confirmed RSVP without phone or diet fields', () => {
@@ -30,6 +25,16 @@ test('accepts a complete confirmed RSVP without phone or diet fields', () => {
     transportMode: '高铁',
     arrivalTime: '2026-09-12T10:30',
     arrivalLocation: '景德镇北站',
+  })
+
+  assert.equal(result.success, true)
+})
+
+test('allows a confirmed guest to provide only part of the arrival plan', () => {
+  const result = rsvpSchema.safeParse({
+    ...baseRsvp,
+    attendance: 'yes',
+    transportMode: '高铁',
   })
 
   assert.equal(result.success, true)
