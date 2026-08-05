@@ -936,79 +936,146 @@ figure {
 }
 
 .countdown-section {
-  padding-top: 70px;
-  padding-bottom: 76px;
+  overflow: hidden;
+  padding-top: 68px;
+  padding-bottom: 70px;
 }
 
-.countdown-editorial {
-  margin-top: 40px;
-  border-top: 1px solid rgba(11, 24, 38, 0.28);
-  border-bottom: 1px solid rgba(11, 24, 38, 0.18);
+.event-card {
+  position: relative;
+  overflow: hidden;
+  margin-top: 34px;
+  padding: 7px;
+  border: 1px solid rgba(11, 24, 38, 0.15);
+  border-radius: 24px;
+  background: #f8f5ee;
+  box-shadow: 0 24px 55px rgba(17, 38, 53, 0.13);
 }
 
-.countdown-main {
+.event-card__date {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+  overflow: hidden;
+  padding: 25px 17px 27px;
+}
+
+.event-card__date::after {
+  position: absolute;
+  right: -42px;
+  bottom: -70px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(48, 82, 101, 0.08);
+  border-radius: 50%;
+  content: "";
+}
+
+.event-card__calendar,
+.event-card__time {
+  position: relative;
+  z-index: 1;
+}
+
+.event-card__month {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6b7c87;
+  font-size: 7px;
+  font-style: normal;
+  letter-spacing: 0.26em;
+}
+
+.event-card__month i {
+  font-style: normal;
+}
+
+.event-card__month i + i {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.event-card__month i + i::before {
+  width: 18px;
+  height: 1px;
+  background: rgba(11, 24, 38, 0.24);
+  content: "";
+}
+
+.event-card__day-row {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  padding: 25px 0 22px;
+  gap: 9px;
+  margin-top: 9px;
 }
 
-.countdown-number {
-  font-size: clamp(82px, 23vw, 112px);
+.event-card__day {
+  color: var(--ink);
+  font-size: clamp(52px, 16vw, 70px);
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
 }
 
-.countdown-unit {
+.event-card__weekday {
+  margin-bottom: 4px;
+  color: #5f737f;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.event-card__time {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 5px;
+  padding: 4px 0 2px 18px;
+  border-left: 1px solid rgba(11, 24, 38, 0.16);
 }
 
-.countdown-unit b {
-  font-family: "Songti SC", serif;
-  font-size: 15px;
+.event-card__time small {
+  color: #72828c;
+  font-size: 6px;
+  letter-spacing: 0.18em;
+}
+
+.event-card__time b {
+  color: var(--ink);
+  font-size: clamp(27px, 7.5vw, 32px);
   font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
-.countdown-unit small,
-.countdown-rest small {
-  color: #667782;
-  font-size: 8px;
-  letter-spacing: 0.23em;
+.event-card__time span {
+  color: #506573;
+  font-size: 9px;
+  letter-spacing: 0.16em;
 }
 
-.countdown-rest {
+.countdown-compact {
   display: flex;
-  padding: 18px 0;
-  border-top: 1px solid rgba(11, 24, 38, 0.14);
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 17px;
+  padding: 0 2px;
+  color: #73828c;
+  font-size: 9px;
+  letter-spacing: 0.16em;
 }
 
-.countdown-rest > span {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 6px;
-  border-right: 1px solid rgba(11, 24, 38, 0.12);
-  text-align: center;
-}
-
-.countdown-rest > span:last-child {
-  border-right: 0;
-}
-
-.countdown-rest b {
+.countdown-compact b {
+  color: #344a59;
   font-family: "Times New Roman", serif;
-  font-size: 19px;
-  font-weight: 400;
-}
-
-.countdown-note {
-  margin-top: 24px;
-  color: #465764;
   font-size: 13px;
-  letter-spacing: 0.14em;
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
 .story-section {
@@ -1319,31 +1386,26 @@ figure {
   font-size: 20px;
 }
 
-.venue-section {
-  padding: 52px 26px;
-}
-
-.venue-card {
+.event-card__venue {
   position: relative;
   display: flex;
-  min-height: 360px;
+  min-height: 224px;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  padding: 24px 22px 22px;
+  padding: 20px 18px 17px;
   border: 1px solid rgba(177, 210, 226, 0.18);
-  border-radius: 24px;
+  border-radius: 18px;
   color: var(--ivory);
   background:
-    radial-gradient(circle at 82% 16%, rgba(104, 202, 230, 0.2), transparent 31%),
-    linear-gradient(145deg, #10283c, #07111f 58%, #040a12);
-  box-shadow: 0 26px 55px rgba(10, 28, 41, 0.22);
+    radial-gradient(circle at 86% 8%, rgba(121, 205, 228, 0.2), transparent 32%),
+    linear-gradient(145deg, #122e43, #081725 57%, #050c15);
 }
 
-.venue-grid {
+.event-card__grid {
   position: absolute;
   inset: 0;
-  opacity: 0.32;
+  opacity: 0.28;
   background-image:
     linear-gradient(rgba(169, 215, 231, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(169, 215, 231, 0.08) 1px, transparent 1px);
@@ -1352,12 +1414,12 @@ figure {
   mask-image: linear-gradient(135deg, #000, transparent 72%);
 }
 
-.venue-orbit {
+.event-card__orbit {
   position: absolute;
-  top: -72px;
-  right: -72px;
-  width: 230px;
-  height: 230px;
+  top: -76px;
+  right: -68px;
+  width: 204px;
+  height: 204px;
   border: 1px solid rgba(178, 225, 238, 0.18);
   border-radius: 50%;
   animation: venue-orbit-drift 20s linear infinite;
@@ -1369,10 +1431,10 @@ figure {
   }
 }
 
-.venue-orbit i {
+.event-card__orbit i {
   position: absolute;
-  bottom: 42px;
-  left: 31px;
+  bottom: 37px;
+  left: 28px;
   width: 8px;
   height: 8px;
   border: 1px solid rgba(206, 239, 247, 0.9);
@@ -1381,27 +1443,24 @@ figure {
   box-shadow: 0 0 18px rgba(117, 202, 228, 0.85);
 }
 
-.venue-topline {
+.event-card__place-meta {
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.venue-topline .chapter-index,
-.venue-coordinate {
   color: #8fa6b4;
   font-size: 7px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
 }
 
-.venue-content {
+.event-card__place-main,
+.event-card__place-footer {
   position: relative;
   z-index: 2;
 }
 
-.venue-kicker {
+.event-card__destination {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1410,64 +1469,43 @@ figure {
   letter-spacing: 0.2em;
 }
 
-.venue-kicker i {
+.event-card__destination i {
   width: 18px;
   height: 1px;
   background: #78c9e1;
 }
 
-.venue-name {
-  max-width: 280px;
-  margin-top: 14px;
-  font-size: clamp(28px, 8vw, 34px);
-  line-height: 1.35;
-  letter-spacing: 0.1em;
+.event-card__hotel {
+  max-width: none;
+  margin-top: 11px;
+  font-size: clamp(26px, 7.8vw, 34px);
+  line-height: 1.28;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
-.venue-address {
-  max-width: 275px;
-  margin-top: 10px;
-  color: #9fb0bb;
-  font-size: 10px;
-  line-height: 1.7;
-}
-
-.venue-footer {
+.event-card__place-footer {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-top: 24px;
-  padding-top: 18px;
+  padding-top: 13px;
   border-top: 1px solid rgba(216, 225, 231, 0.16);
 }
 
-.venue-date {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.venue-date small {
+.event-card__place-footer > span {
   color: #778e9d;
-  font-size: 7px;
-  letter-spacing: 0.18em;
+  font-size: 6px;
+  letter-spacing: 0.2em;
 }
 
-.venue-date b {
-  color: #dce5e9;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-}
-
-.venue-button {
+.event-card__map {
   display: flex;
-  min-width: 112px;
-  min-height: 42px;
+  min-width: 106px;
+  min-height: 39px;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   padding: 0 12px;
   border: 1px solid rgba(216, 225, 231, 0.24);
   border-radius: 8px;
@@ -2880,7 +2918,6 @@ figure {
 
 @media (max-width: 350px) {
   .section,
-  .venue-section,
   .spots-section,
   .rsvp-panel {
     padding-right: 20px;

@@ -88,27 +88,51 @@ onBeforeUnmount(() => {
       </div>
       <div class="hero-meta">
         <p class="hero-date serif">{{ wedding.dateDisplay }}</p>
-        <p class="hero-venue">{{ wedding.venue.name }}</p>
+        <p class="hero-venue">江西·景德镇·乐平</p>
         <p class="hero-quote serif">{{ wedding.quote }}</p>
         <span class="scroll-cue"><i></i></span>
       </div>
     </header>
 
     <section class="section countdown-section light-chapter">
-      <div v-reveal class="chapter-row"><span class="chapter-index">ACT I</span><span class="eyebrow">SAVE THE DATE</span></div>
-      <h2 v-reveal="{ delay: 70 }" class="section-heading">{{ countdown.ended ? '故事已经开场' : '距离故事开场' }}</h2>
-      <div v-reveal="{ delay: 130 }" class="countdown-editorial">
-        <div class="countdown-main">
-          <strong class="countdown-number serif">{{ countdown.days }}</strong>
-          <span class="countdown-unit"><b>天</b><small>DAYS</small></span>
+      <div v-reveal class="chapter-row"><span class="chapter-index">ACT I</span><span class="eyebrow">DATE &amp; VENUE</span></div>
+
+      <article v-reveal="{ delay: 80 }" class="event-card reveal--scale">
+        <div class="event-card__date">
+          <div class="event-card__calendar">
+            <span class="event-card__month"><i>2026</i><i>SEPTEMBER</i></span>
+            <span class="event-card__day-row"><strong class="event-card__day serif">09.12</strong><span class="event-card__weekday">周六</span></span>
+          </div>
+          <div class="event-card__time">
+            <small>GUEST ARRIVAL</small>
+            <b class="serif">17:00</b>
+            <span>迎宾开始</span>
+          </div>
         </div>
-        <div class="countdown-rest">
-          <span><b>{{ countdown.hours }}</b><small>HOURS</small></span>
-          <span><b>{{ countdown.minutes }}</b><small>MINUTES</small></span>
-          <span><b>{{ countdown.seconds }}</b><small>SECONDS</small></span>
+
+        <div class="event-card__venue">
+          <span class="event-card__grid" aria-hidden="true"></span>
+          <span class="event-card__orbit" aria-hidden="true"><i></i></span>
+          <div class="event-card__place-meta">
+            <span>江西 · 景德镇 · 乐平</span>
+            <span>29.0072° N</span>
+          </div>
+          <div class="event-card__place-main">
+            <span class="event-card__destination"><i></i> WEDDING DESTINATION</span>
+            <h2 class="event-card__hotel serif">{{ wedding.venue.name }}</h2>
+          </div>
+          <div class="event-card__place-footer">
+            <span>THE PLACE WE MEET</span>
+            <button class="event-card__map pressable" @click="openMap(wedding.venue)"><span>地图导航</span><span>↗</span></button>
+          </div>
         </div>
+      </article>
+
+      <div v-reveal="{ delay: 160 }" class="countdown-compact">
+        <span>{{ countdown.ended ? '故事已经开场' : '距离相见' }}</span>
+        <span v-if="!countdown.ended"><b>{{ countdown.days }}</b> 天 · {{ countdown.hours }}:{{ countdown.minutes }}:{{ countdown.seconds }}</span>
+        <span v-else>谢谢你与我们共同抵达</span>
       </div>
-      <p v-reveal="{ delay: 190 }" class="countdown-note serif">九月十二日，愿你与我们共同抵达。</p>
     </section>
 
     <section v-photo-motion class="story-section">
@@ -176,26 +200,6 @@ onBeforeUnmount(() => {
           <span class="entry-main"><b class="serif">参与这一天</b><small>照片共创 · 文字祝福</small></span>
           <span class="entry-arrow">↗</span>
         </button>
-      </div>
-    </section>
-
-    <section class="section venue-section light-chapter">
-      <div v-reveal class="venue-card reveal--scale">
-        <span class="venue-grid" aria-hidden="true"></span>
-        <span class="venue-orbit" aria-hidden="true"><i></i></span>
-        <div class="venue-topline">
-          <span class="chapter-index">ACT V · VENUE</span>
-          <span class="venue-coordinate">29.0072° N&nbsp;&nbsp;117.1283° E</span>
-        </div>
-        <div class="venue-content">
-          <span class="venue-kicker"><i></i> WEDDING DESTINATION</span>
-          <h2 class="venue-name serif">{{ wedding.venue.name }}</h2>
-          <p class="venue-address">{{ wedding.venue.address }}</p>
-          <div class="venue-footer">
-            <span class="venue-date"><small>DATE &amp; TIME</small><b class="serif">{{ wedding.dateDisplay }} · 17:00</b></span>
-            <button class="venue-button pressable" @click="openMap(wedding.venue)"><span>地图导航</span><span>↗</span></button>
-          </div>
-        </div>
       </div>
     </section>
 
