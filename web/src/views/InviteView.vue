@@ -125,8 +125,40 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
+    <section class="portrait-section light-chapter">
+      <div class="portrait-heading">
+        <div class="chapter-row"><span class="chapter-index">ACT III · PORTRAITS</span><span class="eyebrow">THE TWO OF US</span></div>
+        <h2 class="section-heading">我们，和我们喜欢的日常</h2>
+        <p class="section-copy">从此以后，生活继续发生，只是每一个明天都有彼此。</p>
+      </div>
+
+      <figure class="portrait-feature">
+        <img :src="images.coupleClose" alt="张凯文与刘明玥的婚纱照" loading="lazy" />
+        <span class="portrait-feature__line"></span>
+        <figcaption>
+          <small>KEVIN &amp; MINGYUE</small>
+          <span class="serif">并肩，向同一个以后</span>
+        </figcaption>
+      </figure>
+
+      <div class="portrait-pair">
+        <figure>
+          <img :src="images.couplePlayful" alt="张凯文与刘明玥的轻松合影" loading="lazy" />
+          <figcaption><span>01</span><small>LAUGHTER</small></figcaption>
+        </figure>
+        <figure>
+          <img :src="images.coupleFormal" alt="张凯文与刘明玥的正式合影" loading="lazy" />
+          <figcaption><span>02</span><small>TOGETHER</small></figcaption>
+        </figure>
+      </div>
+
+      <div class="portrait-signature">
+        <span class="serif">K</span><i></i><span class="serif">M</span>
+      </div>
+    </section>
+
     <section class="section entry-section">
-      <div class="chapter-row"><span class="chapter-index">ACT III</span><span class="eyebrow">EXPLORE</span></div>
+      <div class="chapter-row"><span class="chapter-index">ACT IV</span><span class="eyebrow">EXPLORE</span></div>
       <h2 class="section-heading">关于这一天</h2>
       <div class="entry-list">
         <button class="entry-card line-card pressable" @click="router.push('/schedule')">
@@ -147,7 +179,7 @@ onBeforeUnmount(() => {
         <img class="cover-image" :src="images.welcomeInstallation" alt="婚礼迎宾装置" loading="lazy" />
         <div class="venue-overlay"></div>
         <div class="venue-content">
-          <span class="chapter-index">ACT IV · VENUE</span>
+          <span class="chapter-index">ACT V · VENUE</span>
           <h2 class="venue-name serif">{{ wedding.venue.name }}</h2>
           <p class="venue-date">{{ wedding.dateDisplay }}</p>
           <button class="venue-button pressable" @click="openMap(wedding.venue)"><span>查看地图</span><span>↗</span></button>
@@ -160,11 +192,20 @@ onBeforeUnmount(() => {
       <span class="city-shade"></span>
       <span class="city-route"><i></i><i></i><i></i><i></i></span>
       <span class="city-content">
-        <span class="chapter-row"><span class="chapter-index">ACT V · CITY GUIDE</span><span class="eyebrow">JINGDEZHEN</span></span>
+        <span class="chapter-row"><span class="chapter-index">ACT VI · CITY GUIDE</span><span class="eyebrow">JINGDEZHEN</span></span>
         <span class="city-copy"><b class="city-title serif">婚礼之外，顺游瓷都</b><small>从酒店出发，去看窑火、老城与这座城市仍在生长的当代一面。</small></span>
         <span class="city-link"><i>四处私心推荐</i><i>查看漫游指南 ↗</i></span>
       </span>
     </button>
+
+    <figure class="outdoor-portrait">
+      <img class="cover-image" :src="images.coupleOutdoor" alt="张凯文与刘明玥的户外合影" loading="lazy" />
+      <span class="outdoor-portrait__shade"></span>
+      <figcaption>
+        <small>ONE ORDINARY, BEAUTIFUL DAY</small>
+        <span class="serif">是恋人，也是彼此最熟悉的朋友</span>
+      </figcaption>
+    </figure>
 
     <section class="invitation-end">
       <img class="cover-image" :src="images.floralSculpture" alt="银白色婚礼花艺装置" loading="lazy" />

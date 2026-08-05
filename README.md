@@ -51,4 +51,4 @@ Web 版本使用 Vue 3、TypeScript、Vite、Node.js、Fastify 与 MySQL，计�
 
 ## 视觉资源
 
-`assets/images/` 中的婚礼视觉图片以婚礼提案为构图与风格参考，使用 imagegen 重新绘制，并针对小程序竖屏裁切做了优化。景德镇漫游视觉位于独立分包 `packages/travel/images/`，不会增加主包首屏加载压力。所有成品均移除了文字、水印与演示稿元素，并压缩为适合小程序加载的 JPEG 资源。
+`assets/images/` 中的婚礼场景视觉以婚礼提案为构图与风格参考，使用 imagegen 重新绘制；`1.jpg` 至 `4.jpg` 为新人提供的真实婚纱照，已用于 Web 邀请页的肖像章节与邀请前情绪过渡。景德镇漫游视觉位于 `packages/travel/images/`。所有图片均按竖屏浏览场景控制了尺寸和加载体积。
