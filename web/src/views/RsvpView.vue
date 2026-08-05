@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import SignatureMark from '@/components/SignatureMark.vue'
 import { images, wedding } from '@/data/wedding'
 import { getOrCreateClientId } from '@/lib/browser'
 import { submitRsvp, type RsvpPayload } from '@/lib/api'
@@ -101,7 +102,7 @@ onMounted(() => {
     <nav class="rsvp-nav">
       <button aria-label="返回" @click="router.back()">←</button>
       <span>RSVP</span>
-      <i class="serif">K / M</i>
+      <SignatureMark class="rsvp-signature" />
     </nav>
 
     <section v-if="submitted" v-photo-motion class="success-view">
@@ -114,7 +115,7 @@ onMounted(() => {
         </h1>
         <p>{{ form.name }}，{{ form.attendance === 'yes' ? '灯光已经为你亮起。' : '谢谢你认真回复这份邀请。' }}</p>
         <article class="wedding-ticket">
-          <header><b class="serif">K × M</b><span>{{ form.attendance === 'yes' ? 'WEDDING ADMISSION' : 'WEDDING REPLY' }}</span></header>
+          <header><SignatureMark class="ticket-signature" /><span>{{ form.attendance === 'yes' ? 'WEDDING ADMISSION' : 'WEDDING REPLY' }}</span></header>
           <h2 class="serif">{{ form.name }}</h2>
           <div class="ticket-grid">
             <span><small>DATE</small><b>{{ wedding.dateDisplay }}</b></span>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import SignatureMark from '@/components/SignatureMark.vue'
 import { images, wedding } from '@/data/wedding'
 import { openMap, sharePage } from '@/lib/browser'
 import { useToast } from '@/composables/useToast'
@@ -62,9 +63,7 @@ onBeforeUnmount(() => {
       <span class="opening-curtain opening-curtain--left"></span>
       <span class="opening-curtain opening-curtain--right"></span>
       <span class="opening-mark">
-        <span class="opening-monogram serif">K</span>
-        <i></i>
-        <span class="opening-monogram serif">M</span>
+        <SignatureMark flourish class="opening-signature" />
         <span class="opening-caption">THE CURTAIN OPENS</span>
       </span>
       <span class="opening-skip">轻触进入</span>
@@ -76,7 +75,7 @@ onBeforeUnmount(() => {
       <div class="hero-beam"></div>
       <div class="hero-top">
         <span class="micro-label">OUR WEDDING · 2026</span>
-        <span class="hero-mark serif">K / M</span>
+        <SignatureMark class="hero-mark" />
       </div>
       <div class="hero-content">
         <p v-if="guestName" class="guest-line">致 {{ guestName }}</p>
@@ -159,7 +158,7 @@ onBeforeUnmount(() => {
       </figure>
 
       <div v-reveal class="portrait-signature">
-        <span class="serif">K</span><i></i><span class="serif">M</span>
+        <SignatureMark flourish />
       </div>
     </section>
 
@@ -217,7 +216,7 @@ onBeforeUnmount(() => {
         <h2 class="end-title serif">这一天，因你在场<br />而更加完整</h2>
         <button class="ivory-button pressable" @click="router.push('/rsvp')">回应邀请</button>
         <button class="text-button" @click="shareInvitation">分享邀请函</button>
-        <p class="end-sign serif">K &amp; M · 2026</p>
+        <p class="end-sign"><SignatureMark /><small>· 2026</small></p>
       </div>
     </section>
 

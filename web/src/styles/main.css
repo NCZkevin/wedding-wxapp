@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Italianno Wedding";
+  src: url("../assets/fonts/Italianno-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   color: #f3f0e8;
   background: #03070d;
@@ -159,6 +167,40 @@ figure {
 .serif {
   font-family: "Songti SC", "STSong", "SimSun", serif;
   font-weight: 400;
+}
+
+.signature-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.16em;
+  font-family: "Italianno Wedding", Baskerville, "Times New Roman", serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.006em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.signature-mark b {
+  font-family: inherit;
+  font-size: 0.68em;
+  font-style: normal;
+  font-weight: 400;
+  transform: translateY(-0.13em);
+}
+
+.signature-mark--flourished::after {
+  position: absolute;
+  right: 10%;
+  bottom: -0.12em;
+  width: 38%;
+  height: 0.2em;
+  border-bottom: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.18;
+  content: "";
+  transform: rotate(-2deg);
 }
 
 .light-chapter {
@@ -684,29 +726,25 @@ figure {
   z-index: 3;
   top: 42%;
   left: 50%;
-  display: grid;
-  grid-template-columns: auto 36px auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   text-align: center;
   transform: translate(-50%, -50%);
   animation: mark-fade 1.2s ease 0.2s both;
 }
 
-.opening-mark i {
-  height: 1px;
-  background: rgba(243, 240, 232, 0.6);
-}
-
-.opening-monogram {
-  font-size: 35px;
+.opening-signature {
+  color: #edf3f4;
+  font-size: clamp(42px, 13vw, 58px);
+  text-shadow: 0 5px 24px rgba(83, 180, 211, 0.28);
 }
 
 .opening-caption {
-  grid-column: 1 / 4;
-  margin-top: 10px;
   font-size: 8px;
   letter-spacing: 0.42em;
+  text-indent: 0.42em;
 }
 
 .opening-skip {
@@ -735,8 +773,7 @@ figure {
 
 @keyframes mark-fade {
   0% { opacity: 0; transform: translate(-50%, -46%); }
-  35% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -54%); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 /* Invite */
@@ -795,8 +832,9 @@ figure {
 }
 
 .hero-mark {
-  font-size: 12px;
-  letter-spacing: 0.26em;
+  color: #edf3f4;
+  font-size: 20px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.32);
 }
 
 .hero-content {
@@ -1222,22 +1260,15 @@ figure {
 }
 
 .portrait-signature {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 14px;
-  width: 125px;
+  justify-content: center;
   margin: 50px auto 0;
   color: #667986;
 }
 
-.portrait-signature span {
-  font-size: 17px;
-}
-
-.portrait-signature i {
-  height: 1px;
-  background: rgba(11, 24, 38, 0.25);
+.portrait-signature > .signature-mark {
+  font-size: 34px;
 }
 
 .entry-section {
@@ -1673,10 +1704,22 @@ figure {
 }
 
 .end-sign {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
   margin-top: 66px;
   color: #728597;
-  font-size: 11px;
-  letter-spacing: 0.34em;
+}
+
+.end-sign .signature-mark {
+  font-size: 27px;
+}
+
+.end-sign small {
+  font-family: "Times New Roman", serif;
+  font-size: 8px;
+  letter-spacing: 0.26em;
 }
 
 /* Shared internal page hero */
@@ -2413,10 +2456,11 @@ figure {
   letter-spacing: 0.3em;
 }
 
-.rsvp-nav > i {
-  width: 34px;
-  font-size: 10px;
-  font-style: normal;
+.rsvp-nav > .rsvp-signature {
+  min-width: 78px;
+  justify-content: flex-end;
+  color: #dce7ec;
+  font-size: 15px;
   text-align: right;
 }
 
@@ -2754,9 +2798,9 @@ figure {
   letter-spacing: 0.18em;
 }
 
-.wedding-ticket header b {
+.wedding-ticket header .ticket-signature {
   color: var(--ink);
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .wedding-ticket h2 {
