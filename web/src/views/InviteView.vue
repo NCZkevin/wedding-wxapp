@@ -7,11 +7,16 @@ import { openMap, sharePage } from '@/lib/browser'
 import { useToast } from '@/composables/useToast'
 
 const DAY = 24 * 60 * 60 * 1000
+const OPENING_STORAGE_KEY = 'wedding-basic-opening-seen-v1'
 const router = useRouter()
 const toast = useToast()
 const now = ref(Date.now())
-const opening = ref(sessionStorage.getItem('wedding-opening-seen') !== '1')
+const opening = ref(sessionStorage.getItem(OPENING_STORAGE_KEY) !== '1')
 let countdownTimer: number | undefined
+
+const weddingFlow = ['接亲互动', '午饭', '迎宾留影', '婚礼仪式', '答谢晚宴']
+const participationItems = ['照片共创：分享你与我们的合影或小故事', '写下你的祝福']
+const brideRecommendations = ['御窑厂', '陶瓷博物馆', '大地艺术节', '锄月']
 
 const guestName = computed(() => new URLSearchParams(window.location.search).get('guest')?.trim() || '')
 const countdown = computed(() => {
@@ -25,10 +30,15 @@ const countdown = computed(() => {
   }
 })
 
+function setOpeningLock(locked: boolean) {
+  document.documentElement.classList.toggle('ri-opening-active', locked)
+}
+
 function closeOpening(startMusic = false) {
   if (!opening.value) return
   opening.value = false
-  sessionStorage.setItem('wedding-opening-seen', '1')
+  sessionStorage.setItem(OPENING_STORAGE_KEY, '1')
+  setOpeningLock(false)
   if (startMusic) window.dispatchEvent(new Event('wedding:music-request'))
 }
 
@@ -41,198 +51,265 @@ async function shareInvitation() {
     })
     if (result === 'copied') toast.show('邀请链接已复制')
   } catch {
-    // The share sheet can be dismissed without needing an error message.
+    // The native share sheet can be dismissed without needing an error message.
   }
 }
 
 onMounted(() => {
+  setOpeningLock(opening.value)
   countdownTimer = window.setInterval(() => {
     now.value = Date.now()
   }, 1000)
 })
 
 onBeforeUnmount(() => {
+  setOpeningLock(false)
   window.clearInterval(countdownTimer)
 })
 </script>
 
 <template>
-  <div class="page-shell invite-page">
-    <button v-if="opening" class="opening-scene" aria-label="轻触进入婚礼邀请并播放背景音乐" @click="closeOpening(true)">
-      <span class="opening-glow"></span>
-      <span class="opening-curtain opening-curtain--left"></span>
-      <span class="opening-curtain opening-curtain--right"></span>
-      <span class="opening-mark">
-        <SignatureMark flourish class="opening-signature" />
-        <span class="opening-caption">THE CURTAIN OPENS</span>
-      </span>
-      <span class="opening-skip">轻触进入</span>
-    </button>
+  <div class="page-shell invite-page ri-page">
+    <Transition name="ri-power">
+      <button
+        v-if="opening"
+        class="ri-opening"
+        aria-label="轻触或按回车进入 Kevin 与 Huan 的婚礼邀请，并播放背景音乐"
+        @click="closeOpening(true)"
+      >
+        <span class="ri-opening__stars" aria-hidden="true"></span>
+        <span class="ri-opening__art">
+          <img :src="images.beginScreen" alt="复古 Atari 电脑正在载入 Kevin 与 Huan 的婚礼邀请" />
+          <span class="ri-opening__glow" aria-hidden="true"></span>
+          <span class="ri-scanlines" aria-hidden="true"></span>
+          <span class="ri-opening__sweep" aria-hidden="true"></span>
+        </span>
+        <span class="ri-opening__status">
+          <span><i></i>LOVE.EXE READY</span>
+          <strong>轻触屏幕&nbsp;&nbsp;/&nbsp;&nbsp;PRESS ENTER</strong>
+          <small>A$=<b aria-hidden="true">█</b></small>
+        </span>
+      </button>
+    </Transition>
 
-    <header class="hero">
-      <img class="cover-image hero-image" :src="images.heroSea" alt="" />
-      <div class="hero-shade"></div>
-      <div class="hero-beam"></div>
-      <div class="hero-top">
-        <span class="micro-label">OUR WEDDING · 2026</span>
-        <SignatureMark class="hero-mark" />
+    <header class="ri-event">
+      <span class="ri-event__stars" aria-hidden="true"></span>
+      <div class="ri-terminal-bar"><span>LOVE.EXE / EVENT INFO</span><span>READY_</span></div>
+      <div v-reveal class="ri-event__identity">
+        <p v-if="guestName">DEAR {{ guestName }} · THIS INVITATION IS FOR YOU</p>
+        <span>THE WEDDING OF</span>
+        <SignatureMark flourish />
+        <small>张凯文 &amp; 刘明玥</small>
       </div>
-      <div class="hero-content">
-        <p v-if="guestName" class="guest-line">致 {{ guestName }}</p>
-        <div class="name-lockup">
-          <h1 class="hero-title serif">{{ wedding.couple.groom }}</h1>
-          <div class="hero-cross"><i></i><span>×</span><i></i></div>
-          <h1 class="hero-title serif">{{ wedding.couple.bride }}</h1>
-        </div>
-        <p class="hero-subtitle">我们的婚礼</p>
+
+      <div v-reveal="{ delay: 80 }" class="ri-event__date">
+        <span>SEPTEMBER</span>
+        <strong class="serif">09<span>/</span>12</strong>
+        <p>2026 · SATURDAY</p>
       </div>
-      <div class="hero-meta">
-        <p class="hero-date serif">{{ wedding.dateDisplay }}</p>
-        <p class="hero-venue">江西·景德镇·乐平</p>
-        <p class="hero-quote serif">{{ wedding.quote }}</p>
-        <span class="scroll-cue"><i></i></span>
+
+      <div v-reveal="{ delay: 140 }" class="ri-event__details">
+        <div><small>GUEST ARRIVAL</small><b>17:00</b><span>迎宾留影</span></div>
+        <div><small>DESTINATION</small><b>{{ wedding.venue.name }}</b><span>江西 · 景德镇 · 乐平</span></div>
       </div>
+
+      <button v-reveal="{ delay: 180 }" class="ri-map-button pressable" @click="openMap(wedding.venue)">
+        <span><small>ROUTE / 29.0072° N · 117.1283° E</small><b>打开地图导航</b></span><i>↗</i>
+      </button>
+
+      <div v-reveal="{ delay: 220 }" class="ri-countdown">
+        <span>{{ countdown.ended ? 'LOVE.EXE IS RUNNING' : 'COUNTDOWN TO LOVE.EXE' }}</span>
+        <b v-if="!countdown.ended">{{ countdown.days }}D&nbsp;&nbsp;{{ countdown.hours }}:{{ countdown.minutes }}:{{ countdown.seconds }}</b>
+        <b v-else>THANK YOU FOR BEING HERE</b>
+      </div>
+      <span class="ri-scroll-hint">SCROLL TO READ THE STORY <i>↓</i></span>
     </header>
 
-    <section class="section countdown-section light-chapter">
-      <div v-reveal class="chapter-row"><span class="chapter-index">ACT I</span><span class="eyebrow">DATE &amp; VENUE</span></div>
-
-      <article v-reveal="{ delay: 80 }" class="event-card reveal--scale">
-        <div class="event-card__date">
-          <div class="event-card__calendar">
-            <span class="event-card__month"><i>2026</i><i>SEPTEMBER</i></span>
-            <span class="event-card__day-row"><strong class="event-card__day serif">09.12</strong><span class="event-card__weekday">周六</span></span>
-          </div>
-          <div class="event-card__time">
-            <small>GUEST ARRIVAL</small>
-            <b class="serif">17:00</b>
-            <span>迎宾开始</span>
-          </div>
+    <main>
+      <section class="ri-prologue">
+        <div v-reveal class="ri-spread-heading ri-spread-heading--night">
+          <span>PROLOGUE · PLAYER SELECT</span>
+          <h1 class="serif">序章</h1>
+          <p>在成为“我们”之前，先认识两个属性相异的玩家。</p>
         </div>
 
-        <div class="event-card__venue">
-          <span class="event-card__grid" aria-hidden="true"></span>
-          <span class="event-card__orbit" aria-hidden="true"><i></i></span>
-          <div class="event-card__place-meta">
-            <span>江西 · 景德镇 · 乐平</span>
-            <span>29.0072° N</span>
-          </div>
-          <div class="event-card__place-main">
-            <span class="event-card__destination"><i></i> WEDDING DESTINATION</span>
-            <h2 class="event-card__hotel serif">{{ wedding.venue.name }}</h2>
-          </div>
-          <div class="event-card__place-footer">
-            <span>THE PLACE WE MEET</span>
-            <button class="event-card__map pressable" @click="openMap(wedding.venue)"><span>地图导航</span><span>↗</span></button>
-          </div>
+        <div class="ri-player-spread">
+          <article v-reveal class="ri-player-card ri-player-card--kevin reveal--image">
+            <div class="ri-player-card__photo"><img :src="images.groomPortrait" alt="新郎张凯文单人肖像" loading="lazy" /></div>
+            <div class="ri-player-card__copy"><span>PLAYER 01</span><h2>Kevin</h2><p>理性 · 逻辑 · 问题解决</p></div>
+          </article>
+          <span class="ri-player-link" aria-hidden="true"><i></i><b>SYNC</b><i></i></span>
+          <article v-reveal="{ delay: 90 }" class="ri-player-card ri-player-card--huan reveal--image">
+            <div class="ri-player-card__photo"><img :src="images.bridePortrait" alt="新娘刘明玥单人肖像" loading="lazy" /></div>
+            <div class="ri-player-card__copy"><span>PLAYER 02</span><h2>Huan</h2><p>共情 · 洞察 · 链接</p></div>
+          </article>
         </div>
-      </article>
 
-      <div v-reveal="{ delay: 160 }" class="countdown-compact">
-        <span>{{ countdown.ended ? '故事已经开场' : '距离相见' }}</span>
-        <span v-if="!countdown.ended"><b>{{ countdown.days }}</b> 天 · {{ countdown.hours }}:{{ countdown.minutes }}:{{ countdown.seconds }}</span>
-        <span v-else>谢谢你与我们共同抵达</span>
-      </div>
-    </section>
+        <div v-reveal class="ri-prologue__statement">
+          <span>COMPATIBILITY / 100%</span>
+          <p class="serif">属性相异，灵魂同频<br />天赋互补，心意相通</p>
+        </div>
+      </section>
 
-    <section v-photo-motion class="story-section">
-      <img class="cover-image story-photo" :src="images.coupleToast" alt="张凯文与刘明玥举杯合影" loading="lazy" />
-      <div class="story-shade"></div>
-      <div v-reveal class="story-copy">
-        <span class="eyebrow">ACT II · OUR STORY</span>
-        <h2 class="story-title serif">光落下的时候</h2>
-        <p class="story-body">我们想把那些平常却珍贵的时刻，变成这一天的光。也想邀请你，来到故事真正发生的地方。</p>
-        <div class="story-line"><i></i><span>TOGETHER, INTO THE LIGHT</span></div>
-      </div>
-    </section>
+      <section class="ri-see-you">
+        <div v-reveal class="ri-spread-heading ri-spread-heading--paper ri-spread-heading--numbered">
+          <span>CHAPTER 1 · I SEE YOU</span>
+          <strong>01</strong>
+          <h2 class="serif">看见你，<br />也被你看见。</h2>
+        </div>
 
-    <section class="portrait-section light-chapter">
-      <div v-reveal class="portrait-heading">
-        <div class="chapter-row"><span class="chapter-index">ACT III · PORTRAITS</span><span class="eyebrow">THE TWO OF US</span></div>
-        <h2 class="section-heading">我们，和我们喜欢的日常</h2>
-        <p class="section-copy">从此以后，生活继续发生，只是每一个明天都有彼此。</p>
-      </div>
-
-      <figure v-reveal class="portrait-feature reveal--image">
-        <img :src="images.coupleClose" alt="张凯文与刘明玥的婚纱照" loading="lazy" />
-        <span class="portrait-feature__line"></span>
-        <figcaption>
-          <small>KEVIN &amp; MINGYUE</small>
-          <span class="serif">并肩，向同一个以后</span>
-        </figcaption>
-      </figure>
-
-      <div class="portrait-pair">
-        <figure v-reveal class="reveal--image">
-          <img :src="images.couplePlayful" alt="张凯文与刘明玥的轻松合影" loading="lazy" />
-          <figcaption><span>01</span><small>LAUGHTER</small></figcaption>
+        <figure v-photo-motion class="ri-reeds-fullbleed">
+          <img class="cover-image" :src="images.coupleReeds" alt="张凯文与刘明玥在芦苇地牵手的昼夜拼幅" loading="lazy" />
+          <span class="ri-reeds-fullbleed__shade"></span>
+          <figcaption><small>WHERE SWAYS THE GRAIN</small><b class="serif">沒有一棵樹看到另外一棵樹<br />我們卻在藍調里共鳴</b></figcaption>
         </figure>
-        <figure v-reveal="{ delay: 90 }" class="reveal--image">
-          <img :src="images.coupleFormal" alt="张凯文与刘明玥的正式合影" loading="lazy" />
-          <figcaption><span>02</span><small>TOGETHER</small></figcaption>
+
+        <div class="ri-see-you__spread">
+          <figure v-reveal class="ri-see-you__portrait reveal--image">
+            <div class="ri-editorial-frame"><img :src="images.coupleOutdoor" alt="张凯文与刘明玥在芦苇地的正面合影" loading="lazy" /></div>
+            <figcaption>FOUND EACH OTHER · 2026</figcaption>
+          </figure>
+          <blockquote v-reveal="{ delay: 90 }" class="ri-see-you__quote">
+            <span>UNTIL I FOUND YOU</span>
+            <p class="serif">有些相遇不是突然发生，<br />只是我们终于抵达彼此。</p>
+            <small>Until I found you,<br />Where sways the grain!</small>
+          </blockquote>
+        </div>
+      </section>
+
+      <section class="ri-life-with-you">
+        <div v-reveal class="ri-spread-heading ri-spread-heading--night ri-spread-heading--numbered">
+          <span>CHAPTER 2 · LIFE WITH YOU</span>
+          <strong>02</strong>
+          <h2 class="serif">与你生活，<br />是日常也是冒险。</h2>
+        </div>
+
+        <div class="ri-life-manifesto">
+          <p v-reveal class="serif">人生主线<br /><b>相互托底</b></p>
+          <i aria-hidden="true"></i>
+          <p v-reveal="{ delay: 80 }" class="serif">生活支线<br /><b>共享乐趣</b></p>
+        </div>
+
+        <div class="ri-life-collage">
+          <figure v-reveal class="ri-life-collage__hero reveal--image"><img :src="images.couplePlayfulWarm" alt="刘明玥与张凯文轻松俏皮的暖色合影" loading="lazy" /><figcaption>PLAYFUL MODE / ALWAYS ON</figcaption></figure>
+          <figure v-reveal="{ delay: 70 }" class="ri-life-collage__small ri-life-collage__small--one reveal--image"><img :src="images.couplePlayful" alt="张凯文与刘明玥俏皮互动的合影" loading="lazy" /></figure>
+          <figure v-reveal="{ delay: 110 }" class="ri-life-collage__small ri-life-collage__small--two reveal--image"><img :src="images.coupleSeated" alt="张凯文与刘明玥坐在一起的合影" loading="lazy" /></figure>
+          <span class="ri-life-collage__index">LIFE<br />WITH<br />YOU</span>
+        </div>
+
+        <blockquote v-reveal class="ri-life-quote">
+          <span>CO-OP MODE · CONNECTED</span>
+          <p class="serif">默契相伴<br />无吵通关生活大小事</p>
+          <small>我们没有约定谁迁就谁，只是在每一次选择里，自然地站到同一边。</small>
+        </blockquote>
+
+        <div class="ri-life-diptych">
+          <figure v-reveal class="reveal--image"><img :src="images.coupleClose" alt="张凯文望向刘明玥的合影" loading="lazy" /><figcaption>LOOK AT YOU</figcaption></figure>
+          <figure v-reveal="{ delay: 80 }" class="reveal--image"><img :src="images.coupleIntimate" alt="张凯文与刘明玥亲密依偎的合影" loading="lazy" /><figcaption>STAY WITH YOU</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="ri-new-life">
+        <div v-reveal class="ri-spread-heading ri-spread-heading--paper ri-spread-heading--numbered">
+          <span>CHAPTER … · NEW LIFE LOADING</span>
+          <strong>∞</strong>
+          <h2 class="serif">下一章节，<br />正在载入。</h2>
+        </div>
+
+        <figure v-photo-motion class="ri-new-life__back-view">
+          <img class="cover-image" :src="images.coupleBackView" alt="张凯文与刘明玥牵手走向芦苇地的背影" loading="lazy" />
+          <span class="ri-new-life__shade"></span>
+          <figcaption><small>NEW MAP / UNKNOWN</small><b class="serif">与你并肩，<br />前方未知皆是惊喜。</b></figcaption>
         </figure>
-      </div>
 
-      <figure v-reveal class="portrait-closing reveal--image">
-        <img :src="images.coupleVeil" alt="张凯文与刘明玥依偎在一起的婚纱照" loading="lazy" />
-        <figcaption>
-          <small>03 · QUIET MOMENT</small>
-          <span class="serif">靠近一点，就是我们的以后</span>
-        </figcaption>
-      </figure>
+        <div class="ri-new-life__sequence">
+          <figure v-reveal class="ri-new-life__portrait reveal--image"><img :src="images.coupleFormal" alt="张凯文与刘明玥牵手的正式合影" loading="lazy" /></figure>
+          <div v-reveal="{ delay: 70 }" class="ri-new-life__copy"><span>SAVE POINT / FOREVER</span><p class="serif">未来不会提前给出答案，<br />好在方向可以一起确认。</p></div>
+          <figure v-reveal="{ delay: 100 }" class="ri-new-life__portrait ri-new-life__portrait--offset reveal--image"><img :src="images.coupleVeil" alt="张凯文与刘明玥依偎相伴的合影" loading="lazy" /></figure>
+        </div>
 
-      <div v-reveal class="portrait-signature">
-        <SignatureMark flourish />
-      </div>
-    </section>
+        <article v-photo-motion class="ri-join-us">
+          <img class="cover-image" :src="images.coupleToast" alt="张凯文与刘明玥举杯邀请朋友参加婚礼" loading="lazy" />
+          <span class="ri-join-us__shade"></span>
+          <span class="ri-scanlines" aria-hidden="true"></span>
+          <div v-reveal class="ri-join-us__copy">
+            <span>JOIN US · IT TAKES TWO</span>
+            <small>全新双人关卡载入中</small>
+            <h2 class="serif">邀请最好的你，<br />共同见证。</h2>
+            <button class="ri-join-us__button pressable" @click="router.push('/rsvp')"><span>回应邀请</span><b>/ JOIN</b></button>
+          </div>
+        </article>
+      </section>
 
-    <figure v-photo-motion class="outdoor-portrait">
-      <img class="cover-image" :src="images.coupleOutdoor" alt="张凯文与刘明玥的户外合影" loading="lazy" />
-      <span class="outdoor-portrait__shade"></span>
-      <figcaption v-reveal>
-        <small>ONE ORDINARY, BEAUTIFUL DAY</small>
-        <span class="serif">是恋人，也是彼此最熟悉的朋友</span>
-      </figcaption>
-    </figure>
+      <section class="ri-day">
+        <div v-reveal class="ri-heading ri-heading--night">
+          <span>JOIN US · ABOUT THE DAY</span>
+          <h2 class="serif">关于这一天</h2>
+          <p>你不只是观礼者，也会成为这段共同记忆里不可替代的一帧。</p>
+        </div>
 
-    <section class="section entry-section">
-      <div v-reveal class="chapter-row"><span class="chapter-index">ACT IV</span><span class="eyebrow">EXPLORE</span></div>
-      <h2 v-reveal="{ delay: 70 }" class="section-heading">关于这一天</h2>
-      <div class="entry-list">
-        <button v-reveal class="entry-card line-card pressable" @click="router.push('/schedule')">
-          <span class="entry-number serif">01</span>
-          <span class="entry-main"><b class="serif">婚礼流程</b><small>迎宾拍照 · 婚礼仪式 · 晚宴</small></span>
-          <span class="entry-arrow">↗</span>
+        <article v-reveal class="ri-day-card ri-day-card--flow reveal--scale">
+          <div class="ri-day-card__head"><span>01</span><small>PROGRAMME</small></div>
+          <h3 class="serif">婚礼流程</h3>
+          <ol>
+            <li v-for="(item, index) in weddingFlow" :key="item"><i>0{{ index + 1 }}</i><span>{{ item }}</span></li>
+          </ol>
+          <button class="ri-card-action pressable" @click="router.push('/schedule')"><span>查看完整流程</span><b>↗</b></button>
+        </article>
+
+        <article v-reveal="{ delay: 90 }" class="ri-day-card ri-day-card--join reveal--scale">
+          <div class="ri-day-card__head"><span>02</span><small>PARTICIPATE</small></div>
+          <h3 class="serif">不止观礼</h3>
+          <ul>
+            <li v-for="(item, index) in participationItems" :key="item"><i>0{{ index + 1 }}</i><span>{{ item }}</span></li>
+          </ul>
+          <p>你的视角，也会成为这份共同存档的一部分。</p>
+          <button class="ri-card-action pressable" @click="router.push('/interact')"><span>参与照片共创与祝福</span><b>↗</b></button>
+        </article>
+      </section>
+
+      <section class="ri-city">
+        <div v-reveal class="ri-heading ri-heading--paper">
+          <span>AFTER STORY · BEYOND THE WEDDING</span>
+          <h2 class="serif">不止婚礼</h2>
+        </div>
+        <div v-reveal class="ri-city__intro">
+          <p class="serif">乐平，是新郎生长的故土。</p>
+          <p class="serif">景德镇，是新娘 22 年故地重游后被触动、改写人生轨迹的城市。</p>
+          <span>愿借我们的视角，邀你感受这座城市独有的生命力。</span>
+        </div>
+
+        <div class="ri-city__route" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+        <article v-reveal class="ri-recommendation ri-recommendation--bride reveal--scale">
+          <div><small>HUAN'S PICKS</small><b>新娘推荐</b></div>
+          <ul><li v-for="place in brideRecommendations" :key="place"><i></i><span>{{ place }}</span></li></ul>
+        </article>
+        <article v-reveal="{ delay: 80 }" class="ri-recommendation ri-recommendation--groom reveal--scale">
+          <div><small>KEVIN'S PICKS</small><b>新郎推荐</b></div>
+          <h3 class="serif">乐平地道美食</h3>
+          <p>从熟悉的一口开始，尝尝这座小城最真实、最热闹的日常。</p>
+        </article>
+
+        <button v-reveal class="ri-city-action pressable" @click="router.push('/travel')">
+          <span><small>CITY GUIDE / SIDE QUEST</small><b class="serif">打开我们的瓷都漫游地图</b></span><i>↗</i>
         </button>
-        <button v-reveal="{ delay: 80 }" class="entry-card line-card pressable" @click="router.push('/interact')">
-          <span class="entry-number serif">02</span>
-          <span class="entry-main"><b class="serif">参与这一天</b><small>照片共创 · 文字祝福</small></span>
-          <span class="entry-arrow">↗</span>
-        </button>
-      </div>
-    </section>
+      </section>
 
-    <section v-photo-motion class="invitation-end">
-      <img class="cover-image" :src="images.floralSculpture" alt="银白色婚礼花艺装置" loading="lazy" />
-      <div class="end-shade"></div>
-      <div v-reveal class="end-content">
-        <span class="eyebrow">BE OUR GUEST</span>
-        <h2 class="end-title serif">这一天，因你在场<br />而更加完整</h2>
-        <button class="ivory-button pressable" @click="router.push('/rsvp')">回应邀请</button>
-        <button class="text-button" @click="shareInvitation">分享邀请函</button>
-        <p class="end-sign"><SignatureMark /><small>· 2026</small></p>
-      </div>
-    </section>
-
-    <button v-photo-motion class="city-section city-section--epilogue pressable" @click="router.push('/travel')">
-      <img class="cover-image" :src="images.welcomeInstallation" alt="" loading="lazy" />
-      <span class="city-shade"></span>
-      <span class="city-route"><i></i><i></i><i></i><i></i></span>
-      <span v-reveal class="city-content">
-        <span class="chapter-row"><span class="chapter-index">AFTER CREDITS · CITY GUIDE</span><span class="eyebrow">JINGDEZHEN</span></span>
-        <span class="city-copy"><b class="city-title serif">婚礼之外，畅游瓷都</b><small>藏在片尾的一份私心推荐：从酒店出发，去看窑火、老城与这座城市仍在生长的当代一面。</small></span>
-        <span class="city-link"><i>四处私心推荐</i><i>开启彩蛋 ↗</i></span>
-      </span>
-    </button>
+      <section class="ri-finale">
+        <span class="ri-finale__stars" aria-hidden="true"></span>
+        <div v-reveal class="ri-finale__terminal reveal--scale">
+          <span>100 PRINT "SEE YOU THERE"</span>
+          <h2 class="serif">这一天，<br />期待与你见面。</h2>
+          <p>世界没有唯一的通关方式，<br />但我们希望这一段旅程，有你在场。</p>
+          <button class="ri-rsvp-button pressable" @click="router.push('/rsvp')"><span>回应邀请</span><b>/ JOIN</b></button>
+          <button class="ri-share-button" @click="shareInvitation">分享邀请函 ↗</button>
+          <SignatureMark flourish />
+          <small>RUNNING LOVE.EXE · TO BE CONTINUED_</small>
+        </div>
+      </section>
+    </main>
   </div>
 </template>
+
+<style src="../styles/invite-retro.css"></style>

@@ -9,6 +9,14 @@ import coupleFormal from '../../../assets/images/3.jpg'
 import coupleClose from '../../../assets/images/4.jpg'
 import coupleToast from '../../../assets/images/5.jpg'
 import coupleVeil from '../../../assets/images/6.jpg'
+import coupleReeds from '../../../assets/images/7.jpg'
+import groomPortrait from '../../../assets/images/8.jpg'
+import bridePortrait from '../../../assets/images/9.jpg'
+import couplePlayfulWarm from '../../../assets/images/10.jpg'
+import coupleSeated from '../../../assets/images/11.jpg'
+import coupleIntimate from '../../../assets/images/12.jpg'
+import coupleBackView from '../../../assets/images/13.jpg'
+import beginScreen from '../../../assets/images/begin.png'
 import ceramicsMuseum from '../../../packages/travel/images/ceramics-museum.jpg'
 import imperialKiln from '../../../packages/travel/images/imperial-kiln.jpg'
 import taoxichuan from '../../../packages/travel/images/taoxichuan.jpg'
@@ -26,6 +34,14 @@ export const images = {
   coupleClose,
   coupleToast,
   coupleVeil,
+  coupleReeds,
+  groomPortrait,
+  bridePortrait,
+  couplePlayfulWarm,
+  coupleSeated,
+  coupleIntimate,
+  coupleBackView,
+  beginScreen,
 }
 
 export const wedding = {

@@ -14,7 +14,7 @@ const updateShare = () => {
   void configureWechatShare({
     title: `${wedding.couple.display}｜婚礼邀请`,
     description: `${wedding.dateDisplay} · ${wedding.venue.name}`,
-    imageUrl: new URL(images.heroSea, window.location.origin).href,
+    imageUrl: new URL(images.beginScreen, window.location.origin).href,
     link: `${siteUrl}/`,
   })
 }
