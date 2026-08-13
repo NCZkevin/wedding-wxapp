@@ -217,10 +217,10 @@ html.ri-opening-active {
 .ri-event {
   position: relative;
   display: flex;
-  min-height: max(760px, 100svh);
+  min-height: min(760px, 100svh);
   flex-direction: column;
   overflow: hidden;
-  padding: calc(28px + env(safe-area-inset-top, 0px)) 24px 72px;
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 24px 36px;
   background:
     radial-gradient(circle at 50% 22%, rgba(17, 80, 145, 0.38), transparent 27%),
     linear-gradient(180deg, #020813, #061427 64%, #08111d);
@@ -609,8 +609,8 @@ html.ri-opening-active {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: auto;
-  padding-top: 34px;
+  margin-top: 18px;
+  padding-top: 0;
   color: #526f83;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 7px;
@@ -678,7 +678,7 @@ html.ri-opening-active {
 .ri-prologue {
   position: relative;
   overflow: hidden;
-  padding: 58px 22px 70px;
+  padding: 44px 22px 50px;
   background:
     radial-gradient(circle at 50% 18%, rgba(20, 88, 146, 0.3), transparent 29%),
     #050d18;
@@ -701,7 +701,7 @@ html.ri-opening-active {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
   align-items: center;
-  margin-top: 34px;
+  margin-top: 22px;
 }
 
 .ri-player-card {
@@ -710,7 +710,7 @@ html.ri-opening-active {
 }
 
 .ri-player-card--huan {
-  margin-top: 68px;
+  margin-top: 42px;
 }
 
 .ri-player-card__photo {
@@ -746,7 +746,7 @@ html.ri-opening-active {
 }
 
 .ri-player-card__copy {
-  padding: 15px 2px 0;
+  padding: 10px 2px 0;
 }
 
 .ri-player-card__copy span {
@@ -757,7 +757,7 @@ html.ri-opening-active {
 }
 
 .ri-player-card__copy h2 {
-  margin-top: 5px;
+  margin-top: 3px;
   font-family: "Italianno Wedding", Baskerville, serif;
   font-size: clamp(32px, 9vw, 43px);
   font-weight: 400;
@@ -765,7 +765,7 @@ html.ri-opening-active {
 }
 
 .ri-player-card__copy p {
-  margin-top: 9px;
+  margin-top: 6px;
   color: #9eaab2;
   font-size: 8px;
   line-height: 1.6;
@@ -778,7 +778,7 @@ html.ri-opening-active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   color: #73bfe9;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 6px;
@@ -787,34 +787,79 @@ html.ri-opening-active {
 
 .ri-player-link i {
   width: 1px;
-  height: 44px;
+  height: 30px;
   background: linear-gradient(180deg, transparent, #75bce6, #ae7751, transparent);
 }
 
 .ri-prologue__statement {
   position: relative;
   z-index: 2;
-  width: 76%;
-  margin: 37px 0 0 auto;
-  padding: 16px 0 2px 15px;
-  border-top: 0;
-  border-bottom: 0;
-  border-left: 1px solid rgba(168, 205, 230, 0.35);
-  text-align: left;
+  margin-top: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(143, 198, 233, 0.3);
+  background:
+    linear-gradient(90deg, rgba(65, 141, 188, 0.07) 1px, transparent 1px) 0 0 / 18px 18px,
+    rgba(4, 18, 32, 0.78);
+  box-shadow: 5px 6px 0 rgba(53, 116, 157, 0.11);
 }
 
-.ri-prologue__statement span {
-  color: #72b9e5;
+.ri-prologue__statement header {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(143, 198, 233, 0.18);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 7px;
-  letter-spacing: 0.18em;
 }
 
-.ri-prologue__statement p {
-  margin-top: 10px;
-  font-size: clamp(15px, 4.2vw, 19px);
-  line-height: 1.65;
-  letter-spacing: 0.07em;
+.ri-prologue__statement header span {
+  color: #6f9bb6;
+  font-size: 5px;
+  letter-spacing: 0.15em;
+}
+
+.ri-prologue__statement header b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #9fd8f4;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 5px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.ri-prologue__statement header i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #9bdefc;
+  box-shadow: 0 0 9px rgba(104, 197, 240, 0.8);
+}
+
+.ri-prologue__statement > p {
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  align-items: center;
+  padding: 16px 11px 14px;
+  color: #e2eaed;
+  font-size: clamp(13px, 3.7vw, 17px);
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+}
+
+.ri-prologue__statement > p span:last-child {
+  color: #d8c6ae;
+  text-align: right;
+}
+
+.ri-prologue__statement > p i {
+  color: #70bce5;
+  font-family: "Times New Roman", serif;
+  font-size: 13px;
+  font-style: normal;
+  text-align: center;
 }
 
 .ri-see-you {
@@ -875,6 +920,11 @@ html.ri-opening-active {
   letter-spacing: 0.04em;
 }
 
+.ri-reeds-fullbleed b em {
+  font-family: "Times New Roman", serif;
+  font-weight: 400;
+}
+
 .ri-see-you__spread {
   position: relative;
   padding: 62px 20px 76px;
@@ -923,6 +973,15 @@ html.ri-opening-active {
   line-height: 1.4;
   letter-spacing: 0.04em;
   text-align: left;
+}
+
+.ri-see-you__portrait figcaption small.serif {
+  color: #4f5558;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.75;
+  letter-spacing: 0.05em;
 }
 
 .ri-see-you__quote {
@@ -1120,7 +1179,7 @@ html.ri-opening-active {
   z-index: 5;
   width: 62%;
   margin: -38px 0 0;
-  padding: 20px 2px 12px 17px;
+  padding: 20px 2px 4px 17px;
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -1143,20 +1202,11 @@ html.ri-opening-active {
   letter-spacing: 0.05em;
 }
 
-.ri-life-quote small {
-  display: block;
-  margin-top: 11px;
-  max-width: 190px;
-  color: #7f929f;
-  font-size: 8px;
-  line-height: 1.7;
-}
-
 .ri-life-diptych {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 11px;
-  margin-top: 30px;
+  margin-top: 14px;
 }
 
 .ri-life-diptych figure {

@@ -189,8 +189,8 @@ onBeforeUnmount(() => {
         </div>
 
         <div v-reveal class="ri-prologue__statement">
-          <span>COMPATIBILITY / 100%</span>
-          <p class="serif">属性相异，灵魂同频<br />天赋互补，心意相通</p>
+          <header><span>SYSTEM RESULT</span><b><i></i>CONNECTED_</b></header>
+          <p class="serif"><span>逻辑，搭建世界。</span><i>×</i><span>共情，理解彼此。</span></p>
         </div>
       </section>
 
@@ -204,19 +204,19 @@ onBeforeUnmount(() => {
         <figure v-photo-motion class="ri-reeds-fullbleed">
           <img class="cover-image" :src="images.coupleReeds" alt="张凯文与刘明玥在芦苇地牵手的昼夜拼幅" loading="lazy" />
           <span class="ri-reeds-fullbleed__shade"></span>
-          <figcaption><small>WHERE SWAYS THE GRAIN</small><b class="serif">沒有一棵樹看到另外一棵樹<br />我們卻在藍調里共鳴</b></figcaption>
+          <figcaption><small>WHERE SWAYS THE GRAIN</small><b class="serif"><em>Until I found you,</em><br /><em>where sways the grain.</em></b></figcaption>
         </figure>
 
         <div class="ri-see-you__spread">
           <figure v-reveal class="ri-see-you__portrait reveal--image">
             <div class="ri-editorial-frame"><img :src="images.coupleOutdoor" alt="张凯文与刘明玥在芦苇地的正面合影" loading="lazy" /></div>
             <figcaption>
-              <small>Until I found you, where sways the grain.</small>
+              <small class="serif">有些相遇不是突然发生，<br />只是我们终于抵达彼此。</small>
               <span>FOUND EACH OTHER · 2026</span>
             </figcaption>
           </figure>
           <blockquote v-reveal="{ delay: 90 }" class="ri-see-you__quote">
-            <p class="serif"><span>有些相遇不是突然发生，</span><span>只是我们终于抵达彼此。</span></p>
+            <p class="serif"><span>沒有一棵樹看到另外一棵樹，</span><span>我們卻在藍調裡共鳴。</span></p>
           </blockquote>
         </div>
       </section>
@@ -240,11 +240,10 @@ onBeforeUnmount(() => {
           <span class="ri-life-collage__index">LIFE<br />WITH<br />YOU</span>
         </div>
 
-        <blockquote v-reveal class="ri-life-quote">
-          <span>CO-OP MODE · CONNECTED</span>
-          <p class="serif">默契相伴<br />无吵通关生活大小事</p>
-          <small>我们没有约定谁迁就谁，只是在每一次选择里，自然地站到同一边。</small>
-        </blockquote>
+<blockquote v-reveal class="ri-life-quote">
+  <span>CO-OP MODE · CONNECTED</span>
+  <p class="serif">默契相伴<br />无吵通关生活大小事</p>
+</blockquote>
 
         <div class="ri-life-diptych">
           <figure v-reveal class="reveal--image"><img :src="images.coupleClose" alt="张凯文望向刘明玥的合影" loading="lazy" /><figcaption>LOOK AT YOU</figcaption></figure>
