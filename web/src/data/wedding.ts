@@ -38,6 +38,10 @@ export const images = {
   coupleIntimate,
   coupleBackView,
   beginScreen,
+  ceramicsMuseum,
+  imperialKiln,
+  taoxichuan,
+  sanbao,
 }
 
 export const wedding = {

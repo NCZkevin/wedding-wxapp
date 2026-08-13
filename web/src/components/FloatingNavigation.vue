@@ -9,7 +9,6 @@ const items = [
   { to: '/', label: '邀请', index: 'I' },
   { to: '/schedule', label: '流程', index: 'II' },
   { to: '/interact', label: '祝福', index: 'III' },
-  { to: '/travel', label: '漫游', index: 'IV' },
 ]
 </script>
 

@@ -12,7 +12,9 @@ const router = useRouter()
 const toast = useToast()
 const now = ref(Date.now())
 const opening = ref(sessionStorage.getItem(OPENING_STORAGE_KEY) !== '1')
+const eggState = ref<'locked' | 'loading' | 'open'>('locked')
 let countdownTimer: number | undefined
+let eggTimer: number | undefined
 
 const weddingFlow = ['接亲互动', '午饭', '迎宾留影', '婚礼仪式', '答谢晚宴']
 const brideRecommendations = ['御窑厂', '陶瓷博物馆', '大地艺术节', '锄月']
@@ -41,6 +43,15 @@ function closeOpening(startMusic = false) {
   if (startMusic) window.dispatchEvent(new Event('wedding:music-request'))
 }
 
+function unlockEgg() {
+  if (eggState.value !== 'locked') return
+  eggState.value = 'loading'
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  eggTimer = window.setTimeout(() => {
+    eggState.value = 'open'
+  }, reducedMotion ? 180 : 1650)
+}
+
 async function shareInvitation() {
   try {
     const result = await sharePage({
@@ -64,6 +75,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   setOpeningLock(false)
   window.clearInterval(countdownTimer)
+  window.clearTimeout(eggTimer)
 })
 </script>
 
@@ -263,40 +275,83 @@ onBeforeUnmount(() => {
         </div>
       </section>
 
-      <section class="ri-city">
+      <section class="ri-city" :class="{ 'is-locked': eggState === 'locked', 'is-loading': eggState === 'loading', 'is-open': eggState === 'open' }">
         <div v-reveal class="ri-city__unlock">
-          <span class="ri-city__unlock-mark" aria-hidden="true">+</span>
-          <span class="ri-city__unlock-copy">
+          <span class="ri-city__stars" aria-hidden="true"></span>
+          <span class="ri-city__code" aria-hidden="true">BONUS_FILE_04<br />29.0072° N<br />117.1283° E</span>
+          <span class="ri-city__orbit" aria-hidden="true"><i></i><i></i><b>+</b></span>
+
+          <div class="ri-city__unlock-copy" aria-live="polite">
             <small>AFTER THE CREDITS · EASTER EGG</small>
-            <b>片尾彩蛋 · 隐藏章节已解锁</b>
-          </span>
-          <i aria-hidden="true">04</i>
-        </div>
-        <div v-reveal class="ri-heading ri-heading--paper">
-          <span>SIDE QUEST · BEYOND THE WEDDING</span>
-          <h2 class="serif">不止婚礼</h2>
-        </div>
-        <div v-reveal class="ri-city__intro">
-          <p class="serif">乐平，是新郎生长的故土。</p>
-          <p class="serif">景德镇，是新娘 22 年故地重游后被触动、改写人生轨迹的城市。</p>
-          <span>愿借我们的视角，邀你感受这座城市独有的生命力。</span>
+            <b v-if="eggState === 'locked'" class="serif">主线故事已经结束，<br />这里还藏着一段旅程。</b>
+            <b v-else-if="eggState === 'loading'" class="serif">正在读取隐藏章节…</b>
+            <b v-else class="serif">隐藏章节已解锁</b>
+            <span>{{ eggState === 'locked' ? '它不会自动出现。' : eggState === 'loading' ? 'LOADING CITY MEMORY' : '继续向下，打开我们的城市记忆。' }}</span>
+          </div>
+
+          <div class="ri-city__loader" :class="{ 'is-running': eggState === 'loading', 'is-complete': eggState === 'open' }" aria-hidden="true">
+            <i></i><span>00</span><span>25</span><span>50</span><span>75</span><span>100</span>
+          </div>
+
+          <button
+            v-if="eggState !== 'open'"
+            class="ri-city__unlock-action pressable"
+            type="button"
+            :disabled="eggState === 'loading'"
+            @click="unlockEgg"
+          >
+            <span>{{ eggState === 'loading' ? '正在解锁' : '解锁片尾彩蛋' }}</span>
+            <b>{{ eggState === 'loading' ? '···' : 'PRESS TO LOAD ↘' }}</b>
+          </button>
+          <span v-else class="ri-city__unlocked"><i></i> BONUS CHAPTER ONLINE <b>↓</b></span>
         </div>
 
-        <div class="ri-city__route" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <Transition name="ri-bonus-reveal">
+          <div v-if="eggState === 'open'" class="ri-city__content">
+            <div class="ri-city__masthead">
+              <span class="ri-city__edition">BONUS 04 · CITY MEMORY</span>
+              <div class="ri-heading">
+                <span>SIDE QUEST · BEYOND THE WEDDING</span>
+                <h2 class="serif">不止婚礼</h2>
+              </div>
+              <span class="ri-city__seal serif" aria-hidden="true">景<br />德<br />镇</span>
+              <figure class="ri-city__hero-photo">
+                <img :src="images.imperialKiln" alt="景德镇御窑博物馆的拱形窑砖建筑" loading="lazy" />
+                <figcaption>IMPERIAL KILN · JINGDEZHEN</figcaption>
+              </figure>
+              <figure class="ri-city__peek-photo">
+                <img :src="images.taoxichuan" alt="景德镇陶溪川文创街区" loading="lazy" />
+                <figcaption>29.2969° N</figcaption>
+              </figure>
+              <span class="ri-city__coordinates">29° N<br />117° E<br />江西</span>
+            </div>
 
-        <article v-reveal class="ri-recommendation ri-recommendation--bride reveal--scale">
-          <div><small>HUAN'S PICKS</small><b>新娘推荐</b></div>
-          <ul><li v-for="place in brideRecommendations" :key="place"><i></i><span>{{ place }}</span></li></ul>
-        </article>
-        <article v-reveal="{ delay: 80 }" class="ri-recommendation ri-recommendation--groom reveal--scale">
-          <div><small>KEVIN'S PICKS</small><b>新郎推荐</b></div>
-          <h3 class="serif">乐平地道美食</h3>
-          <p>从熟悉的一口开始，尝尝这座小城最真实、最热闹的日常。</p>
-        </article>
+            <div class="ri-city__intro">
+              <p class="serif">乐平，是新郎生长的故土。</p>
+              <p class="serif">景德镇，是新娘 22 年故地重游后被触动、改写人生轨迹的城市。</p>
+              <span>愿借我们的视角，邀你感受这座城市独有的生命力。</span>
+            </div>
 
-        <button v-reveal class="ri-city-action pressable" @click="router.push('/travel')">
-          <span><small>CITY GUIDE / SIDE QUEST</small><b class="serif">打开我们的瓷都漫游地图</b></span><i>↗</i>
-        </button>
+            <div class="ri-city__route" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+            <div class="ri-city__picks">
+              <article class="ri-recommendation ri-recommendation--bride">
+                <div><small>HUAN'S FIELD NOTES</small><b>新娘推荐</b></div>
+                <ul><li v-for="(place, index) in brideRecommendations" :key="place"><i>0{{ index + 1 }}</i><span>{{ place }}</span></li></ul>
+              </article>
+              <article class="ri-recommendation ri-recommendation--groom">
+                <div><small>KEVIN'S LOCAL TABLE</small><b>新郎推荐</b></div>
+                <span class="ri-recommendation__ticket">LP / FOOD / 01</span>
+                <h3 class="serif">乐平地道美食</h3>
+                <p>从熟悉的一口开始，尝尝这座小城最真实、最热闹的日常。</p>
+              </article>
+            </div>
+
+            <button class="ri-city-action pressable" @click="router.push('/travel')">
+              <span><small>CITY GUIDE / SIDE QUEST</small><b class="serif">打开我们的瓷都漫游地图</b></span><i>↗</i>
+            </button>
+          </div>
+        </Transition>
       </section>
     </main>
   </div>
