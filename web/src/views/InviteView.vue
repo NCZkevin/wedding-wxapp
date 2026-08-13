@@ -15,7 +15,6 @@ const opening = ref(sessionStorage.getItem(OPENING_STORAGE_KEY) !== '1')
 let countdownTimer: number | undefined
 
 const weddingFlow = ['接亲互动', '午饭', '迎宾留影', '婚礼仪式', '答谢晚宴']
-const participationItems = ['照片共创：分享你与我们的合影或小故事', '写下你的祝福']
 const brideRecommendations = ['御窑厂', '陶瓷博物馆', '大地艺术节', '锄月']
 
 const guestName = computed(() => new URLSearchParams(window.location.search).get('guest')?.trim() || '')
@@ -167,12 +166,13 @@ onBeforeUnmount(() => {
         <div class="ri-see-you__spread">
           <figure v-reveal class="ri-see-you__portrait reveal--image">
             <div class="ri-editorial-frame"><img :src="images.coupleOutdoor" alt="张凯文与刘明玥在芦苇地的正面合影" loading="lazy" /></div>
-            <figcaption>FOUND EACH OTHER · 2026</figcaption>
+            <figcaption>
+              <small>Until I found you, where sways the grain.</small>
+              <span>FOUND EACH OTHER · 2026</span>
+            </figcaption>
           </figure>
           <blockquote v-reveal="{ delay: 90 }" class="ri-see-you__quote">
-            <span>UNTIL I FOUND YOU</span>
-            <p class="serif">有些相遇不是突然发生，<br />只是我们终于抵达彼此。</p>
-            <small>Until I found you,<br />Where sways the grain!</small>
+            <p class="serif"><span>有些相遇不是突然发生，</span><span>只是我们终于抵达彼此。</span></p>
           </blockquote>
         </div>
       </section>
@@ -184,13 +184,12 @@ onBeforeUnmount(() => {
           <h2 class="serif">与你生活，<br />是日常也是冒险。</h2>
         </div>
 
-        <div class="ri-life-manifesto">
-          <p v-reveal class="serif">人生主线<br /><b>相互托底</b></p>
-          <i aria-hidden="true"></i>
-          <p v-reveal="{ delay: 80 }" class="serif">生活支线<br /><b>共享乐趣</b></p>
-        </div>
-
         <div class="ri-life-collage">
+          <div class="ri-life-manifesto">
+            <p v-reveal class="serif">人生主线<br /><b>相互托底</b></p>
+            <i aria-hidden="true"></i>
+            <p v-reveal="{ delay: 80 }" class="serif">生活支线<br /><b>共享乐趣</b></p>
+          </div>
           <figure v-reveal class="ri-life-collage__hero reveal--image"><img :src="images.couplePlayfulWarm" alt="刘明玥与张凯文轻松俏皮的暖色合影" loading="lazy" /><figcaption>PLAYFUL MODE / ALWAYS ON</figcaption></figure>
           <figure v-reveal="{ delay: 70 }" class="ri-life-collage__small ri-life-collage__small--one reveal--image"><img :src="images.couplePlayful" alt="张凯文与刘明玥俏皮互动的合影" loading="lazy" /></figure>
           <figure v-reveal="{ delay: 110 }" class="ri-life-collage__small ri-life-collage__small--two reveal--image"><img :src="images.coupleSeated" alt="张凯文与刘明玥坐在一起的合影" loading="lazy" /></figure>
@@ -222,12 +221,6 @@ onBeforeUnmount(() => {
           <figcaption><small>NEW MAP / UNKNOWN</small><b class="serif">与你并肩，<br />前方未知皆是惊喜。</b></figcaption>
         </figure>
 
-        <div class="ri-new-life__sequence">
-          <figure v-reveal class="ri-new-life__portrait reveal--image"><img :src="images.coupleFormal" alt="张凯文与刘明玥牵手的正式合影" loading="lazy" /></figure>
-          <div v-reveal="{ delay: 70 }" class="ri-new-life__copy"><span>SAVE POINT / FOREVER</span><p class="serif">未来不会提前给出答案，<br />好在方向可以一起确认。</p></div>
-          <figure v-reveal="{ delay: 100 }" class="ri-new-life__portrait ri-new-life__portrait--offset reveal--image"><img :src="images.coupleVeil" alt="张凯文与刘明玥依偎相伴的合影" loading="lazy" /></figure>
-        </div>
-
         <article v-photo-motion class="ri-join-us">
           <img class="cover-image" :src="images.coupleToast" alt="张凯文与刘明玥举杯邀请朋友参加婚礼" loading="lazy" />
           <span class="ri-join-us__shade"></span>
@@ -245,7 +238,7 @@ onBeforeUnmount(() => {
         <div v-reveal class="ri-heading ri-heading--night">
           <span>JOIN US · ABOUT THE DAY</span>
           <h2 class="serif">关于这一天</h2>
-          <p>你不只是观礼者，也会成为这段共同记忆里不可替代的一帧。</p>
+          <p>五个节点，组成我们共同抵达的这一天。</p>
         </div>
 
         <article v-reveal class="ri-day-card ri-day-card--flow reveal--scale">
@@ -254,23 +247,33 @@ onBeforeUnmount(() => {
           <ol>
             <li v-for="(item, index) in weddingFlow" :key="item"><i>0{{ index + 1 }}</i><span>{{ item }}</span></li>
           </ol>
-          <button class="ri-card-action pressable" @click="router.push('/schedule')"><span>查看完整流程</span><b>↗</b></button>
-        </article>
-
-        <article v-reveal="{ delay: 90 }" class="ri-day-card ri-day-card--join reveal--scale">
-          <div class="ri-day-card__head"><span>02</span><small>PARTICIPATE</small></div>
-          <h3 class="serif">不止观礼</h3>
-          <ul>
-            <li v-for="(item, index) in participationItems" :key="item"><i>0{{ index + 1 }}</i><span>{{ item }}</span></li>
-          </ul>
-          <p>你的视角，也会成为这份共同存档的一部分。</p>
-          <button class="ri-card-action pressable" @click="router.push('/interact')"><span>参与照片共创与祝福</span><b>↗</b></button>
         </article>
       </section>
 
+      <section class="ri-finale">
+        <span class="ri-finale__stars" aria-hidden="true"></span>
+        <div v-reveal class="ri-finale__terminal reveal--scale">
+          <span>100 PRINT "SEE YOU THERE"</span>
+          <h2 class="serif">这一天，<br />期待与你见面。</h2>
+          <p>世界没有唯一的通关方式，<br />但我们希望这一段旅程，有你在场。</p>
+          <button class="ri-rsvp-button pressable" @click="router.push('/rsvp')"><span>回应邀请</span><b>/ JOIN</b></button>
+          <button class="ri-share-button" @click="shareInvitation">分享邀请函 ↗</button>
+          <SignatureMark flourish />
+          <small>RUNNING LOVE.EXE · TO BE CONTINUED_</small>
+        </div>
+      </section>
+
       <section class="ri-city">
+        <div v-reveal class="ri-city__unlock">
+          <span class="ri-city__unlock-mark" aria-hidden="true">+</span>
+          <span class="ri-city__unlock-copy">
+            <small>AFTER THE CREDITS · EASTER EGG</small>
+            <b>片尾彩蛋 · 隐藏章节已解锁</b>
+          </span>
+          <i aria-hidden="true">04</i>
+        </div>
         <div v-reveal class="ri-heading ri-heading--paper">
-          <span>AFTER STORY · BEYOND THE WEDDING</span>
+          <span>SIDE QUEST · BEYOND THE WEDDING</span>
           <h2 class="serif">不止婚礼</h2>
         </div>
         <div v-reveal class="ri-city__intro">
@@ -294,19 +297,6 @@ onBeforeUnmount(() => {
         <button v-reveal class="ri-city-action pressable" @click="router.push('/travel')">
           <span><small>CITY GUIDE / SIDE QUEST</small><b class="serif">打开我们的瓷都漫游地图</b></span><i>↗</i>
         </button>
-      </section>
-
-      <section class="ri-finale">
-        <span class="ri-finale__stars" aria-hidden="true"></span>
-        <div v-reveal class="ri-finale__terminal reveal--scale">
-          <span>100 PRINT "SEE YOU THERE"</span>
-          <h2 class="serif">这一天，<br />期待与你见面。</h2>
-          <p>世界没有唯一的通关方式，<br />但我们希望这一段旅程，有你在场。</p>
-          <button class="ri-rsvp-button pressable" @click="router.push('/rsvp')"><span>回应邀请</span><b>/ JOIN</b></button>
-          <button class="ri-share-button" @click="shareInvitation">分享邀请函 ↗</button>
-          <SignatureMark flourish />
-          <small>RUNNING LOVE.EXE · TO BE CONTINUED_</small>
-        </div>
       </section>
     </main>
   </div>

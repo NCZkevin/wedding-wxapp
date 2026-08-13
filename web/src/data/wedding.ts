@@ -5,10 +5,8 @@ import handoverStage from '../../../assets/images/handover-stage.jpg'
 import floralSculpture from '../../../assets/images/floral-sculpture.jpg'
 import coupleOutdoor from '../../../assets/images/1.jpg'
 import couplePlayful from '../../../assets/images/2.jpg'
-import coupleFormal from '../../../assets/images/3.jpg'
 import coupleClose from '../../../assets/images/4.jpg'
 import coupleToast from '../../../assets/images/5.jpg'
-import coupleVeil from '../../../assets/images/6.jpg'
 import coupleReeds from '../../../assets/images/7.jpg'
 import groomPortrait from '../../../assets/images/8.jpg'
 import bridePortrait from '../../../assets/images/9.jpg'
@@ -30,10 +28,8 @@ export const images = {
   floralSculpture,
   coupleOutdoor,
   couplePlayful,
-  coupleFormal,
   coupleClose,
   coupleToast,
-  coupleVeil,
   coupleReeds,
   groomPortrait,
   bridePortrait,

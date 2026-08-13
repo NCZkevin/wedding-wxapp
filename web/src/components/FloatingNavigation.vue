@@ -8,8 +8,8 @@ const hidden = computed(() => route.name === 'rsvp' || route.name === 'admin')
 const items = [
   { to: '/', label: '邀请', index: 'I' },
   { to: '/schedule', label: '流程', index: 'II' },
-  { to: '/travel', label: '漫游', index: 'III' },
-  { to: '/interact', label: '祝福', index: 'IV' },
+  { to: '/interact', label: '祝福', index: 'III' },
+  { to: '/travel', label: '漫游', index: 'IV' },
 ]
 </script>
 

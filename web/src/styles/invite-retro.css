@@ -472,18 +472,18 @@ html.ri-opening-active {
 
 .ri-spread-heading h1,
 .ri-spread-heading h2 {
-  margin-top: 13px;
-  font-size: clamp(35px, 9.6vw, 46px);
+  margin-top: 10px;
+  font-size: clamp(26px, 7.2vw, 34px);
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.4;
   letter-spacing: 0.07em;
 }
 
 .ri-spread-heading p {
-  max-width: 330px;
-  margin-top: 16px;
-  font-size: 12px;
-  line-height: 1.9;
+  max-width: 270px;
+  margin-top: 11px;
+  font-size: 10px;
+  line-height: 1.75;
 }
 
 .ri-spread-heading--night > span { color: #78bce8; }
@@ -497,7 +497,7 @@ html.ri-opening-active {
   right: 0;
   color: rgba(55, 103, 133, 0.15);
   font-family: "Times New Roman", serif;
-  font-size: 92px;
+  font-size: 68px;
   font-weight: 400;
   line-height: 1;
 }
@@ -509,7 +509,7 @@ html.ri-opening-active {
 .ri-prologue {
   position: relative;
   overflow: hidden;
-  padding: 82px 22px 92px;
+  padding: 58px 22px 70px;
   background:
     radial-gradient(circle at 50% 18%, rgba(20, 88, 146, 0.3), transparent 29%),
     #050d18;
@@ -532,7 +532,7 @@ html.ri-opening-active {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
   align-items: center;
-  margin-top: 47px;
+  margin-top: 34px;
 }
 
 .ri-player-card {
@@ -625,11 +625,13 @@ html.ri-opening-active {
 .ri-prologue__statement {
   position: relative;
   z-index: 2;
-  margin-top: 56px;
-  padding: 29px 18px;
-  border-top: 1px solid rgba(168, 205, 230, 0.28);
-  border-bottom: 1px solid rgba(168, 205, 230, 0.28);
-  text-align: center;
+  width: 76%;
+  margin: 37px 0 0 auto;
+  padding: 16px 0 2px 15px;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 1px solid rgba(168, 205, 230, 0.35);
+  text-align: left;
 }
 
 .ri-prologue__statement span {
@@ -640,20 +642,20 @@ html.ri-opening-active {
 }
 
 .ri-prologue__statement p {
-  margin-top: 17px;
-  font-size: clamp(24px, 6.8vw, 31px);
-  line-height: 1.7;
+  margin-top: 10px;
+  font-size: clamp(15px, 4.2vw, 19px);
+  line-height: 1.65;
   letter-spacing: 0.07em;
 }
 
 .ri-see-you {
-  padding-top: 82px;
+  padding-top: 54px;
   color: var(--ri-ink);
   background: var(--ri-paper);
 }
 
 .ri-see-you > .ri-spread-heading {
-  padding: 0 25px 54px;
+  padding: 0 25px 32px;
 }
 
 .ri-reeds-fullbleed {
@@ -689,9 +691,7 @@ html.ri-opening-active {
 }
 
 .ri-reeds-fullbleed small,
-.ri-see-you__quote > span,
 .ri-life-quote > span,
-.ri-new-life__copy span,
 .ri-join-us__copy > span {
   color: #9bd2f2;
   font-family: "SFMono-Regular", Consolas, monospace;
@@ -707,7 +707,8 @@ html.ri-opening-active {
 }
 
 .ri-see-you__spread {
-  padding: 86px 22px 94px;
+  position: relative;
+  padding: 62px 20px 76px;
   background:
     radial-gradient(circle at 85% 70%, rgba(171, 114, 75, 0.1), transparent 28%),
     var(--ri-paper);
@@ -734,6 +735,9 @@ html.ri-opening-active {
 }
 
 .ri-see-you__portrait figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
   margin-top: 14px;
   color: #5c7180;
   font-family: "SFMono-Regular", Consolas, monospace;
@@ -742,40 +746,71 @@ html.ri-opening-active {
   text-align: right;
 }
 
-.ri-see-you__quote {
-  width: 86%;
-  margin-top: 68px;
-  padding: 28px 23px;
-  border-left: 2px solid #447593;
-  background: #ded1be;
-  box-shadow: 7px 8px 0 #c2b097;
+.ri-see-you__portrait figcaption small {
+  color: #7b5b45;
+  font-family: "Times New Roman", serif;
+  font-size: 10px;
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-align: left;
 }
 
-.ri-see-you__quote > span {
-  color: #426e8a;
+.ri-see-you__quote {
+  position: absolute;
+  z-index: 4;
+  top: 20%;
+  left: 17px;
+  width: 64px;
+  margin: 0;
+  padding: 27px 0 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ri-see-you__quote::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 41px;
+  height: 1px;
+  background: #477591;
+  content: "";
+}
+
+.ri-see-you__quote::after {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  color: #56798f;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 6px;
+  letter-spacing: 0.16em;
+  content: "01";
 }
 
 .ri-see-you__quote p {
-  margin-top: 17px;
-  font-size: clamp(22px, 6.2vw, 29px);
-  line-height: 1.72;
-  letter-spacing: 0.05em;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 9px;
+  margin: 0;
+  color: #2d3439;
+  font-size: clamp(12px, 3.4vw, 15px);
+  line-height: 1;
 }
 
-.ri-see-you__quote small {
-  display: block;
-  margin-top: 20px;
-  color: #82583d;
-  font-family: "Times New Roman", serif;
-  font-size: 13px;
-  font-style: italic;
-  line-height: 1.5;
+.ri-see-you__quote p span {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.14em;
 }
 
 .ri-life-with-you {
   position: relative;
   overflow: hidden;
-  padding: 84px 22px 92px;
+  padding: 58px 22px 76px;
   background:
     radial-gradient(circle at 12% 18%, rgba(25, 94, 150, 0.28), transparent 25%),
     #050d18;
@@ -796,32 +831,59 @@ html.ri-opening-active {
 }
 
 .ri-life-manifesto {
+  position: absolute;
+  z-index: 4;
+  top: 54px;
+  left: 0;
   display: grid;
-  grid-template-columns: 1fr 26px 1fr;
-  align-items: center;
-  margin-top: 52px;
+  width: 27%;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 24px 0 0 13px;
+}
+
+.ri-life-manifesto::before {
+  position: absolute;
+  top: 0;
+  left: 11px;
+  color: #55788e;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 5px;
+  letter-spacing: 0.14em;
+  content: "LIFE / NOTES";
+}
+
+.ri-life-manifesto::after {
+  position: absolute;
+  top: 21px;
+  bottom: 1px;
+  left: 1px;
+  width: 1px;
+  background: linear-gradient(#74bce6, rgba(116, 188, 230, 0.08));
+  content: "";
 }
 
 .ri-life-manifesto p {
-  font-size: clamp(17px, 5vw, 22px);
+  position: relative;
+  z-index: 2;
+  font-size: clamp(9px, 2.65vw, 12px);
   line-height: 1.7;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
-.ri-life-manifesto p:last-child { text-align: right; }
+.ri-life-manifesto p + p { margin-top: 13px; }
+.ri-life-manifesto p:last-child { text-align: left; }
 .ri-life-manifesto b { color: #82c9ef; font-weight: 400; }
 
 .ri-life-manifesto i {
-  width: 1px;
-  height: 64px;
-  justify-self: center;
-  background: linear-gradient(transparent, rgba(137, 197, 233, 0.65), transparent);
+  display: none;
 }
 
 .ri-life-collage {
   position: relative;
   min-height: 735px;
-  margin-top: 58px;
+  margin-top: 36px;
 }
 
 .ri-life-collage figure {
@@ -881,44 +943,51 @@ html.ri-opening-active {
 }
 
 .ri-life-collage__index {
-  position: absolute;
-  top: 56px;
-  left: 4px;
-  color: #54778e;
-  font-family: "Times New Roman", serif;
-  font-size: 9px;
-  line-height: 1.8;
-  letter-spacing: 0.24em;
+  display: none;
 }
 
 .ri-life-quote {
-  margin-top: 70px;
-  padding: 30px 21px;
-  border: 1px solid rgba(155, 198, 226, 0.36);
-  background: rgba(8, 28, 46, 0.86);
-  box-shadow: 7px 8px 0 rgba(47, 110, 151, 0.15);
+  position: relative;
+  z-index: 5;
+  width: 62%;
+  margin: -38px 0 0;
+  padding: 20px 2px 12px 17px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ri-life-quote::before {
+  position: absolute;
+  top: 18px;
+  bottom: 8px;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(#79c1eb, rgba(121, 193, 235, 0.08));
+  content: "";
 }
 
 .ri-life-quote p {
-  margin-top: 16px;
-  font-size: clamp(22px, 6.2vw, 28px);
-  line-height: 1.65;
+  margin-top: 10px;
+  font-size: clamp(15px, 4.2vw, 19px);
+  line-height: 1.55;
   letter-spacing: 0.05em;
 }
 
 .ri-life-quote small {
   display: block;
-  margin-top: 18px;
-  color: #9ba8b1;
-  font-size: 10px;
-  line-height: 1.85;
+  margin-top: 11px;
+  max-width: 190px;
+  color: #7f929f;
+  font-size: 8px;
+  line-height: 1.7;
 }
 
 .ri-life-diptych {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 11px;
-  margin-top: 66px;
+  margin-top: 30px;
 }
 
 .ri-life-diptych figure {
@@ -947,13 +1016,13 @@ html.ri-opening-active {
 }
 
 .ri-new-life {
-  padding-top: 84px;
+  padding-top: 54px;
   color: var(--ri-ink);
   background: var(--ri-paper);
 }
 
 .ri-new-life > .ri-spread-heading {
-  padding: 0 25px 56px;
+  padding: 0 25px 32px;
 }
 
 .ri-new-life__back-view {
@@ -995,70 +1064,12 @@ html.ri-opening-active {
 .ri-new-life__back-view b {
   display: block;
   margin-top: 14px;
-  font-size: clamp(30px, 8.4vw, 40px);
+  max-width: 62%;
+  margin-left: auto;
+  font-size: clamp(19px, 5.2vw, 25px);
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0.07em;
-}
-
-.ri-new-life__sequence {
-  position: relative;
-  min-height: 1120px;
-  overflow: hidden;
-  padding: 92px 22px 100px;
-}
-
-.ri-new-life__sequence::before {
-  position: absolute;
-  top: 58px;
-  bottom: 58px;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(transparent, rgba(67, 105, 128, 0.25), transparent);
-  content: "";
-}
-
-.ri-new-life__portrait {
-  position: relative;
-  z-index: 2;
-  width: 77%;
-  aspect-ratio: 2 / 3;
-  padding: 6px;
-  border: 1px solid #8d8376;
-  background: #f5efe5;
-  box-shadow: 9px 10px 0 #cbbca7;
-}
-
-.ri-new-life__portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.ri-new-life__copy {
-  position: relative;
-  z-index: 3;
-  width: 90%;
-  margin: -28px 0 0 auto;
-  padding: 27px 22px;
-  border-left: 2px solid #477592;
-  background: #ddd0bc;
-  box-shadow: -7px 8px 0 #c1ae94;
-}
-
-.ri-new-life__copy span { color: #426f8b; }
-
-.ri-new-life__copy p {
-  margin-top: 15px;
-  font-size: clamp(17px, 4.8vw, 21px);
-  line-height: 1.75;
-  letter-spacing: 0.05em;
-}
-
-.ri-new-life__portrait--offset {
-  width: 71%;
-  margin: 74px 0 0 auto;
-  box-shadow: -9px 10px 0 #cbbca7;
 }
 
 .ri-join-us {
@@ -1101,7 +1112,8 @@ html.ri-opening-active {
 
 .ri-join-us__copy h2 {
   margin-top: 13px;
-  font-size: clamp(34px, 9.4vw, 44px);
+  max-width: 72%;
+  font-size: clamp(25px, 6.8vw, 32px);
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.08em;
@@ -1149,18 +1161,18 @@ html.ri-opening-active {
 
 .ri-heading h1,
 .ri-heading h2 {
-  margin-top: 12px;
-  font-size: clamp(35px, 9.4vw, 45px);
+  margin-top: 9px;
+  font-size: clamp(27px, 7.2vw, 34px);
   font-weight: 400;
   letter-spacing: 0.08em;
   line-height: 1.35;
 }
 
 .ri-heading p {
-  max-width: 340px;
-  margin-top: 16px;
-  font-size: 12px;
-  line-height: 1.9;
+  max-width: 250px;
+  margin-top: 10px;
+  font-size: 10px;
+  line-height: 1.75;
 }
 
 .ri-heading--paper {
@@ -1636,7 +1648,7 @@ html.ri-opening-active {
 .ri-day {
   position: relative;
   overflow: hidden;
-  padding: 79px 22px 88px;
+  padding: 58px 22px 70px;
   background:
     radial-gradient(circle at 18% 16%, rgba(25, 92, 147, 0.28), transparent 24%),
     #050d18;
@@ -1654,7 +1666,7 @@ html.ri-opening-active {
 .ri-day-card {
   position: relative;
   z-index: 2;
-  margin-top: 34px;
+  margin-top: 26px;
   overflow: hidden;
   border: 1px solid rgba(164, 205, 233, 0.36);
   background: rgba(8, 24, 40, 0.91);
@@ -1778,7 +1790,7 @@ html.ri-opening-active {
 .ri-city {
   position: relative;
   overflow: hidden;
-  padding: 80px 22px 88px;
+  padding: 0 22px 74px;
   color: var(--ri-ink);
   background:
     radial-gradient(circle at 85% 18%, rgba(128, 175, 202, 0.18), transparent 25%),
@@ -1797,6 +1809,7 @@ html.ri-opening-active {
   content: "";
 }
 
+.ri-city__unlock,
 .ri-city__intro,
 .ri-city__route,
 .ri-recommendation,
@@ -1805,29 +1818,111 @@ html.ri-opening-active {
   z-index: 2;
 }
 
+.ri-city__unlock {
+  display: grid;
+  min-height: 124px;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin: 0 -22px 49px;
+  overflow: hidden;
+  padding: 25px 24px 29px;
+  border-top: 1px solid rgba(154, 204, 236, 0.2);
+  color: #e7f0f5;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(41, 116, 169, 0.35), transparent 32%),
+    #071421;
+}
+
+.ri-city__unlock::before {
+  position: absolute;
+  right: 41px;
+  bottom: -25px;
+  color: rgba(123, 189, 229, 0.045);
+  font-family: "Times New Roman", serif;
+  font-size: 92px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  content: "BONUS";
+}
+
+.ri-city__unlock::after {
+  position: absolute;
+  right: 24px;
+  bottom: 0;
+  left: 24px;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, rgba(129, 190, 228, 0.46) 0 4px, transparent 4px 10px);
+  content: "";
+}
+
+.ri-city__unlock-mark {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(139, 199, 235, 0.45);
+  border-radius: 50%;
+  color: #83c8ee;
+  font-family: "Times New Roman", serif;
+  font-size: 20px;
+  box-shadow: inset 0 0 0 5px rgba(92, 157, 198, 0.07);
+}
+
+.ri-city__unlock-copy {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ri-city__unlock-copy small {
+  color: #72b8e2;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 6px;
+  letter-spacing: 0.15em;
+}
+
+.ri-city__unlock-copy b {
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.ri-city__unlock > i {
+  position: relative;
+  color: rgba(166, 208, 233, 0.48);
+  font-family: "Times New Roman", serif;
+  font-size: 19px;
+  font-style: normal;
+}
+
 .ri-city__intro {
-  margin-top: 37px;
-  padding: 26px 19px;
+  width: 86%;
+  margin: 25px 0 0 auto;
+  padding: 12px 0 4px 15px;
   border-left: 2px solid #447594;
-  background: rgba(222, 211, 194, 0.72);
+  background: transparent;
 }
 
 .ri-city__intro p {
-  font-size: 17px;
-  line-height: 1.8;
+  font-size: 12px;
+  line-height: 1.75;
   letter-spacing: 0.04em;
 }
 
 .ri-city__intro p + p {
-  margin-top: 14px;
+  margin-top: 9px;
 }
 
 .ri-city__intro span {
   display: block;
-  margin-top: 20px;
+  margin-top: 12px;
   color: #626664;
-  font-size: 11px;
-  line-height: 1.85;
+  font-size: 9px;
+  line-height: 1.7;
 }
 
 .ri-city__route {
@@ -1986,7 +2081,7 @@ html.ri-opening-active {
 .ri-finale {
   position: relative;
   overflow: hidden;
-  padding: 88px 22px 98px;
+  padding: 68px 22px 78px;
   background:
     radial-gradient(circle at 50% 14%, rgba(25, 101, 161, 0.3), transparent 26%),
     #020812;
@@ -2011,8 +2106,8 @@ html.ri-opening-active {
 }
 
 .ri-finale__terminal h2 {
-  margin-top: 24px;
-  font-size: clamp(34px, 9.2vw, 44px);
+  margin-top: 18px;
+  font-size: clamp(27px, 7.2vw, 34px);
   font-weight: 400;
   line-height: 1.55;
   letter-spacing: 0.08em;
