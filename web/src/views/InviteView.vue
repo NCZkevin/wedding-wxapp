@@ -103,8 +103,40 @@ onBeforeUnmount(() => {
       </button>
     </Transition>
 
-    <header class="ri-event">
+    <header class="ri-event" :class="{ 'is-ready': !opening }">
       <span class="ri-event__stars" aria-hidden="true"></span>
+      <svg class="ri-event__constellations" viewBox="0 0 480 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="ri-constellation ri-constellation--gemini">
+          <text x="27" y="122">PLAYER 01 · GEMINI</text>
+          <path class="ri-constellation__line" pathLength="1" d="M61 145 L75 190 L58 232 M75 190 L82 280 M75 190 L111 184 M109 138 L111 184 L132 226 M111 184 L124 274" />
+          <circle class="ri-constellation__star is-major" cx="61" cy="145" r="2.8" />
+          <circle class="ri-constellation__star is-major" cx="109" cy="138" r="2.5" />
+          <circle class="ri-constellation__star" cx="75" cy="190" r="1.7" />
+          <circle class="ri-constellation__star" cx="111" cy="184" r="1.5" />
+          <circle class="ri-constellation__star" cx="58" cy="232" r="1.3" />
+          <circle class="ri-constellation__star" cx="132" cy="226" r="1.6" />
+          <circle class="ri-constellation__star" cx="82" cy="280" r="1.5" />
+          <circle class="ri-constellation__star" cx="124" cy="274" r="1.3" />
+        </g>
+
+        <path class="ri-constellation__connection" pathLength="1" d="M124 274 C205 315 254 435 344 535" />
+
+        <g class="ri-constellation ri-constellation--taurus">
+          <text x="305" y="474">PLAYER 02 · TAURUS</text>
+          <path class="ri-constellation__line" pathLength="1" d="M302 560 L344 535 L385 566 M344 535 L398 505 L431 462 M385 566 L419 534 M385 566 L407 610" />
+          <circle class="ri-constellation__star" cx="302" cy="560" r="1.4" />
+          <circle class="ri-constellation__star is-major" cx="344" cy="535" r="2.4" />
+          <circle class="ri-constellation__star is-warm" cx="385" cy="566" r="2.8" />
+          <circle class="ri-constellation__star" cx="398" cy="505" r="1.5" />
+          <circle class="ri-constellation__star" cx="431" cy="462" r="1.5" />
+          <circle class="ri-constellation__star" cx="419" cy="534" r="1.2" />
+          <circle class="ri-constellation__star" cx="407" cy="610" r="1.3" />
+        </g>
+
+        <text class="ri-constellation__pair" x="286" y="350">STAR MAP / PAIR FOUND</text>
+      </svg>
+      <span class="ri-event__star-signal" aria-hidden="true"></span>
+      <span class="ri-event__star-note" aria-hidden="true">不同轨道，同一片夜空。</span>
       <div class="ri-terminal-bar"><span>LOVE.EXE / EVENT INFO</span><span>READY_</span></div>
       <div v-reveal class="ri-event__identity">
         <p v-if="guestName">DEAR {{ guestName }} · THIS INVITATION IS FOR YOU</p>
