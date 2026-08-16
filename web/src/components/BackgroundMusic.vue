@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import trackUrl from '../../../assets/audio/1.mp3'
+import firstTrackUrl from '../../../assets/audio/1.mp3'
+import secondTrackUrl from '../../../assets/audio/2.mp3'
 
 const PAUSED_KEY = 'wedding-music-paused'
-const TRACK_TITLE = '这是我一生中最勇敢的瞬间'
+const tracks = [
+  { url: firstTrackUrl, title: '这是我一生中最勇敢的瞬间' },
+  { url: secondTrackUrl, title: 'Lonestar · 椅子乐团' },
+] as const
+const track = tracks[Math.floor(Math.random() * tracks.length)]
+const trackUrl = track.url
+const trackTitle = track.title
 
 const audio = ref<HTMLAudioElement | null>(null)
 const isPlaying = ref(false)
@@ -139,14 +146,14 @@ onBeforeUnmount(() => {
     ></audio>
     <button
       type="button"
-      :aria-label="isPlaying ? `暂停背景音乐《${TRACK_TITLE}》` : `播放背景音乐《${TRACK_TITLE}》`"
+      :aria-label="isPlaying ? `暂停背景音乐《${trackTitle}》` : `播放背景音乐《${trackTitle}》`"
       :aria-pressed="isPlaying"
       :disabled="isUnavailable"
       @click="togglePlayback"
     >
       <span class="music-control__copy" aria-hidden="true">
         <small>{{ statusText }}</small>
-        <strong>{{ TRACK_TITLE }}</strong>
+        <strong>{{ trackTitle }}</strong>
       </span>
       <span class="music-control__disc" aria-hidden="true">
         <i class="music-control__ring"></i>
